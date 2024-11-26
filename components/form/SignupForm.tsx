@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { signUpFormSchema } from "@/lib/validation";
-import CustomFormField, { FormFieldType } from "../inputs/CustomFormField";
+import CustomFormField, { FormFieldType } from "../main/inputs/CustomFormField";
 
 const SignUpForm = () => {
   const form = useForm<z.infer<typeof signUpFormSchema>>({

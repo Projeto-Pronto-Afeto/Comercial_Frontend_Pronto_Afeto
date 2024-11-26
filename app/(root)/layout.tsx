@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 import AdminHeader from "@/components/AdminHeader";
+import Sidebar from "@/components/main/sidebar/Sidebar";
 
 const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -25,11 +26,12 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "min-h-screen dark:bg-dark-300 bg-white font-sans antialiased",
+          "min-h-screen flex dark:bg-dark-300 bg-white font-sans antialiased",
           fontSans.variable
         )}
       >
-        <div className="mx-auto flex max-w-12xl flex-col space-y-10 relative">
+        <Sidebar />
+        <div className="mx-auto flex-1 max-w-12xl flex-col space-y-10 relative">
           <AdminHeader />
           {children}
         </div>

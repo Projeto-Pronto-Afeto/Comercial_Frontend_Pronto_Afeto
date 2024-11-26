@@ -27,8 +27,9 @@ import { ptBR } from "date-fns/locale";
 import { Badge } from "./ui/badge";
 import { StatusBadge } from "./BadgesStatus";
 import ResumeCardCuidado from "./ResumeCardCuidado";
+import { arrayToDate } from "@/lib/utils";
 
-const ProposalDetailsSheet = ({ proposal }: { proposal: Proposal }) => {
+const ProposalDetailsSheet = ({ proposal }: { proposal: Contrato }) => {
   return (
     proposal && (
       <Sheet>
@@ -81,15 +82,26 @@ const ProposalDetailsSheet = ({ proposal }: { proposal: Proposal }) => {
                 </p>
               </div>
               <div className="grid grid-rows-6 gap-6">
-                <StatusBadge status={proposal.status} />
+                <StatusBadge status="Pendente" />
                 <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
                   {" "}
-                  {format(new Date(proposal.data), "MMM dd, yyyy", {
-                    locale: ptBR,
-                  })}
+                  {format(
+                    arrayToDate(
+                      proposal.dataDeInicio.map((item) => item.toString())
+                    ),
+                    "dd 'de' MMMM 'de' yyyy",
+                    {
+                      locale: ptBR,
+                    }
+                  )}
                   <TbChevronRight className="text-black/40 text-lg my-[0.6px]" />
                   {format(
-                    addDays(new Date(proposal.data), 30),
+                    addDays(
+                      arrayToDate(
+                        proposal.dataDeInicio.map((item) => item.toString())
+                      ),
+                      30
+                    ),
                     "MMM dd, yyyy",
                     {
                       locale: ptBR,
@@ -97,15 +109,15 @@ const ProposalDetailsSheet = ({ proposal }: { proposal: Proposal }) => {
                   )}
                 </p>
                 <p className="flex gap-2 my-auto overflow-hidden remove-scrollbar px-4">
-                  {proposal.dias.map((dia, index) => (
+                  {proposal.plantao.diasDaSemana.map((dia, index) => (
                     <p key={dia} className="text-sm font-medium">
                       {dia}
-                      {index < proposal.dias.length - 1 && ","}
+                      {index < proposal.plantao.diasDaSemana.length - 1 && ","}
                     </p>
                   ))}
                 </p>
                 <p className="flex gap-2 my-auto overflow-hidden remove-scrollbar px-3">
-                  {proposal.turnos.map((turn) => (
+                  {proposal.plantao.turno.map((turn: any) => (
                     <Badge
                       key={turn}
                       className={`rounded-2xl font-light ${
@@ -125,13 +137,13 @@ const ProposalDetailsSheet = ({ proposal }: { proposal: Proposal }) => {
                   className="flex gap-1 text-sm font-medium px-4 my-auto
               "
                 >
-                  R$
-                  {proposal.valor.toFixed(2)}
+                  R$ 00
                 </p>
 
                 <p className="text-xs my-auto font-medium px-4">
-                  {proposal.endereco.rua}, {proposal.endereco.numero} ,{" "}
-                  {proposal.endereco.bairro}
+                  {proposal.localAtendimento.rua},{" "}
+                  {proposal.localAtendimento.numero} ,{" "}
+                  {proposal.localAtendimento.bairro}
                 </p>
               </div>
             </div>
@@ -141,7 +153,7 @@ const ProposalDetailsSheet = ({ proposal }: { proposal: Proposal }) => {
               </h4>
               {/* Essa observção virá predefinida, se tiver alimentação fornecida, a observação explicará */}
               <p className="text-sm text-black/80 py-1">
-                {proposal.observacoes && proposal.observacoes}
+                {proposal.saude.comentarios && proposal.saude.comentarios}
               </p>
             </div>
           </div>

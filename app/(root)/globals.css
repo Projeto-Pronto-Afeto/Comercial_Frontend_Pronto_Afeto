@@ -248,26 +248,7 @@
     @apply text-red-400 !important;
   }
 
-  .shad-table {
-    @apply overflow-hidden !important;
-  }
-
-  .shad-table-row-header {
-    @apply border-b border-[#D2D2D2] text-[#A4A4A4] hover:bg-transparent !important;
-  }
-
-  .shad-table-row {
-    @apply border-b border-[#F4F4F4] text-dark-400 !important;
-  }
-
-  .shad-otp {
-    @apply w-full flex justify-between !important;
-  }
-
-  .shad-otp-slot {
-    @apply text-36-bold justify-center flex border border-dark-500 rounded-lg size-16 gap-4 !important;
-  }
-
+  
   .shad-alert-dialog {
     @apply space-y-5 bg-dark-400 border-dark-500 outline-none !important;
   }
@@ -287,11 +268,7 @@
   }
 }
 
-/* =====  REACT-DATEPICKER OVERRIDES */
-.react-datepicker-wrapper.date-picker {
-  display: flex;
-  align-items: center;
-}
+
 
 .react-datepicker,
 .react-datepicker__time,
@@ -428,5 +405,11 @@
 .gradient-top {
   background: rgb(255,255,255);
   background: linear-gradient(42deg, rgba(255,255,255,1) 0%, rgba(67,9,121,0.5495028308511141) 0%, rgba(140,165,192,0.6461795680112349) 12%, rgba(255,255,255,0.12352095773933158) 25%);
+}
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 

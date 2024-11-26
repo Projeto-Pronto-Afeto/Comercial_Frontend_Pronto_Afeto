@@ -24,9 +24,10 @@ import { addDays, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import ProposalDetailsSheet from "./ProposalDetailsSheet";
 import { StatusBadge } from "./BadgesStatus";
+import { arrayToDate } from "@/lib/utils";
 
 interface RequestCardProps {
-  proposal: Proposal;
+  proposal: Contrato;
 }
 
 const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
@@ -36,7 +37,7 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
         {/* Top */}
         <div className="flex flex-col gap-2">
           <div className="flex gap-5 text-xs text-black/60">
-            <span className="">Solicitado às 8h, Set 4 </span>
+            <span className="">Solicitado às 8h, Nov 4 </span>
           </div>
           <div className="flex justify-between border-b-[0.1rem] border-slate-100 pb-3">
             <div className="flex gap-2">
@@ -51,27 +52,7 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
               <h2 className="font-semibold text-xl my-auto">Proposta 090</h2>
             </div>
             <div className="flex flex-col gap-4">
-              <ProposalDetailsSheet
-                proposal={{
-                  id: 1,
-                  status: "Pendente",
-                  data: "2023-10-01 14:30",
-                  dataSolicitacao: "2023-10-01 08:00",
-                  dias: ["Segunda", "Terça"], // Added 'dias' property
-                  turnos: ["Manhã", "Noite"],
-                  valor: 100,
-                  endereco: {
-                    rua: "Rua das Flores",
-                    numero: 123,
-                    bairro: "Jardim das flores",
-                    cidade: "São Paulo",
-                    estado: "SP",
-                    cep: "12345-678",
-                  },
-                  observacoes:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in porttitor tortor. Donec quis mauris a est vulputate bibendum. Donec pretium maximus lacus. Donec cursus dignissim erat, nec placerat risus tempus ornare. Nullam nec nunc nec nunc",
-                }}
-              />
+              <ProposalDetailsSheet proposal={proposal} />
               <div className="flex gap-1 text-xs text-green-700 ">
                 <TbCheck className="text-lg" />
                 <p className=""> Aceitar</p>
@@ -101,24 +82,37 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
               <div className="grid grid-rows-4 gap-4">
                 <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
                   {" "}
-                  {format(new Date(proposal.data), "MMM dd, yyyy", {
-                    locale: ptBR,
-                  })}
+                  {format(
+                    arrayToDate(
+                      proposal.dataDeInicio.map((item) => item.toString())
+                    ),
+                    "dd 'de' MMMM 'de' yyyy",
+                    {
+                      locale: ptBR,
+                    }
+                  )}
                   <TbChevronRight className="text-black/40 text-lg my-[0.6px]" />
                   {format(
-                    addDays(new Date(proposal.data), 30),
+                    addDays(
+                      arrayToDate(
+                        proposal.dataDeInicio.map((item) => item.toString())
+                      ),
+                      30
+                    ),
                     "MMM dd, yyyy",
                     {
                       locale: ptBR,
                     }
                   )}
                 </p>
-                <StatusBadge status={"Assinado"} />
+                <StatusBadge status={"Pendente"} />
                 <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
-                  Juliana Silva
+                  {proposal.cliente.nome}
                 </p>
                 <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
-                  Almeida Flores, Jardim Botânico - Itaigara
+                  {proposal.localAtendimento.rua},{" "}
+                  {proposal.localAtendimento.numero} ,{" "}
+                  {proposal.localAtendimento.bairro}
                 </p>
               </div>
             </div>

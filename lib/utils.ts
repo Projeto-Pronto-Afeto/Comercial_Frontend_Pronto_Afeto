@@ -10,3 +10,11 @@ export const arrayToDate = (dateArray: string[]): Date => {
   const dateString = `${year}-${month}-${day}`;
   return new Date(dateString);
 };
+
+export function formatDate(dateArray: number[]): string {
+  const [year, month, day] = dateArray;
+  return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(
+    2,
+    "0"
+  )}`;
+}

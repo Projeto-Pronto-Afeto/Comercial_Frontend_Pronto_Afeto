@@ -1,22 +1,13 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import Link from "next/link";
+
 import React from "react";
-import { IoMdClock } from "react-icons/io";
-import { LuMoreVertical } from "react-icons/lu";
-import { MdLocationPin } from "react-icons/md";
 
 import {
-  TbAlignBoxLeftTopFilled,
   TbCalendarSmile,
+  TbCarambola,
   TbCheck,
   TbChevronRight,
-  TbDots,
-  TbEyeHeart,
-  TbLoader,
-  TbMap,
-  TbMapPinFilled,
+  TbPhoneCall,
   TbUserCheck,
 } from "react-icons/tb";
 
@@ -24,10 +15,12 @@ import { addDays, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import ProposalDetailsSheet from "./ProposalDetailsSheet";
 import { StatusBadge } from "./BadgesStatus";
-import { arrayToDate } from "@/lib/utils";
+import { arrayToDate, formatDate } from "@/lib/utils";
+import { acceptProposal } from "@/actions/prposta/proposta.actions";
+import AcceptDialog from "./dialog/AcceptDialog";
 
 interface RequestCardProps {
-  proposal: Contrato;
+  proposal: MinimalProposal;
 }
 
 const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
@@ -49,14 +42,15 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
                   width={100}
                 />
               </div>
-              <h2 className="font-semibold text-xl my-auto">Proposta 090</h2>
+
+              <div className="flex gap-6 my-auto">
+                <h2 className="font-semibold text-xl my-auto">Proposta </h2>
+                <StatusBadge status={proposal.statusProposta} />
+              </div>
             </div>
             <div className="flex flex-col gap-4">
-              <ProposalDetailsSheet proposal={proposal} />
-              <div className="flex gap-1 text-xs text-green-700 ">
-                <TbCheck className="text-lg" />
-                <p className=""> Aceitar</p>
-              </div>
+              <ProposalDetailsSheet proposalId={proposal.id} />
+              <AcceptDialog proposalId={proposal.id} />
             </div>
           </div>
           <div>
@@ -67,52 +61,42 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
                   Data
                 </p>
                 <p className="flex text-sm text-black/50 font-semibold my-auto">
-                  <TbLoader className=" text-black/60 my-auto mr-1 text-[18px]" />
-                  Status
+                  <TbPhoneCall className=" text-black/60 my-auto mr-1 text-[18px]" />
+                  Telefone
                 </p>
                 <p className="flex text-sm text-black/50 font-semibold my-auto">
                   <TbUserCheck className=" text-black/60 my-auto mr-1 text-[18px]" />
                   Cliente
                 </p>
                 <p className="flex text-sm text-black/50 font-semibold my-auto">
-                  <TbMapPinFilled className=" text-black/60 my-auto mr-1 text-[18px]" />
-                  Local
+                  <TbCarambola className=" text-black/60 my-auto mr-1 text-[18px]" />
+                  Cuidado
                 </p>
               </div>
               <div className="grid grid-rows-4 gap-4">
                 <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
                   {" "}
-                  {format(
-                    arrayToDate(
-                      proposal.dataDeInicio.map((item) => item.toString())
-                    ),
-                    "dd 'de' MMMM 'de' yyyy",
-                    {
-                      locale: ptBR,
-                    }
-                  )}
+                  {format(formatDate(proposal.dataProposta), "MMM dd, yyyy", {
+                    locale: ptBR,
+                  })}
                   <TbChevronRight className="text-black/40 text-lg my-[0.6px]" />
                   {format(
-                    addDays(
-                      arrayToDate(
-                        proposal.dataDeInicio.map((item) => item.toString())
-                      ),
-                      30
-                    ),
+                    addDays(formatDate(proposal.dataInicioPlantao), 30),
                     "MMM dd, yyyy",
                     {
                       locale: ptBR,
                     }
                   )}
                 </p>
-                <StatusBadge status={"Pendente"} />
                 <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
-                  {proposal.cliente.nome}
+                  {proposal.telefone}
+                </p>
+
+                <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
+                  {proposal.nomeCliente}
                 </p>
                 <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
-                  {proposal.localAtendimento.rua},{" "}
-                  {proposal.localAtendimento.numero} ,{" "}
-                  {proposal.localAtendimento.bairro}
+                  {proposal.nomeCuidado}
                 </p>
               </div>
             </div>

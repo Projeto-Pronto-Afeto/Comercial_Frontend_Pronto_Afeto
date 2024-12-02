@@ -28,8 +28,10 @@ import { Badge } from "./ui/badge";
 import { StatusBadge } from "./BadgesStatus";
 import ResumeCardCuidado from "./ResumeCardCuidado";
 import { arrayToDate } from "@/lib/utils";
+import { getProposalById } from "@/actions/prposta/proposta.actions";
 
-const ProposalDetailsSheet = ({ proposal }: { proposal: Contrato }) => {
+const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
+  const proposal: Contr = await getProposalById(proposalId);
   return (
     proposal && (
       <Sheet>

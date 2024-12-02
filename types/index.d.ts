@@ -24,7 +24,7 @@ interface UserSession extends Session {
 }
 
 declare type Gender = "Feminino" | "Masculino";
-declare type Status = "Pendente" | "Rejeitado" | "Assinado";
+declare type Status = "Pendente" | "Rejeitado" | "Assinado" | "Observacao";
 
 declare interface Patology {
   id: number;
@@ -71,12 +71,41 @@ declare interface Proposal {
   id: number;
   status: Status;
   data: string;
-  dataSolicitacao: string;
+  dataDeInicio: number[];
+  dataHoraInicioPlantao: number[];
   dias: string[];
   turnos: string[];
   valor: number;
   endereco: Address;
   observacoes?: string;
+}
+
+declare interface MinimalProposal {
+  id: number;
+  telefone: string;
+  nomeCliente: string;
+  nomeCuidado: string;
+  dataProposta: number[];
+  dataInicioPlantao: ñumber[];
+  clienteId: number;
+  cuidadoId: number;
+  statusProposta: Status;
+}
+
+declare interface ProposalDTOGet {
+  content: MinimalProposal[];
+  pageable: {
+    sort: {
+      sorted: boolean;
+      unsorted: boolean;
+      empty: boolean;
+    };
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
 }
 
 declare interface Cuidado {

@@ -90,5 +90,6 @@ export const Cuidadores = [
 export const StatusIcon = {
   Assinado: "/assets/icons/check.svg",
   Pendente: "/assets/icons/pending.svg",
+  Observacao: "/assets/icons/pending.svg",
   Rejeitado: "/assets/icons/cancelled.svg",
 };

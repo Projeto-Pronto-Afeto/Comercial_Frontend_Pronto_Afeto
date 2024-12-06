@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import "./globals.css";
+import ".././globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 import AdminHeader from "@/components/AdminHeader";
-import Sidebar from "@/components/main/sidebar/Sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/sidebar/AppSidebar";
 
 const fontSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -24,18 +25,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={cn(
-          "min-h-screen flex dark:bg-dark-300 bg-white font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        <Sidebar />
-        <div className="mx-auto flex-1 max-w-12xl flex-col space-y-10 relative">
-          <AdminHeader />
-          {children}
-        </div>
-        <Toaster />
+      <body className={cn("font-sans", fontSans.variable)}>
+        <SidebarProvider>
+          <AppSidebar />
+          <SidebarInset>
+            <div className="flex flex-1 flex-col space-y-10 relative">
+              <AdminHeader />
+              {children}
+            </div>
+            <Toaster />
+          </SidebarInset>
+        </SidebarProvider>
       </body>
     </html>
   );

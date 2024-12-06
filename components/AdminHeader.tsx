@@ -7,28 +7,35 @@ import {
   import Link from "next/link";
   import React from "react";
   import { LuBell, LuSearch, LuSettings, LuSettings2 } from "react-icons/lu";
-  
+  import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+  } from "@/components/ui/breadcrumb";
+  import { Separator } from "./ui/separator";
+  import { SidebarTrigger } from "./ui/sidebar";
   const AdminHeader = () => {
     return (
-      <header className="admin-header">
-        <div className="bg-red-50 rounded-lg p-2 w-96">
-          <LuSearch />
-        </div>
-  
-        <div className="flex gap-3">
-          <div className="hover:bg-purple-50 my-auto w-8 h-8 py-2 rounded-full hover:text-purple-900">
-            <LuBell className=" mx-auto  text-dark-600 " />
-          </div>
-  
-          <div className="w-14 h-14 rounded-full py-1 hover:bg-slate-100 hover:border-slate-200">
-            <Image
-              src={"/assets/images/profile.png"}
-              alt="Imagem do usuario"
-              width={45}
-              height={45}
-              className="w-fit h-fit rounded-full mx-auto  "
-            />
-          </div>
+      <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+        <div className="flex items-center gap-2 px-4">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 h-4" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem className="hidden md:block">
+                <BreadcrumbLink href="#">
+                  Building Your Application
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="hidden md:block" />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
       </header>
     );

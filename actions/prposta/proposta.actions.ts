@@ -3,12 +3,33 @@
 import { acceptProposalSchema } from "@/lib/validation";
 import { revalidateTag } from "next/cache";
 
-export async function getAllPropostas(): Promise<ProposalDTOGet> {
+export async function getAllPropostas({
+  status,
+  page = 0,
+  limit = 12,
+  direction = "desc",
+}: {
+  status?: string;
+  page?: number;
+  limit?: number;
+  direction?: string;
+}): Promise<ProposalDTOGet> {
+  const url = new URL(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/propostas/v1/orderByDateAndGroupByStatus`
+  );
+  const params = new URLSearchParams();
+
+  if (status) params.append("status", status);
+  if (page) params.append("page", page.toString());
+  if (limit) params.append("limit", limit.toString());
+  if (direction) params.append("direction", direction);
+  url.search = params.toString();
+  console.log("🚀 ~ url", url.toString());
+
   try {
-    const response = await fetch(
-      "http://localhost:8080/api/propostas/v1/orderByDateAndGroupByStatus",
-      { next: { tags: ["solicitacoes"] } }
-    );
+    const response = await fetch(url.toString(), {
+      next: { tags: ["solicitacoes"] },
+    });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

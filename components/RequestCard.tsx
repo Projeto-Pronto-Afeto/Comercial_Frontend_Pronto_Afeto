@@ -30,7 +30,12 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
         {/* Top */}
         <div className="flex flex-col gap-2">
           <div className="flex gap-5 text-xs text-black/60">
-            <span className="">Solicitado às 8h, Nov 4 </span>
+            <span className="capitalize">
+              Solicitado{" "}
+              {format(formatDate(proposal.dataProposta), "MMM dd, yyyy", {
+                locale: ptBR,
+              })}{" "}
+            </span>
           </div>
           <div className="flex justify-between border-b-[0.1rem] border-slate-100 pb-3">
             <div className="flex gap-2">
@@ -50,7 +55,11 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
             </div>
             <div className="flex flex-col gap-4">
               <ProposalDetailsSheet proposalId={proposal.id} />
-              <AcceptDialog proposalId={proposal.id} />
+              {proposal.statusProposta != "Aprovada" ? (
+                <AcceptDialog proposalId={proposal.id} />
+              ) : (
+                <></>
+              )}
             </div>
           </div>
           <div>
@@ -76,9 +85,13 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
               <div className="grid grid-rows-4 gap-4">
                 <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
                   {" "}
-                  {format(formatDate(proposal.dataProposta), "MMM dd, yyyy", {
-                    locale: ptBR,
-                  })}
+                  {format(
+                    formatDate(proposal.dataInicioPlantao),
+                    "MMM dd, yyyy",
+                    {
+                      locale: ptBR,
+                    }
+                  )}
                   <TbChevronRight className="text-black/40 text-lg my-[0.6px]" />
                   {format(
                     addDays(formatDate(proposal.dataInicioPlantao), 30),

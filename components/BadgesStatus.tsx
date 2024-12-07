@@ -16,9 +16,9 @@ export const StatusBadge = ({ status }: { status: Status }) => {
       />
       <p
         className={clsx("text-12-semibold capitalize", {
-          "text-green-500": status === "Assinado",
+          "text-green-500": status === "Aprovada",
           "text-blue-500": status === "Observacao",
-          "text-red-500": status === "Rejeitado",
+          "text-red-500": status === "Negada",
         })}
       >
         {status === "Observacao" ? "Observação" : status}

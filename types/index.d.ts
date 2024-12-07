@@ -24,7 +24,7 @@ interface UserSession extends Session {
 }
 
 declare type Gender = "Feminino" | "Masculino";
-declare type Status = "Pendente" | "Rejeitado" | "Assinado" | "Observacao";
+declare type Status = "Pendente" | "Negada" | "Aprovada" | "Observacao";
 
 declare interface Patology {
   id: number;
@@ -112,8 +112,10 @@ declare interface Cuidado {
   cpf: string;
   nome: string;
   nomeApresentacao: string;
-  dataNascimento: string[];
+  dataNascimento: [number, number, number];
   peso: number;
+  patologias: Patology[];
+  dispositivos: Dispositives[];
 }
 
 // Reutilização das interfaces existentes
@@ -144,11 +146,12 @@ interface Health {
   hidratacao: string | null;
 }
 
-interface Duty {
+interface Plantao {
   turno: string[];
   diasDaSemana: string[]; // Tipagem como array de strings para dias da semana
   alimentacaoFornecida: boolean;
   dataHoraInicioPlantao: [number, number, number, number, number]; // [ano, mês, dia, hora, minuto]
+  observacoes: string;
 }
 
 interface ServiceLocation extends Address {} // LocalAtendimento possui a mesma estrutura que Address

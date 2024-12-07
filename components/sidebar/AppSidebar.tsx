@@ -69,27 +69,17 @@ const data = {
         },
       ],
     },
-    {
-      title: "Usuários",
-      url: "#",
-      icon: User2,
-      items: [
-        {
-          title: "Cadastrar",
-          url: "#",
-        },
-        {
-          title: "Ver todos",
-          url: "#",
-        },
-      ],
-    },
   ],
   projects: [
     {
       name: "Home",
-      url: "#",
+      url: "/",
       icon: Frame,
+    },
+    {
+      name: "Usuários",
+      url: "/usuarios",
+      icon: User2,
     },
     {
       name: "Configurações",

@@ -24,7 +24,7 @@ const CuidadorCard : React.FC<CuidadorCardProps> = ({ caregiver }) => {
             <div className="flex gap-2">
               <div className=" rounded-xl h-10 w-10 flex justify-center items-center  font-bold">
                 <Image
-                  src={caregiver.fotoUrl}
+                  src={"/assets/icons/abstract-shape.png"}
                   alt=""
                   height={100}
                   width={100}

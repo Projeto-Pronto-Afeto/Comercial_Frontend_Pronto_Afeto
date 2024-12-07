@@ -7,9 +7,12 @@ const CuidadorApprovalPage = async () => {
 
     return (
         <div>
-            <CuidadorCard></CuidadorCard>
-            <CuidadorCard></CuidadorCard>
-            <CuidadorCard></CuidadorCard>
+            <div className="grid grid-cols-1 gap-4 py-6">
+            {" "}
+            {cuidadores.map((item: Caregiver) => (
+              <CuidadorCard caregiver={item} />
+            ))}
+          </div>
         </div>
     );
 };

@@ -10,3 +10,8 @@ export const acceptProposalSchema = z.object({
       message: "O valor deve ser um número positivo",
     }),
 });
+
+export const loginSchema = z.object({
+  email: z.string().email("Email inválido"),
+  password: z.string().min(1, "Senha é obrigatória"),
+});

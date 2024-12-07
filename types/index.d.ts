@@ -11,7 +11,7 @@ declare type Session = {
   expiresAt: number;
   accessToken: string;
   refreshToken: string;
-  client?: {
+  perfil?: {
     id: number;
     name: string;
   };
@@ -117,6 +117,12 @@ declare interface Cuidado {
 }
 
 // Reutilização das interfaces existentes
+interface PerfilComercial {
+  id: number;
+  nome: string;
+  fotoUrl: string;
+  telefone: string;
+}
 interface Client {
   id: number;
   cpf: string;

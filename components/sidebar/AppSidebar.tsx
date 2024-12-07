@@ -12,6 +12,7 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  User2,
 } from "lucide-react";
 
 import { NavMain } from "./nav-main";
@@ -64,6 +65,21 @@ const data = {
         },
         {
           title: "Buscar Cuidadores",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Usuários",
+      url: "#",
+      icon: User2,
+      items: [
+        {
+          title: "Cadastrar",
+          url: "#",
+        },
+        {
+          title: "Ver todos",
           url: "#",
         },
       ],

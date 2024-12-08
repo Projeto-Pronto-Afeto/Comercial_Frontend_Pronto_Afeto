@@ -2,33 +2,35 @@ import React from "react";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import {
-  TbCalendarCheck,
+  TbAward,
+  TbBriefcase,
   TbCalendarSmile,
-  TbChevronRight,
+  TbCarambola,
   TbDots,
-  TbEdit,
+  TbHome,
+  TbLineHeight,
   TbLoader,
+  TbMan,
   TbMapPinFilled,
-  TbBrandDaysCounter,
-  TbCloud,
-  TbAdjustmentsDollar,
+  TbNotebook,
+  TbPhone,
+  TbTools,
+  TbUser,
+  TbWallpaper,
+  TbWeight,
+  TbWoman,
 } from "react-icons/tb";
-import { addDays, format } from "date-fns";
+import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
-import { Badge } from "./ui/badge";
 import { StatusBadge } from "./BadgesStatus";
-import ResumeCardCuidado from "./ResumeCardCuidado";
-import { arrayToDate, formatDate } from "@/lib/utils";
-import { getProposalById } from "@/actions/prposta/proposta.actions";
+import { formatDate } from "@/lib/utils";
 
 const CuidadorDetailsSheet = ({ cuidador }: { cuidador: Caregiver }) => {
   return (
@@ -55,52 +57,65 @@ const CuidadorDetailsSheet = ({ cuidador }: { cuidador: Caregiver }) => {
                 Status
               </p>
               <p className=" flex text-sm text-black/50 font-semibold my-auto">
-                <TbCalendarSmile className=" text-black/60 my-auto mr-1 text-[18px]" />
+                <TbCalendarSmile className="text-black/60 my-auto mr-1 text-[18px]" />
                 Data de Nascimento
               </p>
               <p className="flex text-sm text-black/50 font-semibold my-auto">
+                <TbWallpaper className="text-black/60 my-auto mr-1 text-[18px]" />
                 RG
               </p>
               <p className="flex text-sm text-black/50 font-semibold my-auto">
+                <TbMan className="text-black/60 my-auto mr-1 text-[18px]" />
                 Pai
               </p>
               <p className="flex text-sm text-black/50 font-semibold my-auto">
+                <TbWoman className="text-black/60 my-auto mr-1 text-[18px]" />
                 Mãe
               </p>
               <p className="flex text-sm text-black/50 font-semibold my-auto">
+                <TbMapPinFilled className="text-black/60 my-auto mr-1 text-[18px]" />
                 Endereço
               </p>
               <p className="flex text-sm text-black/50 font-semibold my-auto">
+                <TbPhone className="text-black/60 my-auto mr-1 text-[18px]" />
                 Telefone
               </p>
               <p className="flex text-sm text-black/50 font-semibold my-auto">
+                <TbWeight className="text-black/60 my-auto mr-1 text-[18px]" />
                 Peso
               </p>
               <p className="flex text-sm text-black/50 font-semibold my-auto">
+                <TbLineHeight className="text-black/60 my-auto mr-1 text-[18px]" />
                 Altura
               </p>
               <p className="flex text-sm text-black/50 font-semibold my-auto">
+                <TbNotebook className="text-black/60 my-auto mr-1 text-[18px]" />
                 Escolaridade
               </p>
               <p className="flex text-sm text-black/50 font-semibold my-auto">
+                <TbAward className="text-black/60 my-auto mr-1 text-[18px]" />
                 Titulação
               </p>
               <p className="flex text-sm text-black/50 font-semibold my-auto">
+                <TbCarambola className="text-black/60 my-auto mr-1 text-[18px]" />
                 Tempo de Experiência
               </p>
               <p className="flex text-sm text-black/50 font-semibold my-auto">
+                <TbBriefcase className="text-black/60 my-auto mr-1 text-[18px]" />
                 Experiências
               </p>
               <p className="flex text-sm text-black/50 font-semibold my-auto">
+                <TbTools className="text-black/60 my-auto mr-1 text-[18px]" />
                 Habilidades
               </p>
               <p className="flex text-sm text-black/50 font-semibold my-auto">
+                <TbUser className="text-black/60 my-auto mr-1 text-[18px]" />
                 Apresentação
               </p>
             </div>
             <div style={{ gridTemplateRows: 'repeat(15, minmax(0, 1fr))' }} className="grid gap-6">
               <StatusBadge status="Pendente" />
-              <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
+              <p className="text-sm gap-2 flex text-black font-medium px-3 capitalize my-auto">
                 {" "}
                 {format(
                   formatDate(cuidador.dataNascimento

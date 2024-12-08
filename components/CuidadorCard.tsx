@@ -1,17 +1,28 @@
+'use client';
+
 import { formatDate } from "../lib/utils";
 import { ptBR } from "date-fns/locale";
 import Image from "next/image";
 import { format } from "date-fns";
-import { TbCalendarSmile, TbBuilding, TbNotebook, TbCarambola } from "react-icons/tb";
+import { TbCalendarSmile, TbBuilding, TbNotebook, TbCarambola, TbX, TbCheck } from "react-icons/tb";
 import { StatusBadge } from "./BadgesStatus";
-import AcceptDialog from "./dialog/AcceptDialog";
 import CuidadorDetailsSheet from "./CuidadorDetailsSheet";
 
 interface CuidadorCardProps {
   caregiver:Caregiver;
+  onApprove: (id: number) => void;
+  onReject: (id: number) => void;
 }
 
-const CuidadorCard : React.FC<CuidadorCardProps> = ({ caregiver }) => {
+const CuidadorCard : React.FC<CuidadorCardProps> = ({ caregiver, onApprove, onReject }) => {
+  const handleApprove = () => {
+    onApprove(caregiver.cuidadorId);
+  };
+
+  const handleReject = () => {
+    onReject(caregiver.cuidadorId);
+  };
+  
   return (
     <div className="shadow-sm   w-full py-6 px-6 rounded-xl hover:bg-appointments   ">
       <div className="">
@@ -35,7 +46,14 @@ const CuidadorCard : React.FC<CuidadorCardProps> = ({ caregiver }) => {
             </div>
             <div className="flex flex-col gap-4">
               <CuidadorDetailsSheet cuidador={caregiver} />
-              <AcceptDialog proposalId={9} />
+              <div className="flex gap-1 text-xs text-green-700 cursor-pointer " onClick={handleApprove}>
+                <TbCheck className="text-lg" />
+                <p>Aprovar</p>
+              </div>
+              <div className="flex gap-1 text-xs text-red-700 cursor-pointer " onClick={handleReject}>
+                <TbX className="text-lg" />
+                <p>Rejeitar</p>
+              </div>
             </div>
           </div>
           <div>

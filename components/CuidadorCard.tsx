@@ -17,9 +17,6 @@ const CuidadorCard : React.FC<CuidadorCardProps> = ({ caregiver }) => {
       <div className="">
         {/* Top */}
         <div className="flex flex-col gap-2">
-          <div className="flex gap-5 text-xs text-black/60">
-            <span className="">{caregiver.nome}</span>
-          </div>
           <div className="flex justify-between border-b-[0.1rem] border-slate-100 pb-3">
             <div className="flex gap-2">
               <div className=" rounded-xl h-10 w-10 flex justify-center items-center  font-bold">
@@ -32,7 +29,7 @@ const CuidadorCard : React.FC<CuidadorCardProps> = ({ caregiver }) => {
               </div>
 
               <div className="flex gap-6 my-auto">
-                <h2 className="font-semibold text-xl my-auto">Proposta </h2>
+                <h2 className="font-semibold text-xl my-auto">{caregiver.nome}</h2>
                 <StatusBadge status='Pendente' />
               </div>
             </div>

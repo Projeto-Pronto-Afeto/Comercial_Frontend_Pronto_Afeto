@@ -1,9 +1,4 @@
-import testJson from '../../tests/cuidadores.json';
-
 export async function getCuidadoresByStatus(page:number = 0, limit:number = 12,status ='Em_Observacao'):Promise<Caregiver[]>{
-  console.log(testJson);  
-  return testJson as Caregiver[];
-
     const url = new URL(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cuidadores/v1/order_by_stats?page=${page}&limit=${limit}&status=${status}`
     );

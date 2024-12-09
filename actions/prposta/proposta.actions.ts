@@ -2,7 +2,6 @@
 
 import { acceptProposalSchema } from "@/lib/validation";
 import { revalidateTag } from "next/cache";
-import testJson from "../../tests/propostas.json";
 
 export async function getAllPropostas({
   status,
@@ -15,9 +14,6 @@ export async function getAllPropostas({
   limit?: number;
   direction?: string;
 }): Promise<ProposalDTOGet> {
-  console.log(testJson);
-  return testJson as ProposalDTOGet;
-
   const url = new URL(
     `${process.env.NEXT_PUBLIC_API_URL}/api/propostas/v1/orderByDateAndGroupByStatus`
   );
@@ -50,7 +46,7 @@ export async function getAllPropostas({
 export async function getProposalById(id: number) {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/propostas/v1/1`
+      `http://localhost:8080/api/propostas/v1/${id}`
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

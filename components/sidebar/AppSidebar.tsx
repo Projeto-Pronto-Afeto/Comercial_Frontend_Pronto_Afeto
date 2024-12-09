@@ -60,7 +60,7 @@ const data = {
       items: [
         {
           title: "Cadastros",
-          url: "#",
+          url: "/register",
         },
         {
           title: "Buscar Cuidadores",

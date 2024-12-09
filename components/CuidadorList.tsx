@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import CuidadorCard from "./CuidadorCard";
+import { setCuidadorStatus } from "@/actions/cuidador/cuidador.actions";
 
 interface CuidadorListProps{
     caregivers: Caregiver[];
@@ -12,12 +13,14 @@ const CuidadorList : React.FC<CuidadorListProps> = ({ caregivers}) => {
 
     const handleApprove = (id: number) => {
         console.log(`Parent received approval for caregiver with ID: ${id}`);
-        setCaregivers(careGiversState.filter((caregiver) => caregiver.cuidadorId !== id));
+        setCuidadorStatus(1, 'Aprovado');
+        //setCaregivers(careGiversState.filter((caregiver) => caregiver.cuidadorId !== id));
       };
     
       const handleReject = (id: number) => {
         console.log(`Parent received rejection for caregiver with ID: ${id}`);
-        setCaregivers(careGiversState.filter((caregiver) => caregiver.cuidadorId !== id));
+        setCuidadorStatus(1, 'Negado');
+        //setCaregivers(careGiversState.filter((caregiver) => caregiver.cuidadorId !== id));
       };
 
     return (

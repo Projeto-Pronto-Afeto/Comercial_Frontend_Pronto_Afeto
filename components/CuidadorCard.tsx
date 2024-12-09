@@ -22,6 +22,14 @@ const CuidadorCard : React.FC<CuidadorCardProps> = ({ caregiver, onApprove, onRe
   const handleReject = () => {
     onReject(caregiver.cuidadorId);
   };
+  let badgeStatus:Status;
+  if(caregiver.statusCuidador === 'Aprovado'){
+    badgeStatus = 'Assinado';
+  } else if (caregiver.statusCuidador === 'Negado'){
+    badgeStatus = 'Rejeitado';
+  } else {
+    badgeStatus = 'Pendente';
+  }
   
   return (
     <div className="shadow-sm   w-full py-6 px-6 rounded-xl hover:bg-appointments   ">
@@ -32,7 +40,7 @@ const CuidadorCard : React.FC<CuidadorCardProps> = ({ caregiver, onApprove, onRe
             <div className="flex gap-2">
               <div className=" rounded-xl h-10 w-10 flex justify-center items-center  font-bold">
                 <Image
-                  src={"/assets/icons/abstract-shape.png"}
+                  src={caregiver.fotoUrl}
                   alt=""
                   height={100}
                   width={100}
@@ -41,7 +49,8 @@ const CuidadorCard : React.FC<CuidadorCardProps> = ({ caregiver, onApprove, onRe
 
               <div className="flex gap-6 my-auto">
                 <h2 className="font-semibold text-xl my-auto">{caregiver.nome}</h2>
-                <StatusBadge status='Pendente' />
+                {}
+                <StatusBadge status={badgeStatus} />
               </div>
             </div>
             <div className="flex flex-col gap-4">

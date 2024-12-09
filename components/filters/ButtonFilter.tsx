@@ -20,12 +20,21 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TbApps, TbFilter, TbPlus } from "react-icons/tb";
 
-const ButtonFilter = () => {
+interface ButtonFilterProps {
+  baseRoute:string
+  approvalValue:string
+  pendingValue:string
+  rejectedValue:string
+}
+
+const ButtonFilter: React.FC<ButtonFilterProps> = ({ baseRoute,approvalValue,pendingValue,rejectedValue }) => {
   const [position, setPosition] = useState();
   const router = useRouter();
 
   const handleFilter = (value: string) => {
-    router.push("/solicitacoes/?status=" + value);
+    //Isso aq não tá funcionando nem a pau em uma página já criada
+    //router.push(`${baseRoute}/?status=` + value);
+    window.location.href = `${baseRoute}/?status=` + value;
   };
 
   return (
@@ -64,13 +73,13 @@ const ButtonFilter = () => {
                   value={position}
                   onValueChange={handleFilter}
                 >
-                  <DropdownMenuRadioItem value="Observacao">
+                  <DropdownMenuRadioItem value={pendingValue}>
                     Em Observação
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="Aprovada">
+                  <DropdownMenuRadioItem value={approvalValue}>
                     Aprovada
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="Negada">
+                  <DropdownMenuRadioItem value={rejectedValue}>
                     Negada
                   </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>

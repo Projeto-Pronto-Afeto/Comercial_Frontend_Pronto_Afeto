@@ -35,7 +35,7 @@ const SolicitacoesPage = async ({
               </span>
             </div>
             <div className="my-auto">
-              <ButtonFilter />
+              <ButtonFilter baseRoute="solicitacoes" approvalValue="Aprovada" pendingValue="Observacao" rejectedValue="Negada"/>
             </div>
           </div>
 

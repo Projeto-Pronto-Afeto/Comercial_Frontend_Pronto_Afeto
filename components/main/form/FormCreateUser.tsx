@@ -2,7 +2,7 @@
 import { DialogHeader } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import ServerCustomField, { FormFieldType } from "../inputs/ServerCustomField";
 import { useFormState } from "react-dom";
@@ -12,6 +12,8 @@ import {
 } from "@/actions/comercial/comercial.actions";
 import ImageUpload from "../inputs/ImageUpload";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { FormMessage } from "@/components/ui/form";
 
 const FormCreateUser = () => {
   const initialState: State = { errors: {}, message: "", error: false };
@@ -20,6 +22,20 @@ const FormCreateUser = () => {
     createComercialUser,
     initialState
   );
+  useEffect(() => {
+    console.log("🚀 ~ formState.error", formState.error);
+    if (formState) {
+      if (
+        !formState.error &&
+        formState.message === "Usuário criado com sucesso"
+      ) {
+        console.log("🚀 ~ formState.error logando");
+        toast.success(formState.message);
+      } else if (formState.message) {
+        toast.error(formState.message);
+      }
+    }
+  }, [formState.error, formState.message, formState]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 

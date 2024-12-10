@@ -43,61 +43,63 @@ export const createComercialUser = async (
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const telefone = formData.get("telefone") as string;
-  const image = formData.get("image") as string;
+  const image = formData.get("image"); // Verificar se está vindo como File ou Blob
 
-  const userDto = {
-    email: email,
-    password: password,
+  const comercial = {
+    nome: nome,
+    telefone: telefone,
+    userDto: {
+      email: email,
+      password: password,
+    },
   };
 
-  formData.append("userDto", JSON.stringify(userDto));
+  formData.delete("nome");
   formData.delete("email");
   formData.delete("password");
+  formData.delete("telefone");
+  formData.append("comercial", JSON.stringify(comercial));
 
-  console.log("🚀 ~ formData", formData);
+  console.log("🚀 ~ formData:", formData);
 
-  const validatedFields = createUserSchema.safeParse({
-    nome: nome,
-    email: email,
-    password: password,
-    telefone: telefone,
-    image: image,
-  });
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/comercial/v1`,
+      {
+        method: "POST",
+        body: formData, // Cabeçalho gerado automaticamente
+      }
+    );
+    if (!response.ok) {
+      const error = await response.json();
+      console.log("🚀 ~ error:", error);
+      return {
+        errors: {},
+        message: error.message || error.toString(),
+        error: true,
+      };
+    }
+    const data = await response.json();
 
-  if (!validatedFields.success) {
-    console.log("deu error", validatedFields.error.flatten().fieldErrors);
+    console.log("🚀 ~ data", data);
+    revalidateTag("users-comercial");
     return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: "Há campos a serem preenchidos corretamente.",
+      errors: {},
+      message: "Usuário criado com sucesso",
+      error: false,
+    };
+  } catch (error: any) {
+    console.error("Failed to fetch proposta:", error);
+    return {
+      errors: {},
+      message: error.message || error.toString(),
       error: true,
     };
   }
-  console.log(formData);
-
-  // try {
-  //   const response = await fetch(
-  //     `${process.env.NEXT_PUBLIC_API_URL}/api/comercial/v1`,
-  //     {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //       body: formData,
-  //     }
-  //   );
-  //   if (!response.ok) {
-  //     throw new Error(`HTTP error! status: ${response.status}`);
-  //   }
-  //   const data = await response.json();
-
-  //   console.log("🚀 ~ data", data);
-  //   revalidateTag("users-comercial");
-  //   return data;
-  // } catch (error) {
-  //   console.error("Failed to fetch proposta:", error);
-  //   throw error; // Re-throw the error after logging it
-  // }
 };
+
+//Function for remove comercial users
+
 export type StateRemove = {
   errors: {
     id?: string[] | undefined;
@@ -115,6 +117,11 @@ export const removeUser = async (
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/comercial/v1/${id}`,
       {
+        headers: {
+          Accept: "application/json",
+          // O cabeçalho Content-Type será definido automaticamente pelo navegador
+          // quando você usa FormData, então não é necessário defini-lo manualmente.
+        },
         method: "DELETE",
         next: { tags: ["users-comercial"] },
       }

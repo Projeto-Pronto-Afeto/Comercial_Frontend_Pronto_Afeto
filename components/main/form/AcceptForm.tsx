@@ -1,10 +1,8 @@
 "use client";
 import React, { useEffect } from "react";
-import ServerCustomField, {
-  FormFieldType,
-} from "../main/inputs/ServerCustomField";
+import ServerCustomField, { FormFieldType } from "../inputs/ServerCustomField";
 import { useFormState } from "react-dom";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { acceptProposal } from "@/actions/prposta/proposta.actions";
 import { toast } from "sonner";
 

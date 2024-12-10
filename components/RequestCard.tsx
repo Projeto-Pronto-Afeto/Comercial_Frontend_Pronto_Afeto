@@ -17,7 +17,7 @@ import ProposalDetailsSheet from "./ProposalDetailsSheet";
 import { StatusBadge } from "./BadgesStatus";
 import { arrayToDate, formatDate } from "@/lib/utils";
 import { acceptProposal } from "@/actions/prposta/proposta.actions";
-import AcceptDialog from "./dialog/AcceptDialog";
+import AcceptDialog from "./main/dialog/AcceptDialog";
 
 interface RequestCardProps {
   proposal: MinimalProposal;

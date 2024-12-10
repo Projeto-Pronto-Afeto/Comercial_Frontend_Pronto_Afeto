@@ -9,9 +9,7 @@ import { useRouter } from "next/navigation";
 
 import { useFormState } from "react-dom";
 import { login, State } from "@/actions/auth/auth.actions";
-import ServerCustomField, {
-  FormFieldType,
-} from "../main/inputs/ServerCustomField";
+import ServerCustomField, { FormFieldType } from "../inputs/ServerCustomField";
 import { TbBrandBackbone, TbCarambola } from "react-icons/tb";
 
 const LoginForm = () => {

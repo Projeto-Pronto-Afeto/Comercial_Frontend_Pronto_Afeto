@@ -93,3 +93,37 @@ export const StatusIcon = {
   Observacao: "/assets/icons/pending.svg",
   Negada: "/assets/icons/cancelled.svg",
 };
+
+
+
+export const perfisComerciais: PerfilComercial[] = [
+  {
+    id: 1,
+    nome: "João Silva",
+    fotoUrl: "/assets/images/profile.png",
+    telefone: "(11) 1234-5678",
+    email: "exemplo@hotmail.com",
+  },
+  {
+    id: 2,
+    nome: "Maria Oliveira",
+    fotoUrl: "/assets/images/profile.png",
+    telefone: "(21) 8765-4321",
+    email: "exemplo@hotmail.com",
+  },
+  {
+    id: 3,
+    nome: "Carlos Souza",
+    fotoUrl: "/assets/images/profile.png",
+    telefone: "(31) 2345-6789",
+    email: "exemplo@hotmail.com",
+  },
+  {
+    id: 4,
+    nome: "Ana Pereira",
+    fotoUrl: "/assets/images/profile.png",
+    telefone: "(41) 9876-5432",
+    email: "exemplo@hotmail.com",
+  },
+  // Adicione mais perfis conforme necessário
+];

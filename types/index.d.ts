@@ -122,6 +122,7 @@ declare interface Cuidado {
 interface PerfilComercial {
   id: number;
   nome: string;
+  email: string;
   fotoUrl: string;
   telefone: string;
 }

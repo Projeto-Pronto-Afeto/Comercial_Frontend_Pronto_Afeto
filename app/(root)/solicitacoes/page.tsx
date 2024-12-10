@@ -1,5 +1,5 @@
 import { getAllPropostas } from "@/actions/prposta/proposta.actions";
-import ButtonFilter from "@/components/filters/ButtonFilter";
+import ButtonFilter from "@/components/main/filters/ButtonFilter";
 import CommandRequest from "@/components/main/command/CommandRequest";
 import RequestCard from "@/components/RequestCard";
 
@@ -19,18 +19,12 @@ const SolicitacoesPage = async ({
 
   return (
     <div className="admin-main">
-      <section className="w-full py-6">
-        <h1 className="md:text-3xl sm:text-2xl font-bold">Solicitações</h1>
-        <p className="text-dark-600 text-sm">
-          Gerencie as solicitações dos seus clientes com facilidade
-        </p>
-      </section>
       <section className="flex flex-col gap-6 w-full ">
         <div>
           <div className="flex justify-between">
             <div className="">
-              <p className="text-lg font-semibold">Mais Recentes</p>
-              <span className="text-sm text-black-40">
+              <p className="text-2xl font-semibold">Solicitações</p>
+              <span className="text-sm text-black/80">
                 56 Solicitações de propostas
               </span>
             </div>

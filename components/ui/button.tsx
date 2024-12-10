@@ -11,8 +11,7 @@ const buttonVariants = cva(
       variant: {
         default:
           "rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "rounded-2xl bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        destructive: "rounded-2xl bg-red-100 text-red-800 hover:bg-red-800/10",
         outline:
           "rounded-2xl border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary:

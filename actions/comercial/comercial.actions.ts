@@ -1,5 +1,6 @@
 "use server";
 import { createUserSchema } from "@/lib/validation";
+import { revalidateTag } from "next/cache";
 
 export const getAllComercialUsers = async () => {
   try {
@@ -90,9 +91,44 @@ export const createComercialUser = async (
   //   const data = await response.json();
 
   //   console.log("🚀 ~ data", data);
+  //   revalidateTag("users-comercial");
   //   return data;
   // } catch (error) {
   //   console.error("Failed to fetch proposta:", error);
   //   throw error; // Re-throw the error after logging it
   // }
+};
+export type StateRemove = {
+  errors: {
+    id?: string[] | undefined;
+  };
+  message?: string | null;
+  error?: boolean;
+};
+export const removeUser = async (
+  previousState: StateRemove,
+  formData: FormData
+): Promise<StateRemove> => {
+  console.log("🚀 ~ formData", formData);
+  const id = formData.get("id") as string;
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/comercial/v1/${id}`,
+      {
+        method: "DELETE",
+        next: { tags: ["users-comercial"] },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+
+    console.log("🚀 ~ data", data);
+    revalidateTag("users-comercial");
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch proposta:", error);
+    throw error; // Re-throw the error after logging it
+  }
 };

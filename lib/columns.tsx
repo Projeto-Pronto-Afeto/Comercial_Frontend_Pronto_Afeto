@@ -84,12 +84,12 @@ export const columns: ColumnDef<PerfilComercial>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="bg-white">
-            <DropdownMenuLabel>Atividade</DropdownMenuLabel>
-            <DropdownMenuItem>
+            {/* <DropdownMenuLabel>Atividade</DropdownMenuLabel> */}
+            {/* <DropdownMenuItem>
               {" "}
               <TbPencil />
               Editar
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem className="hover:bg-red-100">
               <form action={formAction} className="">
                 <input type="hidden" name="id" value={row.original.id} />

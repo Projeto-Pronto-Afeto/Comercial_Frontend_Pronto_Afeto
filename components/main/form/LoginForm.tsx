@@ -25,7 +25,7 @@ const LoginForm = () => {
         formState.message === "Login efetuado com sucesso"
       ) {
         console.log("🚀 ~ formState.error logando");
-        window.location.href = "/home";
+        window.location.href = "/";
       } else {
         toast.error(formState.message);
       }

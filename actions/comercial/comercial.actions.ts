@@ -16,7 +16,6 @@ export async function getAllComerciais({
   if (page) params.append("page", page.toString());
   if (limit) params.append("limit", limit.toString());
   url.search = params.toString();
-  console.log("🚀 ~ url", url.toString());
 
   try {
     const response = await fetch(url.toString(), {
@@ -27,7 +26,6 @@ export async function getAllComerciais({
     }
     const data = await response.json();
 
-    console.log("🚀 ~ data", data);
     return data;
   } catch (error) {
     console.error("Failed to fetch comerciais:", error);
@@ -75,8 +73,6 @@ export const createComercialUser = async (
     new Blob([JSON.stringify(comercial)], { type: "application/json" })
   );
 
-  console.log("🚀 ~ formData:", formData);
-
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/comercial/v1`,
@@ -90,7 +86,7 @@ export const createComercialUser = async (
     );
     if (!response.ok) {
       const error = await response.json();
-      console.log("🚀 ~ error:", error);
+
       return {
         errors: {},
         message: error.message || error.toString(),
@@ -127,7 +123,6 @@ export const removeUser = async (
   previousState: StateRemove,
   formData: FormData
 ): Promise<StateRemove> => {
-  console.log("🚀 ~ formData", formData);
   const id = formData.get("id") as string;
   try {
     const response = await fetch(

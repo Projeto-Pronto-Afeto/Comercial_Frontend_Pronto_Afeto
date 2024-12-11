@@ -11,10 +11,7 @@ declare type Session = {
   expiresAt: number;
   accessToken: string;
   refreshToken: string;
-  perfil?: {
-    id: number;
-    name: string;
-  };
+  perfil?: PerfilComercial;
 };
 interface UserSession extends Session {
   userId: number;

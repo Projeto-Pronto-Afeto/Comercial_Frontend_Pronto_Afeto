@@ -15,7 +15,7 @@ export async function getUserFromCookies(): Promise<UserSession | null> {
 
   return {
     userId: userCredentials.userId,
-    client: userCredentials.client,
+    perfil: userCredentials.perfil,
     email: userCredentials.email,
     roles: userCredentials.roles,
     isAuthenticated: true,

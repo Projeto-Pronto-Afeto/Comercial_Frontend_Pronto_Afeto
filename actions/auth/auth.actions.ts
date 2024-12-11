@@ -8,7 +8,7 @@ export async function fetchPerfilComercial(
 ): Promise<PerfilComercial | null> {
   //mudar endpoint
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}api/clientes/v1/comercial-user/${userId}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/comercial/v1/user/${userId}`
   );
   if (res.ok) {
     const data = await res.json();
@@ -76,8 +76,16 @@ export async function login(
   console.log("🚀 ~ userId:", userId);
   const perfil = await fetchPerfilComercial(userId);
   console.log("🚀 ~ Comercial:", perfil);
-
-  insertUserToCookies(data, perfil);
+  if (!perfil) {
+    return {
+      errors: {},
+      message: "Você não possui uma conta vinculada ao comercial!",
+      error: true,
+    };
+  }
+  {
+    insertUserToCookies(data, perfil);
+  }
 
   return {
     errors: {},

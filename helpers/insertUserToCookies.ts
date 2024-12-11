@@ -26,10 +26,6 @@ export async function insertUserToCookies(
     expires: new Date(session.expiresAt * 1000),
   });
 
-  if (!process.env.SECRET_KEY) {
-    throw new Error("SECRET_KEY is not defined in the environment variables");
-  }
-
   // Decodifique o token e obtenha o userId
   const decodedToken = jwt.decode(session.accessToken);
 

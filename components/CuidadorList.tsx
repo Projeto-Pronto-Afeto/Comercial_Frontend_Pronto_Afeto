@@ -24,12 +24,16 @@ const CuidadorList : React.FC<CuidadorListProps> = ({ caregivers}) => {
       };
 
     return (
-        <div className="grid grid-cols-1 gap-4 py-6">
-            {" "}
-            {careGiversState.map((item: Caregiver) => (
-              <CuidadorCard caregiver={item} onApprove={handleApprove} onReject={handleReject}/>
-            ))}
-        </div>
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-8 py-6 ">
+        {" "}
+        {careGiversState.map((item: Caregiver) => (
+          <CuidadorCard
+            caregiver={item}
+            onApprove={handleApprove}
+            onReject={handleReject}
+          />
+        ))}
+      </div>
     );
 };
 

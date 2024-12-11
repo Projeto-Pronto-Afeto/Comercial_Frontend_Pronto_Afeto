@@ -1,6 +1,7 @@
 import { getCuidadoresByStatus } from "@/actions/cuidador/cuidador.actions";
 import CuidadorList from "@/components/CuidadorList";
-import ButtonFilter from "@/components/filters/ButtonFilter";
+import ButtonFilter from "@/components/main/filters/ButtonFilter";
+
 
 const CuidadorApprovalPage = async ({
     searchParams,

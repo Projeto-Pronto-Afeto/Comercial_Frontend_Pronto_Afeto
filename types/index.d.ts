@@ -21,7 +21,12 @@ interface UserSession extends Session {
 }
 
 declare type Gender = "Feminino" | "Masculino";
-declare type Status = "Pendente" | "Negada" | "Aprovada" | "Observacao";
+declare type Status =
+  | "Pendente"
+  | "Negada"
+  | "Aprovada"
+  | "Observacao"
+  | "Em_Observacao";
 
 declare interface Patology {
   id: number;

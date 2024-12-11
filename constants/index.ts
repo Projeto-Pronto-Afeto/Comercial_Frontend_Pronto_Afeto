@@ -32,6 +32,7 @@ export const StatusIcon = {
   Aprovada: "/assets/icons/check.svg",
   Pendente: "/assets/icons/pending.svg",
   Observacao: "/assets/icons/pending.svg",
+  Em_Observacao: "/assets/icons/pending.svg",
   Negada: "/assets/icons/cancelled.svg",
 };
 

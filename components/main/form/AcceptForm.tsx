@@ -1,10 +1,8 @@
 "use client";
 import React, { useEffect } from "react";
-import ServerCustomField, {
-  FormFieldType,
-} from "../main/inputs/ServerCustomField";
+import ServerCustomField, { FormFieldType } from "../inputs/ServerCustomField";
 import { useFormState } from "react-dom";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { acceptProposal } from "@/actions/prposta/proposta.actions";
 import { toast } from "sonner";
 
@@ -48,7 +46,7 @@ const AcceptForm = ({ proposalId }: { proposalId: number }) => {
         iconAlt="user"
         type="password"
       />
-      <Button className="  bg-purple-500 text-white hover:bg-gradient-to-r hover:from-purple-400 hover:to-purple-600">
+      <Button className="bg-purple text-white hover:bg-gradient-to-r hover:from-purple/50 hover:to-purple-600">
         Aprovar
       </Button>
     </form>

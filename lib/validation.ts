@@ -1,3 +1,4 @@
+import { te } from "date-fns/locale";
 import { z } from "zod";
 
 export const acceptProposalSchema = z.object({
@@ -10,6 +11,7 @@ export const acceptProposalSchema = z.object({
       message: "O valor deve ser um número positivo",
     }),
 });
+
 
 
 
@@ -72,4 +74,18 @@ export const cuidadorSchema = z.object({
   experiencias: z
   .string(),
   apresentacao: z.string().min(1, "Apresentação é obrigatória"),
+})
+
+export const loginSchema = z.object({
+  email: z.string().email("Email inválido"),
+  password: z.string().min(1, "Senha é obrigatória"),
+});
+
+export const createUserSchema = z.object({
+  nome: z.string().min(1, "Nome é obrigatório"),
+  email: z.string().email("Email inválido"),
+  telefone: z.string().min(1, "Telefone é obrigatório"),
+  image: z.any(),
+  password: z.string().min(1, "Senha é obrigatória"),
+
 });

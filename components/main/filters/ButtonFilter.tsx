@@ -31,7 +31,7 @@ const ButtonFilter = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">
+        <Button size={"sm"} variant="outline">
           <TbFilter />
           Filtrar
         </Button>

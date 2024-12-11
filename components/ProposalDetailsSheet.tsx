@@ -31,7 +31,8 @@ import { arrayToDate } from "@/lib/utils";
 import { getProposalById } from "@/actions/prposta/proposta.actions";
 
 const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
-  const proposal: Contr = await getProposalById(proposalId);
+  const proposal: Contrato = await getProposalById(1);
+  console.log(proposal);
   return (
     proposal && (
       <Sheet>
@@ -50,7 +51,9 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
               </div> */}
               <div className="my-auto">
                 <p className="text-black/60 text-sm">Solicitado por</p>
-                <SheetTitle className="text-3xl">Juliana Silva</SheetTitle>
+                <SheetTitle className="text-3xl">
+                  {proposal.cliente.nome}
+                </SheetTitle>
               </div>
             </div>
           </SheetHeader>
@@ -84,7 +87,7 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
                 </p>
               </div>
               <div className="grid grid-rows-6 gap-6">
-                <StatusBadge status="Pendente" />
+                <StatusBadge status={proposal.statusProposta} />
                 <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
                   {" "}
                   {format(
@@ -123,10 +126,10 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
                     <Badge
                       key={turn}
                       className={`rounded-2xl font-light ${
-                        turn === "Manhã"
+                        turn === "Diurno"
                           ? "bg-yellow-50 text-yellow-500"
-                          : turn === "Noite"
-                          ? "bg-gray-50 text-gray-500"
+                          : turn === "Noturno"
+                          ? "bg-blue-50 text-blue-500"
                           : "bg-purple-50 text-purple-500"
                       }`}
                     >
@@ -150,12 +153,10 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
               </div>
             </div>
             <div className="pt-8 ">
-              <h4 className="flex gap-2 font-semibold text-lg">
-                Observações <TbEdit className="my-auto text-black/40" />
-              </h4>
+              <h4 className="flex gap-2 font-semibold text-lg">Observações</h4>
               {/* Essa observção virá predefinida, se tiver alimentação fornecida, a observação explicará */}
               <p className="text-sm text-black/80 py-1">
-                {proposal.saude.comentarios && proposal.saude.comentarios}
+                {proposal.plantao.observacoes && proposal.plantao.observacoes}
               </p>
             </div>
           </div>
@@ -168,7 +169,11 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
             </TabsList>
             <TabsContent value="cuidadoecliente">
               <div className="p-4">
-                <ResumeCardCuidado />
+                <ResumeCardCuidado
+                  saude={proposal.saude}
+                  cuidado={proposal.cuidado}
+                  cliente={proposal.cliente}
+                />
               </div>
             </TabsContent>
             <TabsContent value="cuidadores">Cuidadores</TabsContent>

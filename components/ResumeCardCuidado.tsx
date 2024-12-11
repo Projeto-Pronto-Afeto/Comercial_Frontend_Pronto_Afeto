@@ -12,8 +12,19 @@ import {
 import React from "react";
 
 import { Badge } from "@/components/ui/badge";
+import { format } from "date-fns";
+import { formatDate } from "@/lib/utils";
+import { ptBR } from "date-fns/locale";
 
-const ResumeCardCuidado = () => {
+const ResumeCardCuidado = ({
+  cliente,
+  cuidado,
+  saude,
+}: {
+  cliente: Client;
+  cuidado: Cuidado;
+  saude: Health;
+}) => {
   return (
     <div className="col-span-1 ">
       {/* Cuidado Nome, idade, foto, resumo, pdf */}
@@ -27,23 +38,16 @@ const ResumeCardCuidado = () => {
         />
         <div className=" my-auto">
           <div className="flex justify-between">
-            <h2 className="font-semibold ">Roseane Souto</h2>
-            <TbGenderFemale className="text-lg text-purple-700 " />
+            <h2 className="font-semibold ">{cuidado.nome}</h2>
           </div>
 
           <p className="text-black/30 font-semibold text-sm">
-            12 Jun, 1856 (66 anos)
+            {" "}
+            {format(formatDate(cuidado.dataNascimento), "MMM dd, yyyy", {
+              locale: ptBR,
+            })}
           </p>
-          {/* <div className="flex bg-slate-100/50 p-2 mt-6 rounded-lg gap-4">
-            <div className="flex gap-1 my-auto">
-              <TbShare3 className="text-lg " />
-              <p className=" my-auto text-xs font-semibold">Resumo</p>
-            </div>
-            <button className="p-2 rounded-md  bg-dark-400 flex  text-white gap-1 text-xs">
-              <LuDownload className="text-sm " />
-              .pdf
-            </button>
-          </div> */}
+
           <div className="pt-6">
             <p className="text-xs text-black/40">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
@@ -78,9 +82,9 @@ const ResumeCardCuidado = () => {
           <p className="my-auto text-sm ">Patologias</p>
         </div>
         <div className="flex gap-3 py-6">
-          <Badge variant={"primary"}>Patologia 1</Badge>
-          <Badge variant={"primary"}>Patologia 2</Badge>
-          <Badge variant={"primary"}>Patologia 2</Badge>
+          {saude.patologias.map((patologia) => (
+            <Badge variant={"primary"}>{patologia.nome}</Badge>
+          ))}
         </div>
       </div>
       {/* Dispositivos */}
@@ -93,9 +97,9 @@ const ResumeCardCuidado = () => {
           <p className="my-auto text-sm ">Dispositivos</p>
         </div>
         <div className="flex gap-3 py-6">
-          <Badge variant={"primary"}>Patologia 1</Badge>
-          <Badge variant={"primary"}>Patologia 2</Badge>
-          <Badge variant={"primary"}>Patologia 2</Badge>
+          {saude.dispositivos.map((dispositivo) => (
+            <Badge variant={"primary"}>{dispositivo.nome}</Badge>
+          ))}
         </div>
       </div>
       {/* Dispositivos */}
@@ -113,30 +117,27 @@ const ResumeCardCuidado = () => {
               Nome Completo
             </p>
             <p className="font-semibold text-xs text-purple-600">
-              Lucas Oliveira Souto
+              {cliente.nome}
             </p>
           </div>
           <div className="flex py-4">
             <p className="text-xs font-medium flex-1 text-black/40">Telefone</p>
             <p className="font-semibold text-xs text-purple-600">
-              71 999839209
+              {cliente.telefone}
             </p>
           </div>
 
           <div className="flex py-4">
             <p className="text-xs font-medium flex-1 text-black/40">CPF</p>
-            <p className="font-semibold text-xs text-purple-600">19832990239</p>
+            <p className="font-semibold text-xs text-purple-600">
+              {cliente.cpf}
+            </p>
           </div>
 
           <div className="flex py-4">
             <p className="text-xs font-medium flex-1 text-black/40">RG</p>
-            <p className="font-semibold text-xs text-purple-600">32893289</p>
-          </div>
-
-          <div className="flex py-4">
-            <p className="text-xs font-medium flex-1 text-black/40">Endereço</p>
             <p className="font-semibold text-xs text-purple-600">
-              Avenida Carlos Gomes, Paralela, 232
+              {cliente.rg}
             </p>
           </div>
         </div>

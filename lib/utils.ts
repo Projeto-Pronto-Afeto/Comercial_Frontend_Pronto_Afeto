@@ -18,3 +18,12 @@ export function formatDate(dateArray: number[]): string {
     "0"
   )}`;
 }
+export const convertToOptions = (values: string[]) => {
+  return (
+    values &&
+    values.map((value, index) => ({
+      key: value,
+      name: value,
+    }))
+  );
+};

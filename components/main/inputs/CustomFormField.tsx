@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { Control } from "react-hook-form";
 import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 import { Checkbox } from "../../ui/checkbox";
 import {
@@ -44,6 +45,7 @@ interface CustomProps {
   iconAlt?: string;
   disabled?: boolean;
   dateFormat?: string;
+  step?: string;
   showTimeSelect?: boolean;
   children?: React.ReactNode;
   renderSkeleton?: (field: any) => React.ReactNode;
@@ -54,7 +56,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
   switch (props.fieldType) {
     case FormFieldType.INPUT:
       return (
-        <div className="flex rounded-md border dark:border-dark-500 dark:bg-dark-400">
+        <div className="flex rounded-xl border dark:border-dark-500 dark:bg-dark-400">
           {props.iconSrc && (
             <Image
               src={props.iconSrc}
@@ -66,10 +68,11 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
           )}
           <FormControl>
             <Input
+              step={props.type === "number" ? props.step : undefined}
               type={props.type ? props.type : "text"}
               placeholder={props.placeholder}
               {...field}
-              className="shad-input border-0"
+              className=" rounded-xl border-0"
             />
           </FormControl>
         </div>
@@ -116,7 +119,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
       );
     case FormFieldType.DATE_PICKER:
       return (
-        <div className="flex rounded-md border dark:border-dark-500 dark:bg-dark-400">
+        <div className="flex rounded-xl border dark:border-dark-500 dark:bg-dark-400">
           <Image
             src="/assets/icons/calendar.svg"
             height={24}
@@ -134,7 +137,7 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
         <FormControl>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
-              <SelectTrigger className="shad-select-trigger">
+              <SelectTrigger className="shad-select-trigger rounded-xl">
                 <SelectValue placeholder={props.placeholder} />
               </SelectTrigger>
             </FormControl>

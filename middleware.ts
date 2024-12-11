@@ -3,7 +3,12 @@ import { cookies } from "next/headers";
 import { getUserFromCookies } from "./helpers/getUserFromToken";
 import { insertUserToCookies } from "./helpers/insertUserToCookies";
 
-const PUBLIC_ROUTES = ["/auth/login", "/auth/sign-up", "/auth-callback"];
+const PUBLIC_ROUTES = [
+  "/auth/login",
+  "/auth/sign-up",
+  "/auth-callback",
+  "/registro-cuidador",
+];
 
 async function refreshToken(token: string | undefined) {
   const user = await getUserFromCookies();

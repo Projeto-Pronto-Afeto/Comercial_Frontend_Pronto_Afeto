@@ -107,6 +107,22 @@ declare interface ProposalDTOGet {
   totalElements: number;
   totalPages: number;
 }
+declare interface PatologyDtoGet {
+  content: Patology[];
+  pageable: {
+    sort: {
+      sorted: boolean;
+      unsorted: boolean;
+      empty: boolean;
+    };
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+}
+
 
 declare interface ComercialDTOGet {
   content: PerfilComercial[];

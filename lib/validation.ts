@@ -16,6 +16,7 @@ export const acceptProposalSchema = z.object({
 
 
 export const cuidadorSchema = z.object({
+  image: z.any(),
   nome: z.string().min(1, "Nome é obrigatório"),
   nomeApresentacao: z.string().min(1, "Nome de apresentação é obrigatório"),
   telefone: z
@@ -33,15 +34,12 @@ export const cuidadorSchema = z.object({
     }),
   bairro: z.string().min(1, "Bairro é obrigatório"),
   complemento: z.string().optional(),
-  cep: z
-    .string()
-    .regex(/^\d{5}-\d{3}$/, "CEP deve estar no formato 00000-000"),
+  cep: z.string().regex(/^\d{5}-\d{3}$/, "CEP deve estar no formato 00000-000"),
   cidade: z.string().min(1, "Cidade é obrigatória"),
   estado: z.string().min(1, "Estado é obrigatório"),
   nomePai: z.string().min(1, "Nome do pai é obrigatório"),
   nomeMae: z.string().min(1, "Nome da mãe é obrigatório"),
-  dataNascimento: z
-    .date(),
+  dataNascimento: z.date(),
   peso: z
     .string()
     .min(1, "Peso é obrigatório")
@@ -56,11 +54,7 @@ export const cuidadorSchema = z.object({
     .refine((val) => !isNaN(val) && val > 0, {
       message: "Altura deve ser um número positivo",
     }),
-  escolaridade: z.enum([
-    "NÍVEL_FUNDAMENTAL",
-    "NÍVEL_MÉDIO",
-    "NÍVEL_SUPERIOR",
-  ]),
+  escolaridade: z.enum(["NÍVEL_FUNDAMENTAL", "NÍVEL_MÉDIO", "NÍVEL_SUPERIOR"]),
   titulacao: z.string().min(1, "Titulação é obrigatória"),
   tempoExperiencia: z
     .string()
@@ -70,11 +64,13 @@ export const cuidadorSchema = z.object({
       message: "Tempo de experiência deve ser um número não negativo",
     }),
   habilidades: z
-  .string(),
+    .array(z.string())
+    .nonempty("Você deve selecionar pelo menos uma habilidade"),
   experiencias: z
-  .string(),
+    .array(z.string())
+    .nonempty("Você deve selecionar pelo menos uma experiencia"),
   apresentacao: z.string().min(1, "Apresentação é obrigatória"),
-})
+});
 
 export const loginSchema = z.object({
   email: z.string().email("Email inválido"),

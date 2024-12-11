@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { FiUpload } from "react-icons/fi";
+import { UseFormSetValue } from "react-hook-form";
 
-const ImageUpload = () => {
+const ImageUpload = ({ setValue }: { setValue?: UseFormSetValue<any> }) => {
   const [image, setImage] = useState<string | null>(null);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,11 +14,15 @@ const ImageUpload = () => {
         setImage(reader.result as string);
       };
       reader.readAsDataURL(file);
+      if (setValue) {
+        console.log("🚀 ~ file", file);
+        setValue("image", file);
+      }
     }
   };
 
   return (
-    <div className="absolute top-5">
+    <div className="">
       <div className="relative flex justify-center items-center w-24 h-24">
         <label
           htmlFor="image-upload"

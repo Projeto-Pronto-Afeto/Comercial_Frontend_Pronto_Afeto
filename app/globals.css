@@ -27,8 +27,8 @@
       --sidebar-ring: 217.2 91.2% 59.8%;
     }
 
-  /* Remove scrollbar */
-  .remove-scrollbar::-webkit-scrollbar {
+   /* Remove scrollbar */
+   .remove-scrollbar::-webkit-scrollbar {
     width: 0px;
     height: 0px;
     border-radius: 0px;

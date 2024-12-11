@@ -100,12 +100,34 @@ declare interface ProposalDTOGet {
       unsorted: boolean;
       empty: boolean;
     };
+
     pageNumber: number;
     pageSize: number;
     offset: number;
     paged: boolean;
     unpaged: boolean;
   };
+  totalElements: number;
+  totalPages: number;
+}
+
+declare interface ComercialDTOGet {
+  content: PerfilComercial[];
+  pageable: {
+    sort: {
+      sorted: boolean;
+      unsorted: boolean;
+      empty: boolean;
+    };
+
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalElements: number;
+  totalPages: number;
 }
 
 declare interface Cuidado {

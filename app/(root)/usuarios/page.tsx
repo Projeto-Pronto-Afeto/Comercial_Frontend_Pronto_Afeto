@@ -6,8 +6,23 @@ import { perfisComerciais } from "@/constants/index";
 import { TbPlus } from "react-icons/tb";
 import { Button } from "@/components/ui/button";
 import CreateUserDialog from "@/components/main/dialog/CreateUserDialog";
+import { getAllComerciais } from "@/actions/comercial/comercial.actions";
+import { PaginationComponent } from "@/components/main/pagination/PaginationComponent";
 
-const UserPage = () => {
+const UserPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined | string[] };
+}) => {
+  const page =
+    typeof searchParams.page === "string" ? parseInt(searchParams.page) : 0;
+  const users: ComercialDTOGet = await getAllComerciais({
+    page: page,
+    limit: 10,
+  });
+
+  console.log(users?.content);
+
   return (
     <div className="admin-main">
       <section className="w-full">
@@ -25,7 +40,14 @@ const UserPage = () => {
               <CreateUserDialog />
             </div>
           </div>
-          <DataTable columns={columns} data={perfisComerciais} />
+          <DataTable columns={columns} data={users.content} />
+          {users.totalPages > 1 ? (
+            <PaginationComponent
+              totalPages={users?.totalPages}
+              currentPage={users?.pageable.pageNumber}
+              domain="usuarios"
+            />
+          ) : null}
         </div>
       </section>
     </div>

@@ -2,6 +2,7 @@ import { getAllPropostas } from "@/actions/prposta/proposta.actions";
 import ButtonFilter from "@/components/main/filters/ButtonFilter";
 import CommandRequest from "@/components/main/command/CommandRequest";
 import RequestCard from "@/components/RequestCard";
+import { PaginationComponent } from "@/components/main/pagination/PaginationComponent";
 
 const SolicitacoesPage = async ({
   searchParams,
@@ -39,6 +40,13 @@ const SolicitacoesPage = async ({
               <RequestCard proposal={item} />
             ))}
           </div>
+          {data.totalPages > 1 ? (
+            <PaginationComponent
+              totalPages={data?.totalPages}
+              currentPage={data?.pageable.pageNumber}
+              domain="solicitacoes"
+            />
+          ) : null}
         </div>
       </section>
     </div>

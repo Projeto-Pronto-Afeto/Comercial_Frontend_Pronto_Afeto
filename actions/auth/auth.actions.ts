@@ -52,7 +52,7 @@ export async function login(
   }
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}api/v1/auth/signin`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/signin`,
     {
       method: "POST",
       headers: {

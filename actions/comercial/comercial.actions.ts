@@ -1,15 +1,27 @@
 "use server";
+
 import { createUserSchema } from "@/lib/validation";
 import { revalidateTag } from "next/cache";
 
-export const getAllComercialUsers = async () => {
+export async function getAllComerciais({
+  page = 0,
+  limit = 12,
+}: {
+  page?: number;
+  limit?: number;
+}): Promise<any> {
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/comercial/v1`);
+  const params = new URLSearchParams();
+
+  if (page) params.append("page", page.toString());
+  if (limit) params.append("limit", limit.toString());
+  url.search = params.toString();
+  console.log("🚀 ~ url", url.toString());
+
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/comercial/v1`,
-      {
-        next: { tags: ["users-comercial"] },
-      }
-    );
+    const response = await fetch(url.toString(), {
+      next: { tags: ["comerciais"] },
+    });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -18,10 +30,10 @@ export const getAllComercialUsers = async () => {
     console.log("🚀 ~ data", data);
     return data;
   } catch (error) {
-    console.error("Failed to fetch proposta:", error);
+    console.error("Failed to fetch comerciais:", error);
     throw error; // Re-throw the error after logging it
   }
-};
+}
 
 export type State = {
   errors: {
@@ -58,7 +70,10 @@ export const createComercialUser = async (
   formData.delete("email");
   formData.delete("password");
   formData.delete("telefone");
-  formData.append("comercial", JSON.stringify(comercial));
+  formData.append(
+    "comercial",
+    new Blob([JSON.stringify(comercial)], { type: "application/json" })
+  );
 
   console.log("🚀 ~ formData:", formData);
 
@@ -66,6 +81,9 @@ export const createComercialUser = async (
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/comercial/v1`,
       {
+        headers: {
+          Accept: "application/json",
+        },
         method: "POST",
         body: formData, // Cabeçalho gerado automaticamente
       }
@@ -79,10 +97,8 @@ export const createComercialUser = async (
         error: true,
       };
     }
-    const data = await response.json();
 
-    console.log("🚀 ~ data", data);
-    revalidateTag("users-comercial");
+    revalidateTag("comerciais");
     return {
       errors: {},
       message: "Usuário criado com sucesso",
@@ -123,17 +139,24 @@ export const removeUser = async (
           // quando você usa FormData, então não é necessário defini-lo manualmente.
         },
         method: "DELETE",
-        next: { tags: ["users-comercial"] },
+        next: { tags: ["comerciais"] },
       }
     );
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
+      return {
+        errors: {},
+        message: data.message || data.toString(),
+        error: true,
+      };
     }
-    const data = await response.json();
 
-    console.log("🚀 ~ data", data);
     revalidateTag("users-comercial");
-    return data;
+    return {
+      errors: {},
+      message: "Usuário removido com sucesso",
+      error: false,
+    };
   } catch (error) {
     console.error("Failed to fetch proposta:", error);
     throw error; // Re-throw the error after logging it

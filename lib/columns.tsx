@@ -52,7 +52,7 @@ export const columns: ColumnDef<PerfilComercial>[] = [
           alt={row.original.nome}
           width={40}
           height={40}
-          className="rounded-full mr-2"
+          className="rounded-full mr-2 h-10 min-w-10"
         />
         <div>
           <p className="font-medium">{row.original.nome}</p>

@@ -46,7 +46,7 @@ const AcceptForm = ({ proposalId }: { proposalId: number }) => {
         iconAlt="user"
         type="password"
       />
-      <Button className="  bg-purple-500 text-white hover:bg-gradient-to-r hover:from-purple-400 hover:to-purple-600">
+      <Button className="bg-purple text-white hover:bg-gradient-to-r hover:from-purple/50 hover:to-purple-600">
         Aprovar
       </Button>
     </form>

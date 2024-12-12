@@ -1,10 +1,6 @@
 import { DataTable } from "@/components/main/table/table";
 import { columns } from "@/lib/columns";
 import React from "react";
-import { perfisComerciais } from "@/constants/index";
-
-import { TbPlus } from "react-icons/tb";
-import { Button } from "@/components/ui/button";
 import CreateUserDialog from "@/components/main/dialog/CreateUserDialog";
 import { getAllComerciais } from "@/actions/comercial/comercial.actions";
 import { PaginationComponent } from "@/components/main/pagination/PaginationComponent";

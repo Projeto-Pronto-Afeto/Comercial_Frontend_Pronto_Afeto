@@ -61,7 +61,7 @@ const data = {
       items: [
         {
           title: "Cadastros",
-          url: "/register",
+          url: "/registro-cuidador",
         },
         {
           title: "Buscar Cuidadores",
@@ -100,7 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={props.user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

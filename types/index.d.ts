@@ -39,7 +39,7 @@ declare interface Dispositives {
 }
 
 declare interface Caregiver {
-  cuidadorId: number;
+  i d: number;
   fotoUrl: string;
   nome: string;
   nomeApresentacao: string;

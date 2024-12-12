@@ -32,12 +32,16 @@ import { ptBR } from "date-fns/locale";
 import { StatusBadge } from "./BadgesStatus";
 import { formatDate } from "@/lib/utils";
 
-const CuidadorDetailsSheet = ({ cuidador }: { cuidador: Caregiver }) => {
+const CuidadorDetailsSheet = ({
+  cuidador,
+  children,
+}: {
+  cuidador: Caregiver;
+  children: React.ReactNode;
+}) => {
   return (
     <Sheet>
-      <SheetTrigger>
-        <TbDots className="text-black/60 text-lg" />
-      </SheetTrigger>
+      <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent
         side={"right"}
         className=" bg-white dark:bg-dark-200 dark:text-white border-none rounded-xl overflow-y-auto "
@@ -51,7 +55,10 @@ const CuidadorDetailsSheet = ({ cuidador }: { cuidador: Caregiver }) => {
         </SheetHeader>
         <div className="py-6">
           <div className="flex gap-6">
-            <div style={{ gridTemplateRows: 'repeat(15, minmax(0, 1fr))' }} className="grid gap-6">
+            <div
+              style={{ gridTemplateRows: "repeat(15, minmax(0, 1fr))" }}
+              className="grid gap-6"
+            >
               <p className="flex text-sm text-black/50 font-semibold my-auto">
                 <TbLoader className=" text-black/60 my-auto mr-1 text-[18px]" />
                 Status
@@ -113,13 +120,15 @@ const CuidadorDetailsSheet = ({ cuidador }: { cuidador: Caregiver }) => {
                 Apresentação
               </p>
             </div>
-            <div style={{ gridTemplateRows: 'repeat(15, minmax(0, 1fr))' }} className="grid gap-6">
+            <div
+              style={{ gridTemplateRows: "repeat(15, minmax(0, 1fr))" }}
+              className="grid gap-6"
+            >
               <StatusBadge status="Pendente" />
               <p className="text-sm gap-2 flex text-black font-medium px-3 capitalize my-auto">
                 {" "}
                 {format(
-                  formatDate(cuidador.dataNascimento
-                  ),
+                  formatDate(cuidador.dataNascimento),
                   "dd 'de' MMMM 'de' yyyy",
                   {
                     locale: ptBR,
@@ -158,10 +167,10 @@ const CuidadorDetailsSheet = ({ cuidador }: { cuidador: Caregiver }) => {
                 {cuidador.tempoExperiencia} anos
               </p>
               <p className="flex gap-2 my-auto overflow-hidden remove-scrollbar px-3">
-                {cuidador.experiencias.join(', ')}
+                {cuidador.experiencias.join(", ")}
               </p>
               <p className="flex gap-2 my-auto overflow-hidden remove-scrollbar px-3">
-                {cuidador.habilidades.join(', ')}
+                {cuidador.habilidades.join(", ")}
               </p>
               <p className="flex gap-2 my-auto overflow-hidden remove-scrollbar px-3">
                 {cuidador.apresentacao}
@@ -172,6 +181,6 @@ const CuidadorDetailsSheet = ({ cuidador }: { cuidador: Caregiver }) => {
       </SheetContent>
     </Sheet>
   );
-}
+};
 
 export default CuidadorDetailsSheet;

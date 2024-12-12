@@ -10,6 +10,13 @@ export const arrayToDate = (dateArray: string[]): Date => {
   const dateString = `${year}-${month}-${day}`;
   return new Date(dateString);
 };
+export const truncateText = (text: string, maxLength: number): string => {
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + "...";
+  }
+  return text;
+};
+
 
 export function formatDate(dateArray: number[]): string {
   const [year, month, day] = dateArray;

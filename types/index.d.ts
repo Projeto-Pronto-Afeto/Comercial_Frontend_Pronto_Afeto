@@ -128,6 +128,25 @@ declare interface PatologyDtoGet {
     unpaged: boolean;
   };
 }
+declare interface CaregiverDtoGet {
+  length: ReactNode;
+  content: Caregiver[];
+  pageable: {
+    sort: {
+      sorted: boolean;
+      unsorted: boolean;
+      empty: boolean;
+    };
+
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalElements: number;
+  totalPages: number;
+}
 
 
 declare interface ComercialDTOGet {

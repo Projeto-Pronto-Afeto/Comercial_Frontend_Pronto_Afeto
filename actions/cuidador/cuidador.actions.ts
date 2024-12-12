@@ -1,4 +1,4 @@
-export async function getCuidadoresByStatus(page:number = 0, limit:number = 12,status ='Em_Observacao'):Promise<Caregiver[]>{
+export async function getCuidadoresByStatus(page:number = 0, limit:number = 12,status ='Em_Observacao'):Promise<CaregiverDtoGet>{
     const url = new URL(
         `${process.env.NEXT_PUBLIC_API_URL}/api/cuidadores/v1/order_by_stats?page=${page}&limit=${limit}&status=${status}`
     );
@@ -18,7 +18,7 @@ export async function getCuidadoresByStatus(page:number = 0, limit:number = 12,s
         const data = await response.json();
     
         console.log("🚀 ~ data", data);
-        return data.content;
+        return data;
       } catch (error) {
         console.error("Failed to fetch propostas:", error);
         throw error; // Re-throw the error after logging it

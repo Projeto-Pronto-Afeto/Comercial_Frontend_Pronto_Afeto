@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CuidadorCard from "./CuidadorCard";
 import { setCuidadorStatus } from "@/actions/cuidador/cuidador.actions";
 
@@ -16,6 +16,10 @@ const CuidadorList : React.FC<CuidadorListProps> = ({ caregivers}) => {
         setCuidadorStatus(1, 'Aprovado');
         //setCaregivers(careGiversState.filter((caregiver) => caregiver.cuidadorId !== id));
       };
+      
+      useEffect(() => {
+        setCaregivers(caregivers);
+      }, [caregivers]);
     
       const handleReject = (id: number) => {
         console.log(`Parent received rejection for caregiver with ID: ${id}`);

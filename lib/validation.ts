@@ -16,7 +16,10 @@ export const acceptProposalSchema = z.object({
 
 
 export const cuidadorSchema = z.object({
-  image: z.any(),
+  image: z.any()
+  .refine((file) => file instanceof File && file.size > 0, {
+    message: "A imagem é obrigatória e deve ser um arquivo válido",
+  }),
   nome: z.string().min(1, "Nome é obrigatório"),
   nomeApresentacao: z.string().min(1, "Nome de apresentação é obrigatório"),
   telefone: z

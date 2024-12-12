@@ -16,7 +16,7 @@ const ButtonSetStatusCaregiver = ({
       className=""
       action={async () => {
         "use server";
-        setCuidadorStatus(2, "Aprovado");
+        setCuidadorStatus(id, "Aprovado");
       }}
     >
       <button type="submit">{children}</button>

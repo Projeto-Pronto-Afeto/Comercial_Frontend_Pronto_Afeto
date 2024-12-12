@@ -39,7 +39,7 @@ declare interface Dispositives {
 }
 
 declare interface Caregiver {
-  i d: number;
+  id: number;
   fotoUrl: string;
   nome: string;
   nomeApresentacao: string;
@@ -57,7 +57,7 @@ declare interface Caregiver {
   experiencias: string[]; // Uma lista de experiências, assumindo que seja uma lista de strings
   habilidades: string[]; // Uma lista de habilidades, também assumindo que seja uma lista de strings
   apresentacao: string;
-  statusCuidador:string; //Deveria ser um enum?
+  statusCuidador: string; //Deveria ser um enum?
 }
 
 interface Address {

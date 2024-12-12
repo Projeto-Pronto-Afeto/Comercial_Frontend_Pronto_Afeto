@@ -47,7 +47,7 @@ export async function middleware(request: NextRequest) {
   // Caso 02 - Usuário não Logou e está tentando acessar uma rota pública!
   if (!isLoggedIn && !isPublicRoute) {
     console.log("Usuário não logado!");
-    //return NextResponse.redirect(new URL("/auth/login", nextUrl));
+    return NextResponse.redirect(new URL("/auth/login", nextUrl));
   }
 
   //   Caso 03 - Usuário Logou e está tentando acessar uma rota pública, mas o token expirou!

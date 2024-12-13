@@ -10,13 +10,13 @@ const SolicitacoesPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined | string[] };
 }) => {
+  const page = searchParams.page ? parseInt(searchParams.page as string) : 0;
   const status =
     typeof searchParams.status === "string" ? searchParams.status : undefined;
   const data: ProposalDTOGet = await getAllPropostas({
     status: status,
-
-    page: 0,
-    limit: 10,
+    page: page,
+    limit: 4,
   });
   if (!data) return <LoadingPage />;
 

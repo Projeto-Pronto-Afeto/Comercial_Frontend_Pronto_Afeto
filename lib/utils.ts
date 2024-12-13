@@ -10,6 +10,11 @@ export const arrayToDate = (dateArray: string[]): Date => {
   const dateString = `${year}-${month}-${day}`;
   return new Date(dateString);
 };
+
+export const arrayToComplexDate = (dateArray: number[]): Date => {
+  const [year, month, day, hour, minute, second, millisecond] = dateArray;
+  return new Date(year, month - 1, day, hour, minute, second, millisecond); // Lembre-se que os meses em JavaScript são baseados em zero
+};
 export const truncateText = (text: string, maxLength: number): string => {
   if (text.length > maxLength) {
     return text.substring(0, maxLength) + "...";

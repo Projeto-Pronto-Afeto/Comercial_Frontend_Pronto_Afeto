@@ -41,7 +41,7 @@ export function PaginationComponent({
   const renderPaginationItems = () => {
     const pages = [];
 
-    for (let i = 0; i <= totalPages; i++) {
+    for (let i = 0; i < totalPages; i++) {
       pages.push(
         <PaginationItem key={i}>
           <PaginationLink

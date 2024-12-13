@@ -229,3 +229,24 @@ interface Contrato {
   cuidadores: Caregiver[]; // Reutilizando a interface Caregiver já declarada
   statusProposta: Status;
 }
+
+declare interface Hability {
+  id: number;
+  nome: string;
+}
+
+declare interface HabilityDTOGet {
+  content: Hability[];
+  pageable: {
+    sort: {
+      sorted: boolean;
+      unsorted: boolean;
+      empty: boolean;
+    };
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+}

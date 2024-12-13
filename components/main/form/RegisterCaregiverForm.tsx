@@ -23,7 +23,13 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { TbLoader } from "react-icons/tb";
 
-const RegisterCaregiverForm = ({ patologias }: { patologias: Patology[] }) => {
+const RegisterCaregiverForm = ({
+  patologias,
+  habilidades,
+}: {
+  patologias: Patology[];
+  habilidades: Hability[];
+}) => {
   const [isPending, setIsPending] = React.useState(false);
   const form = useForm<z.infer<typeof cuidadorSchema>>({
     resolver: zodResolver(cuidadorSchema),
@@ -313,7 +319,9 @@ const RegisterCaregiverForm = ({ patologias }: { patologias: Patology[] }) => {
                         name={field.name}
                         getValues={form.getValues}
                         setValue={form.setValue}
-                        options={convertToOptions(Habilidades)}
+                        options={convertToOptions(
+                          habilidades.map((h) => h.nome)
+                        )}
                         placeholder={""}
                       />
                     </FormControl>

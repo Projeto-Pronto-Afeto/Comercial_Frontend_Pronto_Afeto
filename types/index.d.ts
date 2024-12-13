@@ -54,8 +54,8 @@ declare interface Caregiver {
   escolaridade: string; //tipo específico para os níveis de escolaridade
   titulacao: string;
   tempoExperiencia: number;
-  experiencias: string[]; // Uma lista de experiências, assumindo que seja uma lista de strings
-  habilidades: string[]; // Uma lista de habilidades, também assumindo que seja uma lista de strings
+  experiencias: Experience[];
+  habilidades: Hability[];
   apresentacao: string;
   statusCuidador: string; //Deveria ser um enum?
 }
@@ -228,9 +228,14 @@ interface Contrato {
   localAtendimento: LocalAtendimento;
   cuidadores: Caregiver[]; // Reutilizando a interface Caregiver já declarada
   statusProposta: Status;
+ 
 }
 
 declare interface Hability {
+  id: number;
+  nome: string;
+}
+declare interface Experience {
   id: number;
   nome: string;
 }

@@ -88,3 +88,9 @@ export const createUserSchema = z.object({
   password: z.string().min(1, "Senha é obrigatória"),
 
 });
+export const signUpFormSchema = z.object({
+  nomeCompleto: z.string().min(1, "Nome completo é obrigatório"),
+  email: z.string().email("Email inválido"),
+  password: z.string().min(1, "Senha é obrigatória"),
+  confirmPassword: z.string().min(1, "Confirmação de senha é obrigatória"),
+});

@@ -1,9 +1,7 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { escolaridadeLabels } from "@/constants";
-import { classificarTempoExperiencia } from "@/lib/utils";
-import { StatusBadge } from "@/components/BadgesStatus";
+
+
 const CardExperience = ({ caregiver }: { caregiver: Caregiver }) => {
   let badgeStatus: Status;
   if (caregiver.statusCuidador === "Aprovado") {

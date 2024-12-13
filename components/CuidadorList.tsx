@@ -1,6 +1,5 @@
 import CuidadorCard from "./CuidadorCard";
-import { setCuidadorStatus } from "@/actions/cuidador/cuidador.actions";
-import CuidadorDetailsSheet from "./CuidadorDetailsSheet";
+
 
 interface CuidadorListProps {
   caregivers: Caregiver[];

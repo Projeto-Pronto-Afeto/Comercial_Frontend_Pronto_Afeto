@@ -16,12 +16,15 @@ export const StatusBadge = ({ status }: { status: Status }) => {
       />
       <p
         className={clsx("text-12-semibold capitalize", {
-          "text-green-500": status === "Assinado",
-          "text-blue-500": status === "Observacao",
-          "text-red-500": status === "Rejeitado",
+          "text-green-500": status === "Aprovada",
+          "text-blue-500":
+            status === "Observacao" || status === "Em_Observacao",
+          "text-red-500": status === "Negada",
         })}
       >
-        {status === "Observacao" ? "Observação" : status}
+        {status === "Observacao" || status === "Em_Observacao"
+          ? "Observação"
+          : status}
       </p>
     </div>
   );

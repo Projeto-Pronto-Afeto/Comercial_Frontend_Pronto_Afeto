@@ -11,6 +11,29 @@ export const arrayToDate = (dateArray: string[]): Date => {
   return new Date(dateString);
 };
 
+export const arrayToComplexDate = (dateArray: number[]): Date => {
+  const [year, month, day, hour, minute, second, millisecond] = dateArray;
+  return new Date(year, month - 1, day, hour, minute, second, millisecond); // Lembre-se que os meses em JavaScript são baseados em zero
+};
+export const truncateText = (text: string, maxLength: number): string => {
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + "...";
+  }
+  return text;
+};
+export const classificarTempoExperiencia = (anos: number): string => {
+  if (anos >= 0 && anos <= 2) {
+    return "Iniciante";
+  } else if (anos >= 3 && anos <= 6) {
+    return "Amador";
+  } else if (anos >= 7) {
+    return "Experiente";
+  } else {
+    return "Desconhecido";
+  }
+};
+
+
 export function formatDate(dateArray: number[]): string {
   const [year, month, day] = dateArray;
   return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(
@@ -18,3 +41,12 @@ export function formatDate(dateArray: number[]): string {
     "0"
   )}`;
 }
+export const convertToOptions = (values: string[]) => {
+  return (
+    values &&
+    values.map((value, index) => ({
+      key: value,
+      name: value,
+    }))
+  );
+};

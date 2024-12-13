@@ -28,7 +28,7 @@ export async function getAllPropostas({
 
   try {
     const response = await fetch(url.toString(), {
-      next: { tags: ["solicitacoes"] },
+      next: { tags: ["solicitacoes"], revalidate: 300 },
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -46,7 +46,8 @@ export async function getAllPropostas({
 export async function getProposalById(id: number) {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/propostas/v1/${id}`
+      `http://localhost:8080/api/propostas/v1/${id}`,
+      { cache: "no-cache" }
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

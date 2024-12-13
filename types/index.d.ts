@@ -11,10 +11,7 @@ declare type Session = {
   expiresAt: number;
   accessToken: string;
   refreshToken: string;
-  client?: {
-    id: number;
-    name: string;
-  };
+  perfil?: PerfilComercial;
 };
 interface UserSession extends Session {
   userId: number;
@@ -24,7 +21,12 @@ interface UserSession extends Session {
 }
 
 declare type Gender = "Feminino" | "Masculino";
-declare type Status = "Pendente" | "Rejeitado" | "Assinado" | "Observacao";
+declare type Status =
+  | "Pendente"
+  | "Negada"
+  | "Aprovada"
+  | "Observacao"
+  | "Em_Observacao";
 
 declare interface Patology {
   id: number;
@@ -43,7 +45,7 @@ declare interface Caregiver {
   nomeApresentacao: string;
   telefone: string;
   rg: string;
-  endereco: Endereco;
+  endereco: Address;
   nomePai: string;
   nomeMae: string;
   dataNascimento: [number, number, number]; // [ano, mês, dia]
@@ -55,6 +57,7 @@ declare interface Caregiver {
   experiencias: string[]; // Uma lista de experiências, assumindo que seja uma lista de strings
   habilidades: string[]; // Uma lista de habilidades, também assumindo que seja uma lista de strings
   apresentacao: string;
+  statusCuidador: string; //Deveria ser um enum?
 }
 
 interface Address {
@@ -63,6 +66,7 @@ interface Address {
   estado: string;
   cep: string;
   bairro: string;
+  numero: number;
   complemento: string;
   pontoReferencia?: string;
 }
@@ -100,6 +104,24 @@ declare interface ProposalDTOGet {
       unsorted: boolean;
       empty: boolean;
     };
+
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalElements: number;
+  totalPages: number;
+}
+declare interface PatologyDtoGet {
+  content: Patology[];
+  pageable: {
+    sort: {
+      sorted: boolean;
+      unsorted: boolean;
+      empty: boolean;
+    };
     pageNumber: number;
     pageSize: number;
     offset: number;
@@ -107,16 +129,63 @@ declare interface ProposalDTOGet {
     unpaged: boolean;
   };
 }
+declare interface CaregiverDtoGet {
+  length: ReactNode;
+  content: Caregiver[];
+  pageable: {
+    sort: {
+      sorted: boolean;
+      unsorted: boolean;
+      empty: boolean;
+    };
+
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalElements: number;
+  totalPages: number;
+}
+
+declare interface ComercialDTOGet {
+  content: PerfilComercial[];
+  pageable: {
+    sort: {
+      sorted: boolean;
+      unsorted: boolean;
+      empty: boolean;
+    };
+
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalElements: number;
+  totalPages: number;
+}
 
 declare interface Cuidado {
   cpf: string;
   nome: string;
   nomeApresentacao: string;
-  dataNascimento: string[];
+  dataNascimento: [number, number, number];
   peso: number;
+  patologias: Patology[];
+  dispositivos: Dispositives[];
 }
 
 // Reutilização das interfaces existentes
+interface PerfilComercial {
+  id: number;
+  nome: string;
+  email: string;
+  fotoUrl: string;
+  telefone: string;
+}
 interface Client {
   id: number;
   cpf: string;
@@ -138,11 +207,12 @@ interface Health {
   hidratacao: string | null;
 }
 
-interface Duty {
+interface Plantao {
   turno: string[];
   diasDaSemana: string[]; // Tipagem como array de strings para dias da semana
   alimentacaoFornecida: boolean;
   dataHoraInicioPlantao: [number, number, number, number, number]; // [ano, mês, dia, hora, minuto]
+  observacoes: string;
 }
 
 interface ServiceLocation extends Address {} // LocalAtendimento possui a mesma estrutura que Address
@@ -157,4 +227,26 @@ interface Contrato {
   cuidado: Cuidado; // Reutilizando a interface Cuidado já declarada
   localAtendimento: LocalAtendimento;
   cuidadores: Caregiver[]; // Reutilizando a interface Caregiver já declarada
+  statusProposta: Status;
+}
+
+declare interface Hability {
+  id: number;
+  nome: string;
+}
+
+declare interface HabilityDTOGet {
+  content: Hability[];
+  pageable: {
+    sort: {
+      sorted: boolean;
+      unsorted: boolean;
+      empty: boolean;
+    };
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
 }

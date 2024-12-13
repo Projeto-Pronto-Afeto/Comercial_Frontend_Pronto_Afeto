@@ -38,6 +38,7 @@ interface CustomProps {
   children?: React.ReactNode;
   renderSkeleton?: () => React.ReactNode;
   fieldType: FormFieldType;
+  className?: string;
 }
 
 const RenderInput = ({ props }: { props: CustomProps }) => {
@@ -53,13 +54,14 @@ const RenderInput = ({ props }: { props: CustomProps }) => {
     iconAlt,
     disabled,
     children,
+    className,
   } = props;
 
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
         <div
-          className={`flex rounded-md border ${
+          className={`flex rounded-md border ${className}  ${
             errors ? "border-red-500" : "dark:border-dark-500 dark:bg-dark-400"
           }`}
         >
@@ -76,9 +78,11 @@ const RenderInput = ({ props }: { props: CustomProps }) => {
             step={step && step}
             type={props.type || "text"}
             name={name}
+            value={value} // Vincula o valor
+            onChange={(e) => onChange && onChange(e.target.value)} // Atualiza o estado
             aria-describedby={`${name}-error`}
             placeholder={placeholder}
-            className="shad-input border-0"
+            className="shad-input border-0 "
             disabled={disabled}
           />
         </div>
@@ -87,13 +91,14 @@ const RenderInput = ({ props }: { props: CustomProps }) => {
       return (
         <Textarea
           name={name}
+          value={value}
+          onChange={(e) => onChange && onChange(e.target.value)}
           aria-describedby={`${name}-error`}
           placeholder={placeholder}
           className="shad-textArea"
           disabled={disabled}
         />
       );
-
     case FormFieldType.CHECKBOX:
       return (
         <div className="flex items-center gap-4">
@@ -109,7 +114,6 @@ const RenderInput = ({ props }: { props: CustomProps }) => {
           </label>
         </div>
       );
-
     case FormFieldType.SELECT:
       return (
         <Select
@@ -137,7 +141,7 @@ const ServerCustomField = (props: CustomProps) => {
   const { name, label, errors } = props;
 
   return (
-    <div>
+    <div className="col-span-2">
       {label && <p className="text-sm font-medium mb-1">{label} *</p>}
       <RenderInput props={props} />
       {errors && (

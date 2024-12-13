@@ -5,7 +5,7 @@
 /* ========================================== TAILWIND STYLES */
 @layer base {
 
-    :root {
+    .dark {
       --sidebar-background: 0 0% 98%;
       --sidebar-foreground: 240 5.3% 26.1%;
       --sidebar-primary: 240 5.9% 10%;
@@ -16,7 +16,7 @@
       --sidebar-ring: 217.2 91.2% 59.8%;
     }
   
-    .dark {
+    :root {
       --sidebar-background: 240 5.9% 10%;
       --sidebar-foreground: 240 4.8% 95.9%;
       --sidebar-primary: 224.3 76.3% 48%;
@@ -27,8 +27,8 @@
       --sidebar-ring: 217.2 91.2% 59.8%;
     }
 
-  /* Remove scrollbar */
-  .remove-scrollbar::-webkit-scrollbar {
+   /* Remove scrollbar */
+   .remove-scrollbar::-webkit-scrollbar {
     width: 0px;
     height: 0px;
     border-radius: 0px;
@@ -143,6 +143,7 @@
   .status-badge {
     @apply flex w-fit items-center gap-2 rounded-full px-4 py-2;
   }
+
 
   /* Data Table */
   .data-table {

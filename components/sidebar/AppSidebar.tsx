@@ -12,6 +12,7 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  User2,
 } from "lucide-react";
 
 import { NavMain } from "./nav-main";
@@ -60,11 +61,11 @@ const data = {
       items: [
         {
           title: "Cadastros",
-          url: "#",
+          url: "/registro-cuidador",
         },
         {
           title: "Buscar Cuidadores",
-          url: "#",
+          url: "/cuidadores",
         },
       ],
     },
@@ -72,8 +73,13 @@ const data = {
   projects: [
     {
       name: "Home",
-      url: "#",
+      url: "/",
       icon: Frame,
+    },
+    {
+      name: "Usuários",
+      url: "/usuarios",
+      icon: User2,
     },
     {
       name: "Configurações",
@@ -94,7 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={props.user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

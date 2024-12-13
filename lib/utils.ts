@@ -16,6 +16,17 @@ export const truncateText = (text: string, maxLength: number): string => {
   }
   return text;
 };
+export const classificarTempoExperiencia = (anos: number): string => {
+  if (anos >= 0 && anos <= 2) {
+    return "Iniciante";
+  } else if (anos >= 3 && anos <= 6) {
+    return "Amador";
+  } else if (anos >= 7) {
+    return "Experiente";
+  } else {
+    return "Desconhecido";
+  }
+};
 
 
 export function formatDate(dateArray: number[]): string {

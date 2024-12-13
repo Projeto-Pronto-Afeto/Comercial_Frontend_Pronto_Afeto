@@ -8,12 +8,12 @@ const CreateCaregiverPage = async () => {
   const patologias = await getAllPatologias();
   return (
     <div className="absolute inset-0 grid md:grid-cols-2 grid-cols-1 h-full w-full">
-      <div className="relative h-full rounded-r-2xl">
+      <div className="relative h-full ">
         <Image
-          src={"/assets/images/texture.jpg"}
+          src={"/assets/images/bg-calm.jpg"}
           layout="fill"
           objectFit="cover"
-          className="hidden md:block rounded-2xl"
+          className="hidden md:block "
           alt=""
         />
       </div>

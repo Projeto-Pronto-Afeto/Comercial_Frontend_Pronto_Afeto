@@ -21,7 +21,7 @@ const AdminPage = async () => {
       <section className="w-full py-6">
         <div className="flex gap-8">
           <Image
-            src={"/assets/images/profile.png"}
+            src={user?.perfil?.fotoUrl || "/assets/images/avatar.png"}
             alt="Admin"
             width={120}
             height={120}
@@ -35,7 +35,6 @@ const AdminPage = async () => {
           </div>
         </div>
       </section>
-      <section className="admin-stat"></section>
     </div>
   );
 };

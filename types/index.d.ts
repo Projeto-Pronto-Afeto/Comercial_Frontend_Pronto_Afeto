@@ -39,13 +39,13 @@ declare interface Dispositives {
 }
 
 declare interface Caregiver {
-  id: number;
+  cuidadorId: number;
   fotoUrl: string;
   nome: string;
   nomeApresentacao: string;
   telefone: string;
   rg: string;
-  endereco: Endereco;
+  endereco: Address;
   nomePai: string;
   nomeMae: string;
   dataNascimento: [number, number, number]; // [ano, mês, dia]
@@ -66,6 +66,7 @@ interface Address {
   estado: string;
   cep: string;
   bairro: string;
+  numero: number;
   complemento: string;
   pontoReferencia?: string;
 }
@@ -148,7 +149,6 @@ declare interface CaregiverDtoGet {
   totalPages: number;
 }
 
-
 declare interface ComercialDTOGet {
   content: PerfilComercial[];
   pageable: {
@@ -227,4 +227,5 @@ interface Contrato {
   cuidado: Cuidado; // Reutilizando a interface Cuidado já declarada
   localAtendimento: LocalAtendimento;
   cuidadores: Caregiver[]; // Reutilizando a interface Caregiver já declarada
+  statusProposta: Status;
 }

@@ -13,7 +13,7 @@ const CuidadorApprovalPage = async ({
     typeof searchParams.status === "string" ? searchParams.status : "";
   const page = typeof searchParams.page === "string" ? searchParams.page : "0";
 
-  const data = await getAllCuidadores(Number(page), 6, status);
+  const data = await getAllCuidadores(Number(page), 8, status);
 
   return (
     <div className="admin-main">
@@ -23,12 +23,10 @@ const CuidadorApprovalPage = async ({
           Aqui você pode visualizar os cuidadores cadastrados e aprovar ou
           recusar
         </p>
-
-       
       </section>
       <section className="flex flex-col gap-6 w-full">
         <div>
-          <div className="grid grid-cols-1 gap-4 py-6">
+          <div className="grid grid-cols-1 gap-4 ">
             <CuidadorList caregivers={data.content}></CuidadorList>
           </div>
 

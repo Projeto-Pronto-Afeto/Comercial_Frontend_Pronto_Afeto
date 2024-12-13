@@ -87,7 +87,9 @@ const RegisterCaregiverForm = ({ patologias }: { patologias: Patology[] }) => {
     if (response.ok) {
       toast.success("Cuidador cadastrado com sucesso!");
     } else {
-      toast.error("Erro ao cadastrar cuidador");
+      const error = await response.json();
+
+      toast.error(error.message);
     }
 
     setIsPending(false);

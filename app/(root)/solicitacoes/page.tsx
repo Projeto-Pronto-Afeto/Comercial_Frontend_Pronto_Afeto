@@ -3,6 +3,7 @@ import ButtonFilter from "@/components/main/filters/ButtonFilter";
 import CommandRequest from "@/components/main/command/CommandRequest";
 import RequestCard from "@/components/RequestCard";
 import { PaginationComponent } from "@/components/main/pagination/PaginationComponent";
+import LoadingPage from "@/components/LoadingPage";
 
 const SolicitacoesPage = async ({
   searchParams,
@@ -17,6 +18,7 @@ const SolicitacoesPage = async ({
     page: 0,
     limit: 10,
   });
+  if (!data) return <LoadingPage />;
 
   return (
     <div className="admin-main">
@@ -41,7 +43,7 @@ const SolicitacoesPage = async ({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 py-6">
+          <div className="grid md:grid-cols-2  grid-cols-1 gap-4 py-6">
             {" "}
             {data?.content.map((item: MinimalProposal) => (
               <RequestCard proposal={item} />

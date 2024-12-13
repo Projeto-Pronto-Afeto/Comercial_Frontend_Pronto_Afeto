@@ -31,8 +31,8 @@ import { arrayToDate } from "@/lib/utils";
 import { getProposalById } from "@/actions/prposta/proposta.actions";
 
 const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
-  const proposal: Contrato = await getProposalById(1);
-  console.log(proposal);
+  const proposal: Contrato = await getProposalById(proposalId);
+
   return (
     proposal && (
       <Sheet>

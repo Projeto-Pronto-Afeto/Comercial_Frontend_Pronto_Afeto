@@ -5,7 +5,7 @@
 /* ========================================== TAILWIND STYLES */
 @layer base {
 
-    :root {
+    .dark {
       --sidebar-background: 0 0% 98%;
       --sidebar-foreground: 240 5.3% 26.1%;
       --sidebar-primary: 240 5.9% 10%;
@@ -16,7 +16,7 @@
       --sidebar-ring: 217.2 91.2% 59.8%;
     }
   
-    .dark {
+    :root {
       --sidebar-background: 240 5.9% 10%;
       --sidebar-foreground: 240 4.8% 95.9%;
       --sidebar-primary: 224.3 76.3% 48%;

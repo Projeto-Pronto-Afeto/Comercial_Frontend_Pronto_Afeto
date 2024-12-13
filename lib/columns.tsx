@@ -50,9 +50,9 @@ export const columns: ColumnDef<PerfilComercial>[] = [
         <Image
           src={row.original.fotoUrl}
           alt={row.original.nome}
-          width={40}
-          height={40}
-          className="rounded-full mr-2 h-10 min-w-10"
+          width={50}
+          height={50}
+          className="rounded-full mr-2  "
         />
         <div>
           <p className="font-medium">{row.original.nome}</p>

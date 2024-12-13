@@ -22,7 +22,9 @@ export const StatusBadge = ({ status }: { status: Status }) => {
           "text-red-500": status === "Negada",
         })}
       >
-        {status === "Observacao" || "Em_Observacao" ? "Observação" : status}
+        {status === "Observacao" || status === "Em_Observacao"
+          ? "Observação"
+          : status}
       </p>
     </div>
   );

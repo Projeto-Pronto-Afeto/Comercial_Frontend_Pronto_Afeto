@@ -19,7 +19,8 @@ const ButtonSetStatusCaregiver = ({
         setCuidadorStatus(id, "Aprovado");
       }}
     >
-      <button type="submit">{children}</button>
+      {children}
+      <button type="submit"></button>
     </form>
   );
 };

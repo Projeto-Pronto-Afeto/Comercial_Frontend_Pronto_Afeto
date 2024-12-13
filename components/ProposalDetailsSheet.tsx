@@ -29,6 +29,7 @@ import { StatusBadge } from "./BadgesStatus";
 import ResumeCardCuidado from "./ResumeCardCuidado";
 import { arrayToDate } from "@/lib/utils";
 import { getProposalById } from "@/actions/prposta/proposta.actions";
+import CuidadorCard from "./CuidadorCard";
 
 const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
   const proposal: Contrato = await getProposalById(proposalId);
@@ -176,7 +177,16 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
                 />
               </div>
             </TabsContent>
-            <TabsContent value="cuidadores">Cuidadores</TabsContent>
+            <TabsContent value="cuidadores">
+              <div className="grid xl:grid-cols-2 grid-cols-1 gap-6">
+                {proposal.cuidadores.map((cuidador: Caregiver) => (
+                  <CuidadorCard
+                    caregiver={cuidador}
+                    key={cuidador.cuidadorId}
+                  />
+                ))}
+              </div>
+            </TabsContent>
           </Tabs>
         </SheetContent>
       </Sheet>

@@ -23,7 +23,9 @@ interface RequestCardProps {
   proposal: MinimalProposal;
 }
 
+
 const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
+  console.log(proposal);
   return (
     <div className="shadow-sm   w-full py-6 px-6 rounded-xl hover:bg-appointments   ">
       <div className="">
@@ -54,7 +56,8 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <ProposalDetailsSheet proposalId={proposal.id} />
+              {proposal && <ProposalDetailsSheet proposalId={proposal.id} />}
+
               {proposal.statusProposta != "Aprovada" ? (
                 <AcceptDialog proposalId={proposal.id} />
               ) : (

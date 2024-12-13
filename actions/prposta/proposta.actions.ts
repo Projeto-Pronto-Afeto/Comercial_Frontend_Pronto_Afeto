@@ -28,7 +28,7 @@ export async function getAllPropostas({
 
   try {
     const response = await fetch(url.toString(), {
-      next: { tags: ["solicitacoes"] },
+      next: { tags: ["solicitacoes"], revalidate: 300 },
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

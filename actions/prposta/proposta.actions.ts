@@ -24,7 +24,6 @@ export async function getAllPropostas({
   if (limit) params.append("limit", limit.toString());
   if (direction) params.append("direction", direction);
   url.search = params.toString();
-  console.log("🚀 ~ url", url.toString());
 
   try {
     const response = await fetch(url.toString(), {
@@ -35,7 +34,6 @@ export async function getAllPropostas({
     }
     const data = await response.json();
 
-    console.log("🚀 ~ data", data);
     return data;
   } catch (error) {
     console.error("Failed to fetch propostas:", error);
@@ -46,7 +44,7 @@ export async function getAllPropostas({
 export async function getProposalById(id: number) {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/propostas/v1/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/propostas/v1/${id}`,
       { cache: "no-cache" }
     );
     if (!response.ok) {
@@ -54,7 +52,6 @@ export async function getProposalById(id: number) {
     }
     const data = await response.json();
 
-    console.log("🚀 ~ data", data);
     return data;
   } catch (error) {
     console.error("Failed to fetch proposta:", error);
@@ -101,7 +98,7 @@ export async function acceptProposal(
 
   try {
     const response = await fetch(
-      `http://localhost:8080/api/propostas/v1/aprovar/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/propostas/v1/aprovar/${id}`,
       {
         method: "PATCH",
         headers: {

@@ -30,12 +30,12 @@
    /* Remove scrollbar */
    .remove-scrollbar::-webkit-scrollbar {
     width: 0px;
-    height: 0px;
+    height: 4px;
     border-radius: 0px;
   }
 
   .remove-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
+    background: transarent;
   }
 
   .remove-scrollbar::-webkit-scrollbar-thumb {
@@ -44,9 +44,31 @@
   }
 
   .remove-scrollbar::-webkit-scrollbar-thumb:hover {
-    /* background: #1e2238; */
     background: transparent;
+   
   }
+
+  .simple-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 2px;
+    border-radius: 4px;
+
+  } 
+
+  .simple-scrollbar::-webkit-scrollbar-track {
+    background: transparent ;
+  }
+
+  .simple-scrollbar::-webkit-scrollbar-thumb {
+    background: #eeecec;
+    border-radius: 4px;
+  }
+
+  .simple-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+  
+
 }
 
 @layer utilities {

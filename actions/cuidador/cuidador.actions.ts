@@ -1,55 +1,32 @@
-import { revalidatePath } from "next/cache";
+"use server";
 
-export async function getAllCuidadores(
-  page: number = 0,
-  limit: number = 12,
-  status: string
-): Promise<CaregiverDtoGet> {
-  const params = new URLSearchParams();
-  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/cuidadores/v1`);
+import { getUserFromCookies } from "@/helpers/getUserFromToken";
 
-  if (page) params.append("page", page.toString());
-  if (limit) params.append("limit", limit.toString());
+export async function getCuidadorById(id: number) {
+  const user = await getUserFromCookies();
+  if (!user) throw new Error("User not found");
 
-  url.search = params.toString();
-
-  try {
-    const response = await fetch(url.toString(), {
-      next: { tags: ["cuidadores"] },
-      cache: "no-cache",
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-
-    return data;
-  } catch (error) {
-    console.error("Failed to fetch propostas:", error);
-    throw error; // Re-throw the error after logging it
-  }
-}
-
-export async function getCuidadorById(id: string): Promise<Caregiver> {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/cuidadores/v1/${id}`,
-      { cache: "no-cache" }
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+        cache: "no-cache",
+      }
     );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const data = await response.json();
 
+    const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch proposta:", error);
+    console.error("Failed to fetch cuidador:", error);
     throw error; // Re-throw the error after logging it
   }
 }
@@ -58,29 +35,66 @@ export async function setCuidadorStatus(
   id: number,
   status: "Negado" | "Em_Observacao" | "Aprovado"
 ) {
+  const user = await getUserFromCookies();
+  if (!user) throw new Error("User not found");
+
   const url = new URL(
     `${process.env.NEXT_PUBLIC_API_URL}/api/cuidadores/v1/atualizar_status_cuidador/${id}`
   );
-  console.log("🚀 ~ Chamando setstatus");
+
   const payload = {
     statusCuidador: status,
   };
 
-  //Por algum motivo isso aqui dá problema de CORS no preflight. A mesma chamada funciona no insomnia.
-  fetch(url.toString(), {
-    next: { tags: ["cuidadores"], revalidate: 600 },
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  })
-    .then((res) => {
-      console.log("🚀 ~ res", res);
-      revalidatePath("cuidadores");
-    })
-    .catch((err) => {
-      console.error("Falha de alterar status do cuidador:", err);
-      throw err;
+  try {
+    const response = await fetch(url.toString(), {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.accessToken}`, // Inclua o token no cabeçalho de autorização
+      },
+      body: JSON.stringify(payload),
     });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to update cuidador status:", error);
+    throw error; // Re-throw the error after logging it
+  }
+}
+
+// Adicione a lógica de autorização aos outros métodos neste arquivo
+
+export async function getAllCuidadores(): Promise<any> {
+  const user = await getUserFromCookies();
+  if (!user) throw new Error("User not found");
+
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cuidadores/v1`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`, // Inclua o token no cabeçalho de autorização
+        },
+        cache: "no-cache",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch cuidadores:", error);
+    throw error; // Re-throw the error after logging it
+  }
 }

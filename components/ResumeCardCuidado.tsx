@@ -23,36 +23,31 @@ const ResumeCardCuidado = ({
 }: {
   cliente: Client;
   cuidado: Cuidado;
-  saude: Health;
+  saude?: Health;
 }) => {
   return (
     <div className="col-span-1 ">
       {/* Cuidado Nome, idade, foto, resumo, pdf */}
-      <div className="flex md:flex-row sm:flex-col sm:items-center gap-6 border-b-[0.125rem] border-slate-50 pb-6 mr-8">
-        <Image
-          src={"/assets/images/woman-avatar.svg"}
-          height={1000}
-          width={1000}
-          alt="Cuidado image"
-          className="w-fit h-36 rounded-2xl"
-        />
-        <div className=" my-auto">
-          <div className="flex justify-between">
-            <h2 className="font-semibold ">{cuidado.nome}</h2>
+      <div className="flex md:flex-row flex-col  gap-6 border-b-[0.125rem] border-slate-50 pb-6 mr-8">
+        <div className="flex gap-6 text-start my-auto">
+          <div className="bg-purple rounded-full p-2 h-fit">
+            <TbUserSquareRounded className="text-4xl text-white" />
           </div>
+          <div>
+            <h2 className="font-semibold ">{cuidado.nome}</h2>
 
-          <p className="text-black/30 font-semibold text-sm">
-            {" "}
-            {format(formatDate(cuidado.dataNascimento), "MMM dd, yyyy", {
-              locale: ptBR,
-            })}
-          </p>
-
-          <div className="pt-6">
-            <p className="text-xs text-black/40">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              tristique, odio eget consectetur.{" "}
+            <p className="text-black/30 font-semibold text-sm capitalize">
+              {" "}
+              {format(formatDate(cuidado.dataNascimento), "MMM dd, yyyy", {
+                locale: ptBR,
+              })}
             </p>
+
+            {saude && (
+              <div className="pt-6">
+                <p className="text-xs text-black/40">{saude.comentarios}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -73,36 +68,39 @@ const ResumeCardCuidado = ({
         </div>
       </div> */}
       {/* Patologias */}
-      <div className=" border-b-[0.125rem] border-slate-50 mr-8 pt-6">
-        <div className="flex gap-2 my-auto  text-[#959aa8]">
-          <div className="p-2  rounded-lg border-[0.1rem] ">
-            <TbStethoscope className="text-lg" />
-          </div>
+      {saude && (
+        <>
+          <div className=" border-b-[0.125rem] border-slate-50 mr-8 pt-6">
+            <div className="flex gap-2 my-auto  text-[#959aa8]">
+              <div className="p-2  rounded-lg border-[0.1rem] ">
+                <TbStethoscope className="text-lg" />
+              </div>
 
-          <p className="my-auto text-sm ">Patologias</p>
-        </div>
-        <div className="flex gap-3 py-6">
-          {saude.patologias.map((patologia) => (
-            <Badge variant={"primary"}>{patologia.nome}</Badge>
-          ))}
-        </div>
-      </div>
-      {/* Dispositivos */}
-      <div className=" border-b-[0.125rem] border-slate-50 mr-8 pt-6">
-        <div className="flex gap-2 my-auto  text-[#959aa8]">
-          <div className="p-2  rounded-lg border-[0.1rem] ">
-            <TbJacket className="text-lg" />
+              <p className="my-auto text-sm ">Patologias</p>
+            </div>
+            <div className="flex gap-3 py-6">
+              {saude.patologias.map((patologia) => (
+                <Badge variant={"primary"}>{patologia.nome}</Badge>
+              ))}
+            </div>
           </div>
+          <div className=" border-b-[0.125rem] border-slate-50 mr-8 pt-6">
+            <div className="flex gap-2 my-auto  text-[#959aa8]">
+              <div className="p-2  rounded-lg border-[0.1rem] ">
+                <TbJacket className="text-lg" />
+              </div>
 
-          <p className="my-auto text-sm ">Dispositivos</p>
-        </div>
-        <div className="flex gap-3 py-6">
-          {saude.dispositivos.map((dispositivo) => (
-            <Badge variant={"primary"}>{dispositivo.nome}</Badge>
-          ))}
-        </div>
-      </div>
-      {/* Dispositivos */}
+              <p className="my-auto text-sm ">Dispositivos</p>
+            </div>
+            <div className="flex gap-3 py-6">
+              {saude.dispositivos.map((dispositivo) => (
+                <Badge variant={"primary"}>{dispositivo.nome}</Badge>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
       <div className=" mr-8 pt-6">
         <div className="flex gap-2 my-auto  text-[#959aa8]">
           <div className="p-2  rounded-lg border-[0.1rem] ">

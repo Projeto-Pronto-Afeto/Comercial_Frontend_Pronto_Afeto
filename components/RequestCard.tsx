@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 
 import {
+  TbBrandSuperhuman,
   TbCalendarSmile,
   TbCarambola,
   TbCheck,
@@ -23,11 +24,12 @@ interface RequestCardProps {
   proposal: MinimalProposal;
 }
 
-
 const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
-  console.log(proposal);
+  const proposalNumber = `#PR${proposal.nomeCliente.slice(0, 3)}-${
+    proposal.id
+  }`;
   return (
-    <div className="shadow-sm   w-full py-6 px-6 rounded-xl hover:bg-appointments   ">
+    <div className="shadow-sm bg-[#faf9f8e0]   w-full py-6 px-6 rounded-xl hover:bg-appointments   ">
       <div className="">
         {/* Top */}
         <div className="flex flex-col gap-2">
@@ -41,17 +43,14 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
           </div>
           <div className="flex justify-between border-b-[0.1rem] border-slate-100 pb-3">
             <div className="flex gap-2">
-              <div className=" rounded-xl h-10 w-10 flex justify-center items-center  font-bold">
-                <Image
-                  src={"/assets/icons/abstract-shape.png"}
-                  alt=""
-                  height={100}
-                  width={100}
-                />
+              <div className=" rounded-xl bg-purple h-10 w-10 flex justify-center items-center  font-bold">
+                <TbBrandSuperhuman className="text-white text-2xl" />
               </div>
 
               <div className="flex gap-6 my-auto">
-                <h2 className="font-semibold text-xl my-auto">Proposta </h2>
+                <h2 className="font-semibold text-xl my-auto ">
+                  Proposta <span className="uppercase">{proposalNumber}</span>
+                </h2>
                 <StatusBadge status={proposal.statusProposta} />
               </div>
             </div>

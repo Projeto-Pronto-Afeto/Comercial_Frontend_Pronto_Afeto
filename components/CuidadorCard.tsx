@@ -30,7 +30,7 @@ interface CuidadorCardProps {
 }
 
 const CuidadorCard: React.FC<CuidadorCardProps> = ({ caregiver }) => {
-  console.log("Status do cuidador:", caregiver.statusCuidador);
+
 
   let badgeStatus: Status;
   if (caregiver.statusCuidador === "Aprovado") {
@@ -86,7 +86,7 @@ const CuidadorCard: React.FC<CuidadorCardProps> = ({ caregiver }) => {
           </span>
         </div>
       </div>
-      <div className="flex gap-4 py-4 overflow-x-scroll remove-scrollbar">
+      <div className="flex gap-4 py-4 overflow-x-scroll  mb-6 simple-scrollbar">
         <Badge
           variant={"primary"}
           className="bg-white px-3 py-1 rounded-3xl text-black font-semibold text-xs"

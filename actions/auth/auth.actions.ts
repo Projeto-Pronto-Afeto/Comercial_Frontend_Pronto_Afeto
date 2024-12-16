@@ -12,11 +12,11 @@ export async function fetchPerfilComercial(
   );
   if (res.ok) {
     const data = await res.json();
-    console.log("🚀 ~ data resok:", data);
+  
     return data;
   }
   const data = await res.json();
-  console.log("🚀 ~ data :", data);
+ 
   return null;
 }
 
@@ -63,7 +63,7 @@ export async function login(
   );
 
   const data = await response.json();
-  console.log("🚀 ~ data:", data);
+ 
   if (!response.ok) {
     return {
       errors: {},
@@ -73,9 +73,9 @@ export async function login(
   }
   const decodedToken = jwt.decode(data.accessToken);
   const userId = (decodedToken as jwt.JwtPayload)?.user_id;
-  console.log("🚀 ~ userId:", userId);
+ 
   const perfil = await fetchPerfilComercial(userId);
-  console.log("🚀 ~ Comercial:", perfil);
+
   if (!perfil) {
     return {
       errors: {},

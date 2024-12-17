@@ -1,6 +1,7 @@
 "use server";
 
 import { getUserFromCookies } from "@/helpers/getUserFromToken";
+import { revalidateTag } from "next/cache";
 
 export async function getCuidadorById(id: number) {
   const user = await getUserFromCookies();
@@ -10,6 +11,9 @@ export async function getCuidadorById(id: number) {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/cuidadores/v1/${id}`,
       {
+        next: {
+          tags: ["cuidador"],
+        },
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -24,6 +28,8 @@ export async function getCuidadorById(id: number) {
     }
 
     const data = await response.json();
+    console.log("🚀 ~ getCuidadorById ~ data:", data);
+
     return data;
   } catch (error) {
     console.error("Failed to fetch cuidador:", error);
@@ -31,10 +37,7 @@ export async function getCuidadorById(id: number) {
   }
 }
 
-export async function setCuidadorStatus(
-  id: number,
-  status: "Negado" | "Em_Observacao" | "Aprovado"
-) {
+export async function setCuidadorStatus(id: number, status: string) {
   const user = await getUserFromCookies();
   if (!user) throw new Error("User not found");
 
@@ -48,10 +51,10 @@ export async function setCuidadorStatus(
 
   try {
     const response = await fetch(url.toString(), {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${user.accessToken}`, // Inclua o token no cabeçalho de autorização
+        Authorization: `Bearer ${user.accessToken}`,
       },
       body: JSON.stringify(payload),
     });
@@ -59,7 +62,7 @@ export async function setCuidadorStatus(
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
+    revalidateTag("cuidador");
     const data = await response.json();
     return data;
   } catch (error) {
@@ -67,8 +70,6 @@ export async function setCuidadorStatus(
     throw error; // Re-throw the error after logging it
   }
 }
-
-// Adicione a lógica de autorização aos outros métodos neste arquivo
 
 export async function getAllCuidadores(): Promise<any> {
   const user = await getUserFromCookies();
@@ -81,7 +82,7 @@ export async function getAllCuidadores(): Promise<any> {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user.accessToken}`, // Inclua o token no cabeçalho de autorização
+          Authorization: `Bearer ${user.accessToken}`,
         },
         cache: "no-cache",
       }

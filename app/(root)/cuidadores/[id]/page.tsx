@@ -1,4 +1,5 @@
 import { getCuidadorById } from "@/actions/cuidador/cuidador.actions";
+import { StatusBadge } from "@/components/BadgesStatus";
 
 import LoadingPage from "@/components/LoadingPage";
 import ButtonSetStatusCaregiver from "@/components/main/buttons.tsx/ButtonSetStatusCaregiver";
@@ -16,8 +17,17 @@ import { TbBookmarkPlus, TbHeartBroken } from "react-icons/tb";
 const CaregiverDetailsPage = async ({ params }: SearchParamProps) => {
   const { id } = params;
 
-  const caregiver = await getCuidadorById(id);
+  const caregiver = await getCuidadorById(Number(id));
   if (!caregiver) return <LoadingPage />;
+
+  let badgeStatus: Status;
+  if (caregiver.statusCuidador === "Aprovado") {
+    badgeStatus = "Aprovada";
+  } else if (caregiver.statusCuidador === "Negado") {
+    badgeStatus = "Negada";
+  } else {
+    badgeStatus = "Em_Observacao";
+  }
 
   return (
     <div className="relative">
@@ -43,7 +53,9 @@ const CaregiverDetailsPage = async ({ params }: SearchParamProps) => {
           />
           <section className="flex md:flex-row flex-col gap-8 justify-between w-full mt-16">
             <div className="">
-              <h4 className="font-bold text-xl">{caregiver.nome}</h4>
+              <h4 className="font-bold text-xl flex gap-2">
+                {caregiver.nome} <StatusBadge status={badgeStatus} />
+              </h4>
               <span className="text-xs font-medium text-dark-600">
                 Cuidador com {caregiver.tempoExperiencia} anos de experiência em
                 cuidado de pessoas e titulado como{" "}
@@ -66,7 +78,7 @@ const CaregiverDetailsPage = async ({ params }: SearchParamProps) => {
                       Rejeitar
                     </Button>
                   }
-                  status="Aprovado"
+                  status="Negado"
                 />
               )}
 

@@ -1,6 +1,6 @@
 import { setCuidadorStatus } from "@/actions/cuidador/cuidador.actions";
 import React from "react";
-import { TbBookmarkPlus, TbBookmarksFilled } from "react-icons/tb";
+
 
 const ButtonSetStatusCaregiver = ({
   id,
@@ -16,11 +16,10 @@ const ButtonSetStatusCaregiver = ({
       className=""
       action={async () => {
         "use server";
-        setCuidadorStatus(id, "Aprovado");
+        setCuidadorStatus(id, status);
       }}
     >
-      {children}
-      <button type="submit"></button>
+      <button type="submit"> {children}</button>
     </form>
   );
 };

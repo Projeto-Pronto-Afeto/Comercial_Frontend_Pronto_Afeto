@@ -4,14 +4,7 @@ import { ptBR } from "date-fns/locale";
 import React from "react";
 import {
   TbBrandBackbone,
-  TbBrandWindows,
-  TbDots,
-  TbDotsCircleHorizontal,
-  TbExternalLink,
   TbLayoutSidebarRight,
-  TbLayoutSidebarRightCollapse,
-  TbLayoutSidebarRightExpand,
-  TbLink,
   TbMapPin,
 } from "react-icons/tb";
 import ContractDetailsSheet from "../../sheet/ContractDetailsSheet";
@@ -26,15 +19,15 @@ const ContractCard = ({ contrato }: { contrato: Contrato }) => {
         <div className="flex gap-4">
           <div
             className={`rounded-full h-12 w-12 flex items-center justify-center ${
-              contrato.status === "Assinado" ? "bg-green-500" : "bg-purple"
+              contrato.status === "ASSINADO" ? "bg-green-500" : "bg-purple"
             }`}
           >
-            <ContractDetailsSheet contractId={contrato.id} />
+            <TbBrandBackbone className="text-white text-3xl" />
           </div>
           <div>
             <h2 className="font-semibold flex ">
               Contrato <span className="uppercase">{contractNumber}</span>{" "}
-              <TbLayoutSidebarRight className="text-dark-500 my-auto text-lg ml-4" />{" "}
+              <ContractDetailsSheet contractId={contrato.id} />
             </h2>
             <p className="flex gap-1 text-sm text-dark-600">
               <TbMapPin className="text-dark-500 my-auto" />{" "}
@@ -46,7 +39,7 @@ const ContractCard = ({ contrato }: { contrato: Contrato }) => {
         <div>
           <p
             className={`text-sm font-bold  text-end  ${
-              contrato.status === "Assinado" ? "text-green-500" : "text-purple"
+              contrato.status === "ASSINADO" ? "text-green-500" : "text-purple"
             }`}
           >
             R$ {contrato.valor.toFixed(0.2)}

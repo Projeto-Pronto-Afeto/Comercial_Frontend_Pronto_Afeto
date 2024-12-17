@@ -21,19 +21,20 @@ import {
   TbCloud,
   TbAdjustmentsDollar,
   TbClipboardText,
+  TbBrandBackbone,
+  TbLayoutSidebarRight,
 } from "react-icons/tb";
 import { addDays, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
-import { arrayToComplexDate, arrayToDate, formatDate } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
 
-import { diasDaSemanaMap } from "@/constants";
 import { getContractById } from "@/actions/contrato/contrato.actions";
-import { Badge } from "@/components/ui/badge";
+
 import ResumeCardCuidado from "@/components/ResumeCardCuidado";
-import { StatusBadge } from "@/components/BadgesStatus";
-import { Textarea } from "@/components/ui/textarea";
+
 import CuidadorCard from "@/components/CuidadorCard";
+import { ContractStatus } from "@/components/ContractStatus";
 
 const ContractDetailsSheet = async ({ contractId }: { contractId: number }) => {
   const contrato: Contrato = await getContractById(contractId);
@@ -42,7 +43,7 @@ const ContractDetailsSheet = async ({ contractId }: { contractId: number }) => {
     contrato && (
       <Sheet>
         <SheetTrigger>
-          <TbBrandBackbone className="text-white text-2xl" />
+          <TbLayoutSidebarRight className="text-dark-500 my-auto text-lg ml-4" />{" "}
         </SheetTrigger>
         <SheetContent
           side={"right"}
@@ -74,10 +75,6 @@ const ContractDetailsSheet = async ({ contractId }: { contractId: number }) => {
                   <TbBrandDaysCounter className=" text-black/60 my-auto mr-1 text-[18px]" />
                   Horários
                 </p>
-                <p className="flex text-sm text-black/50 font-semibold my-auto">
-                  <TbCloud className=" text-black/60 my-auto mr-1 text-[18px]" />
-                  Turno
-                </p>
 
                 <p className="flex text-sm text-black/50 font-semibold my-auto">
                   <TbMapPinFilled className=" text-black/60 my-auto mr-1 text-[18px]" />
@@ -85,7 +82,7 @@ const ContractDetailsSheet = async ({ contractId }: { contractId: number }) => {
                 </p>
               </div>
               <div className="grid grid-rows-5 gap-6">
-                <StatusBadge status={contrato.status} />
+                <ContractStatus status={contrato.status} />
                 <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
                   {" "}
                   {format(
@@ -111,24 +108,8 @@ const ContractDetailsSheet = async ({ contractId }: { contractId: number }) => {
                 <p className="flex gap-2 my-auto overflow-hidden remove-scrollbar px-4">
                   {contrato.horarios.map((horario, index) => (
                     <p key={index} className="text-sm font-medium">
-                      {horario}
+                      {horario} h {"  "}
                     </p>
-                  ))}
-                </p>
-                <p className="flex gap-2 my-auto overflow-hidden remove-scrollbar px-3">
-                  {contrato.plantao.turno.map((turn: any) => (
-                    <Badge
-                      key={turn}
-                      className={`rounded-2xl font-light ${
-                        turn === "Diurno"
-                          ? "bg-yellow-50 text-yellow-500"
-                          : turn === "Noturno"
-                          ? "bg-blue-50 text-blue-500"
-                          : "bg-purple-50 text-purple-500"
-                      }`}
-                    >
-                      {turn}
-                    </Badge>
                   ))}
                 </p>
 

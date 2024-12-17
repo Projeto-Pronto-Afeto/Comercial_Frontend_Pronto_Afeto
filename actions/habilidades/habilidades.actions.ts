@@ -5,7 +5,7 @@ export async function getAllHabilidades(): Promise<{
 }> {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/patologias/habilidades`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/patologias/habilidades?page=0&limit=100`,
       {
         method: "GET",
       }
@@ -16,6 +16,7 @@ export async function getAllHabilidades(): Promise<{
     }
 
     const resData = await response.json();
+    console.log("🚀 ~ getAllHabilidades ~ resData:", resData);
     return { error: false, data: resData as PatologyDtoGet };
   } catch (error) {
     console.error("Error fetching patologias:", error);

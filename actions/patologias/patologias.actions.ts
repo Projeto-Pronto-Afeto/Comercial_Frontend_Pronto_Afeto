@@ -5,7 +5,7 @@ export async function getAllPatologias(): Promise<{
 }> {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/patologias`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/patologias?page=0&limit=100`,
       {
         method: "GET",
         headers: {

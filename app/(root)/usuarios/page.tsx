@@ -17,7 +17,7 @@ const UserPage = async ({
     limit: 10,
   });
 
-  console.log(users?.content);
+
 
   return (
     <div className="admin-main">

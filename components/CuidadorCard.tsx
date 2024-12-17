@@ -43,32 +43,7 @@ const CuidadorCard: React.FC<CuidadorCardProps> = ({ caregiver }) => {
 
   return (
     <div className="text-start relative  w-full  shadow-sm bg-[#faf9f8e0]    p-6 rounded-2xl hover:bg-appointments  ">
-      <div className="absolute flex flex-col gap-5 top-6 right-6 text-2xl z-50">
-        {caregiver.statusCuidador === "Aprovado" ||
-        caregiver.statusCuidador === "Negado" ? (
-          <></>
-        ) : (
-          <ButtonSetStatusCaregiver
-            id={caregiver.cuidadorId}
-            children={
-              <TbBookmarkPlus className="cursor-pointer hover:text-purple" />
-            }
-            status="Aprovado"
-          />
-        )}
-        {caregiver.statusCuidador === "Aprovado" ||
-        caregiver.statusCuidador === "Negado" ? (
-          <></>
-        ) : (
-          <ButtonSetStatusCaregiver
-            id={caregiver.cuidadorId}
-            children={
-              <TbHeartBroken className="cursor-pointer hover:text-red-500" />
-            }
-            status="Negado"
-          />
-        )}
-      </div>
+      <div className="absolute flex flex-col gap-5 top-6 right-6 text-2xl z-50"></div>
       <div className="flex gap-4">
         <Image
           src={caregiver.fotoUrl}

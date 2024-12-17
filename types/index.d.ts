@@ -28,7 +28,7 @@ declare type Status =
   | "Observacao"
   | "Em_Observacao";
 
-  declare type ContractStatus = "Criado" | "Assinado";
+  declare type ContractStatus = "SOLICITADO" | "ASSINADO";
 
   declare interface Patology {
     id: number;

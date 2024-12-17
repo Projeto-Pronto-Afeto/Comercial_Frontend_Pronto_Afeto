@@ -1,5 +1,6 @@
 "use server";
 
+import { getUserFromCookies } from "@/helpers/getUserFromToken";
 import { acceptProposalSchema } from "@/lib/validation";
 import { revalidateTag } from "next/cache";
 
@@ -14,9 +15,14 @@ export async function getAllPropostas({
   limit?: number;
   direction?: string;
 }): Promise<ProposalDTOGet> {
+  const user = await getUserFromCookies();
+
+  if (!user) throw new Error("User not found");
+
   const url = new URL(
     `${process.env.NEXT_PUBLIC_API_URL}/api/propostas/v1/orderByDateAndGroupByStatus`
   );
+
   const params = new URLSearchParams();
 
   if (status) params.append("status", status);
@@ -28,6 +34,9 @@ export async function getAllPropostas({
   try {
     const response = await fetch(url.toString(), {
       next: { tags: ["solicitacoes"], revalidate: 300 },
+      headers: {
+        Authorization: `Bearer ${user.accessToken}`,
+      },
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -42,10 +51,19 @@ export async function getAllPropostas({
 }
 
 export async function getProposalById(id: number) {
+  const user = await getUserFromCookies();
+
+  if (!user) throw new Error("User not found");
+
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/propostas/v1/${id}`,
-      { cache: "no-cache" }
+      {
+        cache: "no-cache",
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      }
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -72,6 +90,10 @@ export async function acceptProposal(
   previousState: State,
   formData: FormData
 ): Promise<State> {
+  const user = await getUserFromCookies();
+
+  if (!user) throw new Error("User not found");
+
   const id = formData.get("id");
 
   const observacoes = formData.get("observacoes") as string;
@@ -103,6 +125,7 @@ export async function acceptProposal(
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
         },
         body: JSON.stringify(data),
       }

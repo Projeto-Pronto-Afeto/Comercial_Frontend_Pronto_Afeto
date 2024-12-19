@@ -1,3 +1,4 @@
+
 import { getCuidadorById } from "@/actions/cuidador/cuidador.actions";
 import { StatusBadge } from "@/components/BadgesStatus";
 
@@ -6,6 +7,7 @@ import ButtonSetStatusCaregiver from "@/components/main/buttons.tsx/ButtonSetSta
 import CardAddress from "@/components/main/cards/CardAddress";
 import CardApresentation from "@/components/main/cards/CardApresentation";
 import CardExperience from "@/components/main/cards/CardExperience";
+
 import CardOtherInformations from "@/components/main/cards/CardOtherInformations";
 
 import { Button } from "@/components/ui/button";

@@ -10,9 +10,12 @@ import {
 import ContractDetailsSheet from "../../sheet/ContractDetailsSheet";
 
 const ContractCard = ({ contrato }: { contrato: Contrato }) => {
+ 
   const contractNumber = `#CTR${contrato.cliente.nome.slice(0, 3)}-${
     contrato.id
   }`;
+
+  
   return (
     <div className="bg-[#faf9f8e0]  rounded-3xl">
       <div className="flex justify-between px-6 py-4">

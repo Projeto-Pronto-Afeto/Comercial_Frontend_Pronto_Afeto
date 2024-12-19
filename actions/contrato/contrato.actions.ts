@@ -25,7 +25,7 @@ export async function getAllContracts({
 
   try {
     const response = await fetch(url.toString(), {
-      next: { tags: ["contratos"], revalidate: 300 },
+      cache: "no-cache",
       headers: {
         Authorization: `Bearer ${user.accessToken}`,
       },
@@ -50,7 +50,6 @@ export async function getContractById(id: number) {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/contratos/v1/${id}`,
       {
-        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.accessToken}`, // Inclua o token no cabeçalho de autorização

@@ -7,6 +7,7 @@ import React from "react";
 
 const CreateCaregiverPage = async () => {
   const patologias = await getAllPatologias();
+  console.log("🚀 ~ CreateCaregiverPage ~ patologias:", patologias);
   const habilidades = await getAllHabilidades();
   return (
     <div className="absolute inset-0 grid md:grid-cols-2 grid-cols-1 h-full w-full">

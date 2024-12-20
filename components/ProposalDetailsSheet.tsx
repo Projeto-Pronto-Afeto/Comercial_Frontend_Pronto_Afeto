@@ -28,7 +28,7 @@ import { ptBR } from "date-fns/locale";
 import { Badge } from "./ui/badge";
 import { StatusBadge } from "./BadgesStatus";
 import ResumeCardCuidado from "./ResumeCardCuidado";
-import { arrayToComplexDate, arrayToDate } from "@/lib/utils";
+import { arrayToComplexDate, arrayToDate, arrayToDateHour } from "@/lib/utils";
 import { getProposalById } from "@/actions/prposta/proposta.actions";
 import CuidadorCard from "./CuidadorCard";
 import { Textarea } from "./ui/textarea";
@@ -88,7 +88,7 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
                 <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
                   {" "}
                   {format(
-                    arrayToComplexDate(proposal.dataDeInicio),
+                    arrayToDateHour(proposal.plantao.dataHoraInicioPlantao),
                     "dd 'de' MMMM 'de' yyyy",
                     {
                       locale: ptBR,
@@ -96,7 +96,10 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
                   )}
                   <TbChevronRight className="text-black/40 text-lg my-[0.6px]" />
                   {format(
-                    addDays(arrayToComplexDate(proposal.dataDeInicio), 30),
+                    addDays(
+                      arrayToDateHour(proposal.plantao.dataHoraInicioPlantao),
+                      30
+                    ),
                     "MMM dd, yyyy",
                     {
                       locale: ptBR,

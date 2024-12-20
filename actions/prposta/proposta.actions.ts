@@ -8,7 +8,7 @@ export async function getAllPropostas({
   status,
   page = 0,
   limit = 12,
-  direction = "desc",
+  direction = "asc",
 }: {
   status?: string;
   page?: number;

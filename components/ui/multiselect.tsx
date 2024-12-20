@@ -15,14 +15,14 @@ import { Badge } from "@/components/ui/badge";
 
 export interface Option {
   key: number;
-  name: string;
+  value: string;
 }
 
 interface MultiSelectProps {
   getValues: UseFormGetValues<any>;
   setValue: UseFormSetValue<any>;
   name: string;
-  options: any[];
+  options: Option[];
   placeholder: string;
 }
 
@@ -60,7 +60,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   };
 
   const filteredOptions = options.filter((option) =>
-    option.name.toLowerCase().includes(searchTerm.toLowerCase())
+    option.value.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const {
@@ -82,11 +82,13 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
       newSelectedItems.push(item); // Add item if not selected
     }
     setSelectedItems(newSelectedItems);
+
     setValue(
       name,
       newSelectedItems.map((item) => item.key)
     );
-    console.log(newSelectedItems);
+
+    console.log(getValues(name));
   };
 
   return (
@@ -100,7 +102,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
               placeholder={placeholder}
               value={searchTerm}
               onChange={handleSearchChange}
-              className="px-10 flex h-10 w-full rounded-xl border border-[#E9E9E9] bg-background py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-purple-400 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              className="px-10 flex h-10 w-full rounded-xl border border-[#E9E9E9] bg-background py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-yellow-400 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
         </div>
@@ -116,15 +118,15 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
             <div
               key={option.key}
               onClick={() => toggleSelection(option)}
-              className={`relative m-2 flex hover:bg-purple-50 cursor-default select-none items-center rounded-sm py-1.5 px-3 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 
+              className={`relative m-2 flex hover:bg-yellow-50 cursor-default select-none items-center rounded-sm py-1.5 px-3 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 
                `}
             >
               <span className="flex h-3.5 w-3.5 mr-3  items-center justify-center">
                 {selectedItems.some((item) => item.key === option.key) && (
-                  <Check className="h-4 w-4 text-purple-600" />
+                  <Check className="h-4 w-4 text-yellow-600" />
                 )}
               </span>
-              {option.name}
+              {option.value}
             </div>
           ))}
         </div>
@@ -132,7 +134,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
       <div className="mt-2">
         {selectedItems.map((item) => (
           <Badge key={item.key} variant={"outline"} className="mr-2 mb-2">
-            {item.name}
+            {item.value}
             <LuX
               className="h-3 w-3 ml-1 text-slate-400"
               onClick={() => toggleSelection(item)}

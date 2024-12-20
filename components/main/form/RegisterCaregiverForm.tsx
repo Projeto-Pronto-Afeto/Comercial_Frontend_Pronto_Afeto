@@ -16,7 +16,11 @@ import {
 } from "@/constants";
 import GridCustomField from "../inputs/GridCustomField";
 
-import { convertToOptions } from "@/lib/utils";
+import {
+  convertHabilitiesToOptions,
+  convertPatologiasToOptions,
+  convertToOptions,
+} from "@/lib/utils";
 import MultiSelect from "@/components/ui/multiselect";
 import ImageUpload from "../inputs/ImageUpload";
 import { Button } from "@/components/ui/button";
@@ -63,14 +67,12 @@ const RegisterCaregiverForm = ({
       titulacao: values.titulacao,
       tempoExperiencia: values.tempoExperiencia,
 
-      habilidades: values.habilidades.map((h) => ({
-        nome: h,
-      })),
+      habilidades: values.habilidades,
 
-      experiencias: values.experiencias.map((e) => ({
-        nome: e,
-      })),
+      experiencias: values.experiencias,
     };
+
+    console.log(cuidador);
 
     const formData = new FormData();
     formData.append(
@@ -319,9 +321,7 @@ const RegisterCaregiverForm = ({
                         name={field.name}
                         getValues={form.getValues}
                         setValue={form.setValue}
-                        options={convertToOptions(
-                          habilidades.map((h) => h.nome)
-                        )}
+                        options={convertHabilitiesToOptions(habilidades)}
                         placeholder={""}
                       />
                     </FormControl>
@@ -343,9 +343,7 @@ const RegisterCaregiverForm = ({
                         name={field.name}
                         getValues={form.getValues}
                         setValue={form.setValue}
-                        options={convertToOptions(
-                          patologias.map((p) => p.nome)
-                        )}
+                        options={convertPatologiasToOptions(patologias)}
                         placeholder={""}
                       />
                     </FormControl>

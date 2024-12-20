@@ -41,7 +41,7 @@ const page = async ({
           <div className="grid xl:grid-cols-2 grid-cols-1 gap-4 py-6">
             {" "}
             {data?.content.map((item: Contrato) => (
-              <ContractCard contrato={item} />
+              <ContractCard contrato={item} key={item.id} />
             ))}
           </div>
           {data.totalPages > 1 ? (

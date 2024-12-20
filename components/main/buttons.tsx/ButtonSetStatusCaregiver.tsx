@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import { setCuidadorStatus } from "@/actions/cuidador/cuidador.actions";
@@ -16,25 +16,20 @@ const ButtonSetStatusCaregiver = ({
 }) => {
   const initialState = { error: false, message: "", submitting: false };
 
-  // Gerenciar estado com `useFormState`
   const [formState, formAction] = useFormState(
     async () => {
       const response = await setCuidadorStatus(id, status);
+
+      if (!response.error) {
+        toast.success(response.message || "Status atualizado com sucesso!");
+      } else {
+        toast.error(response.message || "Erro ao atualizar status.");
+      }
+
       return response;
     },
     initialState
   );
-
-  // Exibir notificações de sucesso ou erro
-  useEffect(() => {
-    if (!formState.submitting) {
-      if (!formState.error) {
-        toast.success(formState.message || "Status atualizado com sucesso!");
-      } else {
-        toast.error(formState.message || "Erro ao atualizar status.");
-      }
-    }
-  }, [formState]);
 
   return (
     <form action={formAction}>

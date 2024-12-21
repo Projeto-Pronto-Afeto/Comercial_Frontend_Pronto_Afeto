@@ -1,0 +1,13 @@
+services:
+  comercial:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - "3001:3001" # Mapeia a porta do host para a aplicação
+    environment:
+      NEXT_PUBLIC_API_URL: "http://localhost:8080"
+      NODE_ENV: "production" # Configura o ambiente para produção
+    volumes:
+      - .:/app # Monta o diretório local no container para facilitar o desenvolvimento
+      - /app/node_modules # Evita conflitos entre dependências locais e no container

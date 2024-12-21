@@ -4,19 +4,25 @@ import { loginSchema } from "@/lib/validation";
 import jwt from "jsonwebtoken";
 
 export async function fetchPerfilComercial(
-  userId: number
+  userId: number,
+  accessToken: string
 ): Promise<PerfilComercial | null> {
   //mudar endpoint
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/comercial/v1/user/${userId}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/comercial/v1/user/${userId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
   );
   if (res.ok) {
     const data = await res.json();
-    console.log("🚀 ~ data resok:", data);
+    console.log("data", data);
+
     return data;
   }
-  const data = await res.json();
-  console.log("🚀 ~ data :", data);
+
   return null;
 }
 
@@ -63,7 +69,7 @@ export async function login(
   );
 
   const data = await response.json();
-  console.log("🚀 ~ data:", data);
+
   if (!response.ok) {
     return {
       errors: {},
@@ -73,9 +79,9 @@ export async function login(
   }
   const decodedToken = jwt.decode(data.accessToken);
   const userId = (decodedToken as jwt.JwtPayload)?.user_id;
-  console.log("🚀 ~ userId:", userId);
-  const perfil = await fetchPerfilComercial(userId);
-  console.log("🚀 ~ Comercial:", perfil);
+
+  const perfil = await fetchPerfilComercial(userId, data.accessToken);
+
   if (!perfil) {
     return {
       errors: {},

@@ -1,5 +1,6 @@
 "use server";
 
+import { getUserFromCookies } from "@/helpers/getUserFromToken";
 import { acceptProposalSchema } from "@/lib/validation";
 import { revalidateTag } from "next/cache";
 
@@ -7,16 +8,21 @@ export async function getAllPropostas({
   status,
   page = 0,
   limit = 12,
-  direction = "desc",
+  direction = "asc",
 }: {
   status?: string;
   page?: number;
   limit?: number;
   direction?: string;
 }): Promise<ProposalDTOGet> {
+  const user = await getUserFromCookies();
+
+  if (!user) throw new Error("User not found");
+
   const url = new URL(
     `${process.env.NEXT_PUBLIC_API_URL}/api/propostas/v1/orderByDateAndGroupByStatus`
   );
+
   const params = new URLSearchParams();
 
   if (status) params.append("status", status);
@@ -24,18 +30,19 @@ export async function getAllPropostas({
   if (limit) params.append("limit", limit.toString());
   if (direction) params.append("direction", direction);
   url.search = params.toString();
-  console.log("🚀 ~ url", url.toString());
 
   try {
     const response = await fetch(url.toString(), {
       next: { tags: ["solicitacoes"], revalidate: 300 },
+      headers: {
+        Authorization: `Bearer ${user.accessToken}`,
+      },
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
 
-    console.log("🚀 ~ data", data);
     return data;
   } catch (error) {
     console.error("Failed to fetch propostas:", error);
@@ -44,17 +51,25 @@ export async function getAllPropostas({
 }
 
 export async function getProposalById(id: number) {
+  const user = await getUserFromCookies();
+
+  if (!user) throw new Error("User not found");
+
   try {
     const response = await fetch(
-      `http://localhost:8080/api/propostas/v1/${id}`,
-      { cache: "no-cache" }
+      `${process.env.NEXT_PUBLIC_API_URL}/api/propostas/v1/${id}`,
+      {
+        cache: "no-cache",
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      }
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
 
-    console.log("🚀 ~ data", data);
     return data;
   } catch (error) {
     console.error("Failed to fetch proposta:", error);
@@ -75,6 +90,10 @@ export async function acceptProposal(
   previousState: State,
   formData: FormData
 ): Promise<State> {
+  const user = await getUserFromCookies();
+
+  if (!user) throw new Error("User not found");
+
   const id = formData.get("id");
 
   const observacoes = formData.get("observacoes") as string;
@@ -101,11 +120,12 @@ export async function acceptProposal(
 
   try {
     const response = await fetch(
-      `http://localhost:8080/api/propostas/v1/aprovar/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/propostas/v1/aprovar/${id}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
         },
         body: JSON.stringify(data),
       }

@@ -24,7 +24,7 @@ const CreateUserDialog = () => {
           Adicionar
         </Button>
       </DialogTrigger>
-      <DialogContent className=" sm:max-w-[425px] p-0 bg-white">
+      <DialogContent className="  p-0 bg-white">
         <FormCreateUser />
       </DialogContent>
     </Dialog>

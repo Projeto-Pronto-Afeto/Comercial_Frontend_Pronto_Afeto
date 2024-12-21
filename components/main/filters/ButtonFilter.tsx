@@ -21,13 +21,18 @@ import { useState } from "react";
 import { TbApps, TbFilter, TbPlus } from "react-icons/tb";
 
 interface ButtonFilterProps {
-  baseRoute:string
-  approvalValue:string
-  pendingValue:string
-  rejectedValue:string
+  baseRoute: string;
+  approvalValue: string;
+  pendingValue: string;
+  rejectedValue?: string;
 }
 
-const ButtonFilter: React.FC<ButtonFilterProps> = ({ baseRoute,approvalValue,pendingValue,rejectedValue }) => {
+const ButtonFilter: React.FC<ButtonFilterProps> = ({
+  baseRoute,
+  approvalValue,
+  pendingValue,
+  rejectedValue,
+}) => {
   const [position, setPosition] = useState();
   const router = useRouter();
 
@@ -79,9 +84,11 @@ const ButtonFilter: React.FC<ButtonFilterProps> = ({ baseRoute,approvalValue,pen
                   <DropdownMenuRadioItem value={approvalValue}>
                     Aprovada
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value={rejectedValue}>
-                    Negada
-                  </DropdownMenuRadioItem>
+                  {rejectedValue && (
+                    <DropdownMenuRadioItem value={rejectedValue}>
+                      Negada
+                    </DropdownMenuRadioItem>
+                  )}
                 </DropdownMenuRadioGroup>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>

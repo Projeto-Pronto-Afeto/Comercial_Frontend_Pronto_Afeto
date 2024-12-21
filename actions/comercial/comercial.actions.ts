@@ -1,5 +1,6 @@
 "use server";
 
+import { getUserFromCookies } from "@/helpers/getUserFromToken";
 import { createUserSchema } from "@/lib/validation";
 import { revalidateTag } from "next/cache";
 
@@ -10,6 +11,9 @@ export async function getAllComerciais({
   page?: number;
   limit?: number;
 }): Promise<any> {
+  const user = await getUserFromCookies();
+
+  if (!user) throw new Error("User not found");
   const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/comercial/v1`);
   const params = new URLSearchParams();
 
@@ -19,7 +23,10 @@ export async function getAllComerciais({
 
   try {
     const response = await fetch(url.toString(), {
-      next: { tags: ["comerciais"] },
+      next: { tags: ["comerciais"], revalidate: 100 },
+      headers: {
+        Authorization: `Bearer ${user.accessToken}`,
+      },
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -49,6 +56,10 @@ export const createComercialUser = async (
   previousState: State,
   formData: FormData
 ): Promise<State> => {
+  const user = await getUserFromCookies();
+
+  if (!user) throw new Error("User not found");
+
   const nome = formData.get("nome") as string;
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
@@ -79,6 +90,7 @@ export const createComercialUser = async (
       {
         headers: {
           Accept: "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
         },
         method: "POST",
         body: formData, // Cabeçalho gerado automaticamente
@@ -123,6 +135,9 @@ export const removeUser = async (
   previousState: StateRemove,
   formData: FormData
 ): Promise<StateRemove> => {
+  const user = await getUserFromCookies();
+
+  if (!user) throw new Error("User not found");
   const id = formData.get("id") as string;
   try {
     const response = await fetch(
@@ -130,23 +145,20 @@ export const removeUser = async (
       {
         headers: {
           Accept: "application/json",
-          // O cabeçalho Content-Type será definido automaticamente pelo navegador
-          // quando você usa FormData, então não é necessário defini-lo manualmente.
+          Authorization: `Bearer ${user.accessToken}`,
         },
         method: "DELETE",
-        next: { tags: ["comerciais"] },
       }
     );
     if (!response.ok) {
-      const data = await response.json();
       return {
         errors: {},
-        message: data.message || data.toString(),
+        message: "Erro ao deletar usuário",
         error: true,
       };
     }
 
-    revalidateTag("users-comercial");
+    revalidateTag("comerciais");
     return {
       errors: {},
       message: "Usuário removido com sucesso",

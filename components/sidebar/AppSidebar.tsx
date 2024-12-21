@@ -8,6 +8,7 @@ import {
   Command,
   Frame,
   GalleryVerticalEnd,
+  LucideIcon,
   Map,
   PieChart,
   Settings2,
@@ -26,6 +27,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { TbAnalyze, TbBrandSuperhuman, TbClipboardText } from "react-icons/tb";
 
 // This is sample data.
 const data = {
@@ -45,7 +47,7 @@ const data = {
     {
       title: "Solicitações",
       url: "#",
-      icon: SquareTerminal,
+      icon: TbBrandSuperhuman as LucideIcon,
       isActive: true,
       items: [
         {
@@ -55,9 +57,21 @@ const data = {
       ],
     },
     {
+      title: "Contratos",
+      url: "#",
+      icon: TbAnalyze as LucideIcon,
+      isActive: true,
+      items: [
+        {
+          title: "Histórico",
+          url: "/contratos",
+        },
+      ],
+    },
+    {
       title: "Cuidadores",
       url: "#",
-      icon: Bot,
+      icon: TbClipboardText as LucideIcon,
       items: [
         {
           title: "Cadastros",
@@ -90,14 +104,16 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
+        <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={props.user} />

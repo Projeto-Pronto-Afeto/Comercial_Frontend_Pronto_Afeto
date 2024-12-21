@@ -25,6 +25,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import Image from "next/image";
 
 export function NavUser({ user }: { user: UserSession }) {
   const { isMobile } = useSidebar();
@@ -39,11 +40,18 @@ export function NavUser({ user }: { user: UserSession }) {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage
-                  src={user.perfil?.fotoUrl}
-                  alt={user?.perfil?.nome}
-                />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                {user?.perfil?.fotoUrl && (
+                  <Image
+                    src={user?.perfil?.fotoUrl}
+                    alt={user?.perfil?.nome}
+                    width={50}
+                    height={50}
+                  />
+                )}
+
+                <AvatarFallback className="rounded-lg uppercase">
+                  {user?.perfil?.nome.slice(0, 2)}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">

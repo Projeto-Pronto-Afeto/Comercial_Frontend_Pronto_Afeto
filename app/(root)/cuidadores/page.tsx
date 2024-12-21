@@ -13,7 +13,11 @@ const CuidadorApprovalPage = async ({
     typeof searchParams.status === "string" ? searchParams.status : "";
   const page = typeof searchParams.page === "string" ? searchParams.page : "0";
 
-  const data = await getAllCuidadores(Number(page), 8, status);
+  const data = await getAllCuidadores({
+    page: parseInt(page),
+    limit: 10,
+    status,
+  });
 
   return (
     <div className="admin-main">

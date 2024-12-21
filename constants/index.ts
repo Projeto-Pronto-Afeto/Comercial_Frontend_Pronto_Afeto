@@ -11,6 +11,16 @@ export const escolaridadeLabels = {
   NÍVEL_MÉDIO: "Ensino Médio",
   NÍVEL_SUPERIOR: "Ensino Superior",
 };
+
+export const diasDaSemanaMap = {
+  SEGUNDA_FEIRA: "Segunda-feira",
+  TERCA_FEIRA: "Terça-feira",
+  QUARTA_FEIRA: "Quarta-feira",
+  QUINTA_FEIRA: "Quinta-feira",
+  SEXTA_FEIRA: "Sexta-feira",
+  SABADO: "Sábado",
+  DOMINGO: "Domingo",
+};
 // Defina as opções de experiências e habilidades
 export const Experiencias = [
   "Cuidados com idosos",
@@ -35,6 +45,8 @@ export const StatusIcon = {
   Em_Observacao: "/assets/icons/pending.svg",
   Negada: "/assets/icons/cancelled.svg",
 };
+
+
 
 
 

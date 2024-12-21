@@ -41,8 +41,8 @@ const FormCreateUser = () => {
 
   return (
     <form className="pb-8" action={formAction}>
-      <DialogHeader className="bg-gradient-to-bl from-[#ffe4e6]  to-[#ccfbf1] relative rounded-3xl">
-        <div className="h-20"></div>
+      <DialogHeader className="bg-purple relative rounded-3xl">
+        <div className="h-12"></div>
         <div className="px-6">
           <ImageUpload />
         </div>

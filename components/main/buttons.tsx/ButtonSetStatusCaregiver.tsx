@@ -1,6 +1,9 @@
-import { setCuidadorStatus } from "@/actions/cuidador/cuidador.actions";
+"use client";
+
 import React from "react";
-import { TbBookmarkPlus, TbBookmarksFilled } from "react-icons/tb";
+import { useFormState } from "react-dom";
+import { toast } from "sonner";
+import { setCuidadorStatus } from "@/actions/cuidador/cuidador.actions";
 
 const ButtonSetStatusCaregiver = ({
   id,
@@ -11,16 +14,28 @@ const ButtonSetStatusCaregiver = ({
   children: React.ReactNode;
   status: string;
 }) => {
+  const initialState = { error: false, message: "", submitting: false };
+
+  const [formState, formAction] = useFormState(
+    async () => {
+      const response = await setCuidadorStatus(id, status);
+
+      if (!response.error) {
+        toast.success(response.message || "Status atualizado com sucesso!");
+      } else {
+        toast.error(response.message || "Erro ao atualizar status.");
+      }
+
+      return response;
+    },
+    initialState
+  );
+
   return (
-    <form
-      className=""
-      action={async () => {
-        "use server";
-        setCuidadorStatus(id, "Aprovado");
-      }}
-    >
-      {children}
-      <button type="submit"></button>
+    <form action={formAction}>
+      <button type="submit" disabled={formState.submitting}>
+        {formState.submitting ? "Carregando..." : children}
+      </button>
     </form>
   );
 };

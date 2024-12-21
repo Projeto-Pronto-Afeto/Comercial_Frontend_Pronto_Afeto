@@ -21,27 +21,29 @@ import {
   TbCloud,
   TbAdjustmentsDollar,
   TbClipboardText,
+  TbBrandBackbone,
+  TbLayoutSidebarRight,
 } from "react-icons/tb";
 import { addDays, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
-import { Badge } from "./ui/badge";
-import { StatusBadge } from "./BadgesStatus";
-import ResumeCardCuidado from "./ResumeCardCuidado";
-import { arrayToComplexDate, arrayToDate, arrayToDateHour } from "@/lib/utils";
-import { getProposalById } from "@/actions/prposta/proposta.actions";
-import CuidadorCard from "./CuidadorCard";
-import { Textarea } from "./ui/textarea";
-import { diasDaSemanaMap } from "@/constants";
+import { formatDate } from "@/lib/utils";
 
-const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
-  const proposal: Proposal = await getProposalById(proposalId);
+import { getContractById } from "@/actions/contrato/contrato.actions";
+
+import ResumeCardCuidado from "@/components/ResumeCardCuidado";
+
+import CuidadorCard from "@/components/CuidadorCard";
+import { ContractStatus } from "@/components/ContractStatus";
+
+const ContractDetailsSheet = async ({ contractId }: { contractId: number }) => {
+  const contrato: Contrato = await getContractById(contractId);
 
   return (
-    proposal && (
+    contrato && (
       <Sheet>
         <SheetTrigger>
-          <TbDots className="text-black/60 text-lg" />
+          <TbLayoutSidebarRight className="text-dark-500 my-auto text-lg ml-4" />{" "}
         </SheetTrigger>
         <SheetContent
           side={"right"}
@@ -52,12 +54,12 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
               <div className="my-auto">
                 <p className="text-black/60 text-sm">Solicitado por</p>
                 <SheetTitle className="text-3xl">
-                  {proposal.cliente.nome}
+                  {contrato.cliente.nome}
                 </SheetTitle>
               </div>
             </div>
           </SheetHeader>
-          {/* Proposal Information */}
+          {/* contrato Information */}
           <div className=" py-6">
             <div className="flex gap-6">
               <div className="grid grid-rows-5 gap-6">
@@ -71,11 +73,7 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
                 </p>
                 <p className="flex text-sm text-black/50 font-semibold my-auto">
                   <TbBrandDaysCounter className=" text-black/60 my-auto mr-1 text-[18px]" />
-                  Dias
-                </p>
-                <p className="flex text-sm text-black/50 font-semibold my-auto">
-                  <TbCloud className=" text-black/60 my-auto mr-1 text-[18px]" />
-                  Turno
+                  Horários
                 </p>
 
                 <p className="flex text-sm text-black/50 font-semibold my-auto">
@@ -84,74 +82,43 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
                 </p>
               </div>
               <div className="grid grid-rows-5 gap-6">
-                <StatusBadge status={proposal.statusProposta} />
+                <ContractStatus status={contrato.status} />
                 <p className="text-sm gap-2 flex text-black font-medium px-4 capitalize my-auto">
                   {" "}
                   {format(
-                    arrayToDateHour(proposal.plantao.dataHoraInicioPlantao),
-                    "dd 'de' MMMM 'de' yyyy",
+                    contrato.periodo
+                      .map((dateArray) => formatDate(dateArray))
+                      .join(", "),
+                    "dd 'de' MMM , yyyy",
                     {
                       locale: ptBR,
                     }
                   )}
                   <TbChevronRight className="text-black/40 text-lg my-[0.6px]" />
                   {format(
-                    addDays(
-                      arrayToDateHour(proposal.plantao.dataHoraInicioPlantao),
-                      30
-                    ),
-                    "MMM dd, yyyy",
+                    contrato.periodo
+                      .map((dateArray) => addDays(formatDate(dateArray), 30))
+                      .join(", "),
+                    "dd 'de' MMM , yyyy",
                     {
                       locale: ptBR,
                     }
                   )}
                 </p>
                 <p className="flex gap-2 my-auto overflow-hidden remove-scrollbar px-4">
-                  {proposal.plantao.diasDaSemana.map((dia, index) => (
-                    <p key={dia} className="text-sm font-medium">
-                      {diasDaSemanaMap[dia as keyof typeof diasDaSemanaMap] ||
-                        dia}
-                      {index < proposal.plantao.diasDaSemana.length - 1 && ", "}
+                  {contrato.horarios.map((horario, index) => (
+                    <p key={index} className="text-sm font-medium">
+                      {horario} h {"  "}
                     </p>
-                  ))}
-                </p>
-                <p className="flex gap-2 my-auto overflow-hidden remove-scrollbar px-3">
-                  {proposal.plantao.turno.map((turn: any) => (
-                    <Badge
-                      key={turn}
-                      className={`rounded-2xl font-light ${
-                        turn === "Diurno"
-                          ? "bg-yellow-50 text-yellow-500"
-                          : turn === "Noturno"
-                          ? "bg-blue-50 text-blue-500"
-                          : "bg-purple-50 text-purple-500"
-                      }`}
-                    >
-                      {turn}
-                    </Badge>
                   ))}
                 </p>
 
                 <p className="text-xs my-auto font-medium px-4">
-                  {proposal.localAtendimento.rua},{" "}
-                  {proposal.localAtendimento.numero} ,{" "}
-                  {proposal.localAtendimento.bairro}
+                  {contrato.enderecoPrestacao.rua},{" "}
+                  {contrato.enderecoPrestacao.numero} ,{" "}
+                  {contrato.enderecoPrestacao.bairro}
                 </p>
               </div>
-            </div>
-            <div className="pt-8 ">
-              <p className="flex text-sm text-black/50 font-semibold mb-3">
-                <TbClipboardText className=" text-black/60 my-auto mr-1 text-[18px]" />
-                Observações
-              </p>
-              {/* Essa observção virá predefinida, se tiver alimentação fornecida, a observação explicará */}
-              <Textarea
-                disabled
-                className="text-sm text-black/80 rounded-2xl bg-[#faf9f8]"
-                value={
-                  proposal.plantao.observacoes && proposal.plantao.observacoes
-                }
-              ></Textarea>
             </div>
           </div>
           <Tabs defaultValue="cuidadoecliente">
@@ -164,15 +131,14 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
             <TabsContent value="cuidadoecliente">
               <div className="p-4">
                 <ResumeCardCuidado
-                  saude={proposal.saude}
-                  cuidado={proposal.cuidado}
-                  cliente={proposal.cliente}
+                  cuidado={contrato.cuidado}
+                  cliente={contrato.cliente}
                 />
               </div>
             </TabsContent>
             <TabsContent value="cuidadores">
               <div className="grid xl:grid-cols-2 grid-cols-1 gap-6">
-                {proposal.cuidadores.map((cuidador: Caregiver) => (
+                {contrato.cuidadores.map((cuidador: Caregiver) => (
                   <CuidadorCard
                     caregiver={cuidador}
                     key={cuidador.cuidadorId}
@@ -187,4 +153,4 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
   );
 };
 
-export default ProposalDetailsSheet;
+export default ContractDetailsSheet;

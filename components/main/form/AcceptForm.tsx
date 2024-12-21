@@ -34,8 +34,8 @@ const AcceptForm = ({ proposalId }: { proposalId: number }) => {
         step="0.01"
         type="number"
         placeholder="Valor da Proposta"
-        iconSrc="/assets/icons/dollar.svg"
-        iconAlt="user"
+        iconSrc="/assets/icons/message-dollar.svg"
+        iconAlt="message dollar"
       />
 
       <ServerCustomField

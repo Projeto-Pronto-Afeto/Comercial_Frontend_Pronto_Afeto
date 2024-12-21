@@ -71,22 +71,36 @@ export async function setCuidadorStatus(id: number, status: string) {
   }
 }
 
-export async function getAllCuidadores(): Promise<any> {
+export async function getAllCuidadores({
+  page,
+  limit,
+  status,
+}: {
+  page: number;
+  limit?: number;
+  status: string;
+}): Promise<CaregiverDtoGet> {
   const user = await getUserFromCookies();
   if (!user) throw new Error("User not found");
 
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/contratos/v1`);
+  const params = new URLSearchParams();
+
+  //   if (status) params.append("status", status);
+  if (page) params.append("page", page.toString());
+  if (limit) params.append("limit", limit.toString());
+
+  url.search = params.toString();
+
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/cuidadores/v1`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-        cache: "no-cache",
-      }
-    );
+    const response = await fetch(url.toString(), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.accessToken}`,
+      },
+      cache: "no-cache",
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

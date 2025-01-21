@@ -2,6 +2,8 @@
 import { insertUserToCookies } from "@/helpers/insertUserToCookies";
 import { loginSchema } from "@/lib/validation";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function fetchPerfilComercial(
   userId: number,
@@ -99,3 +101,20 @@ export async function login(
     error: false,
   };
 }
+
+export async function logout() {
+
+  console.log('oiii 1')
+  cookies().delete("accessToken");
+  console.log('oiii 2')
+
+  cookies().delete("refreshToken");
+  console.log('oiii 3')
+
+  
+  // Opcional: limpar o estado global/local
+  // dispatch(userLogout());
+
+  redirect("/");
+}
+

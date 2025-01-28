@@ -60,7 +60,7 @@ export async function setCuidadorStatus(id: number, status: string) {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      return { error: true, message: "Erro ao atualizar status do cuidador" };
     }
     revalidateTag("cuidador");
     const data = await response.json();
@@ -83,7 +83,7 @@ export async function getAllCuidadores({
   const user = await getUserFromCookies();
   if (!user) throw new Error("User not found");
 
-  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/contratos/v1`);
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/cuidadores/v1`);
   const params = new URLSearchParams();
 
   //   if (status) params.append("status", status);
@@ -107,6 +107,7 @@ export async function getAllCuidadores({
     }
 
     const data = await response.json();
+    console.log("🚀 ~ data:", data);
     return data;
   } catch (error) {
     console.error("Failed to fetch cuidadores:", error);

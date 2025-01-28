@@ -6,17 +6,7 @@ import {
 import { ptBR } from "date-fns/locale";
 import Image from "next/image";
 
-import {
-  TbBookmark,
-  TbBookmarkPlus,
-  TbBookmarksFilled,
-  TbBuilding,
-  TbExposure,
-  TbHeartBroken,
-  TbHeartFilled,
-  TbHelpSquare,
-  TbHelpSquareRounded,
-} from "react-icons/tb";
+
 import { StatusBadge } from "./BadgesStatus";
 
 import { escolaridadeLabels } from "@/constants";

@@ -8,14 +8,23 @@ import {
   TbMapPin,
 } from "react-icons/tb";
 import ContractDetailsSheet from "../../sheet/ContractDetailsSheet";
+import ButtonDownloadContract from "../../buttons.tsx/ButtonDownloadContract";
 
-const ContractCard = ({ contrato }: { contrato: Contrato }) => {
- 
+const ContractCard = ({
+  contrato,
+  user,
+}: {
+  contrato: Contrato;
+  user: UserSession;
+}) => {
   const contractNumber = `#CTR${contrato.cliente.nome.slice(0, 3)}-${
     contrato.id
   }`;
+  console.log(
+    "🚀 ~ file: ContractCard.tsx ~ line 10 ~ ContractCard ~ contrato",
+    contrato
+  );
 
-  
   return (
     <div className="bg-[#faf9f8e0]  rounded-3xl">
       <div className="flex justify-between px-6 py-4">
@@ -31,6 +40,10 @@ const ContractCard = ({ contrato }: { contrato: Contrato }) => {
             <h2 className="font-semibold flex ">
               Contrato <span className="uppercase">{contractNumber}</span>{" "}
               <ContractDetailsSheet contractId={contrato.id} />
+              <ButtonDownloadContract
+                proposalId={contrato.propostaId.toString()}
+                user={user}
+              />
             </h2>
             <p className="flex gap-1 text-sm text-dark-600">
               <TbMapPin className="text-dark-500 my-auto" />{" "}

@@ -30,24 +30,24 @@ export async function getAllPropostas({
   if (limit) params.append("limit", limit.toString());
   if (direction) params.append("direction", direction);
   url.search = params.toString();
+   console.log("🚀 ~ url.toString()", url.toString());
 
-  try {
-    const response = await fetch(url.toString(), {
-      next: { tags: ["solicitacoes"], revalidate: 300 },
-      headers: {
-        Authorization: `Bearer ${user.accessToken}`,
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
+   try {
+     const response = await fetch(url.toString(), {
+       next: { tags: ["solicitacoes"], revalidate: 300 },
+       headers: {
+         Authorization: `Bearer ${user.accessToken}`,
+       },
+     });
 
-    return data;
-  } catch (error) {
-    console.error("Failed to fetch propostas:", error);
-    throw error; // Re-throw the error after logging it
-  }
+     const data = await response.json();
+     console.log("🚀 ~ data:", data);
+
+     return data;
+   } catch (error) {
+     console.error("Failed to fetch propostas:", error);
+     throw error; // Re-throw the error after logging it
+   }
 }
 
 export async function getProposalById(id: number) {

@@ -104,17 +104,11 @@ export async function login(
 
 export async function logout() {
 
-  console.log('oiii 1')
+
   cookies().delete("accessToken");
-  console.log('oiii 2')
 
   cookies().delete("refreshToken");
-  console.log('oiii 3')
 
-  
-  // Opcional: limpar o estado global/local
-  // dispatch(userLogout());
-
-  redirect("/");
+  redirect("/auth/login");
 }
 

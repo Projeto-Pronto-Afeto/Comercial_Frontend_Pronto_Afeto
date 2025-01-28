@@ -27,8 +27,14 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 
+import { logout } from "@/actions/auth/auth.actions";
+
 export function NavUser({ user }: { user: UserSession }) {
   const { isMobile } = useSidebar();
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   return (
     <SidebarMenu>
@@ -100,7 +106,7 @@ export function NavUser({ user }: { user: UserSession }) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Sair
             </DropdownMenuItem>

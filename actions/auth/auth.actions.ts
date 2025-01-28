@@ -2,6 +2,8 @@
 import { insertUserToCookies } from "@/helpers/insertUserToCookies";
 import { loginSchema } from "@/lib/validation";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function fetchPerfilComercial(
   userId: number,
@@ -99,3 +101,14 @@ export async function login(
     error: false,
   };
 }
+
+export async function logout() {
+
+
+  cookies().delete("accessToken");
+
+  cookies().delete("refreshToken");
+
+  redirect("/auth/login");
+}
+

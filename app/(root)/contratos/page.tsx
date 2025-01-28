@@ -1,12 +1,10 @@
 import React from "react";
-import { getAllPropostas } from "@/actions/prposta/proposta.actions";
-import ButtonFilter from "@/components/main/filters/ButtonFilter";
-import CommandRequest from "@/components/main/command/CommandRequest";
-import RequestCard from "@/components/RequestCard";
+
 import { PaginationComponent } from "@/components/main/pagination/PaginationComponent";
 import LoadingPage from "@/components/LoadingPage";
 import { getAllContracts } from "@/actions/contrato/contrato.actions";
 import ContractCard from "@/components/main/cards/contract/ContractCard";
+import { getUserFromCookies } from "@/helpers/getUserFromToken";
 
 const page = async ({
   searchParams,
@@ -14,7 +12,8 @@ const page = async ({
   searchParams: { [key: string]: string | undefined | string[] };
 }) => {
   const page = searchParams.page ? parseInt(searchParams.page as string) : 0;
-
+  const user = await getUserFromCookies();
+  if (!user) return null;
   const status =
     typeof searchParams.status === "string" ? searchParams.status : undefined;
 
@@ -41,7 +40,7 @@ const page = async ({
           <div className="grid xl:grid-cols-2 grid-cols-1 gap-4 py-6">
             {" "}
             {data?.content.map((item: Contrato) => (
-              <ContractCard contrato={item} key={item.id} />
+              <ContractCard user={user} contrato={item} key={item.id} />
             ))}
           </div>
           {data.totalPages > 1 ? (

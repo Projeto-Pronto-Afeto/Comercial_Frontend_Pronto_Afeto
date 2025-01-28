@@ -26,6 +26,7 @@ export const cuidadorSchema = z.object({
     .min(10, "Telefone deve ter no mínimo 10 dígitos")
     .max(15, "Telefone deve ter no máximo 15 dígitos"),
   rg: z.string().min(1, "RG é obrigatório"),
+  cpf: z.string().min(1, "CPF é obrigatório"),
   rua: z.string().min(1, "Rua é obrigatória"),
   numero: z
     .string()

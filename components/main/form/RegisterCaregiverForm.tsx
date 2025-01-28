@@ -51,6 +51,7 @@ const RegisterCaregiverForm = ({
       telefone: values.telefone,
       dataNascimento: values.dataNascimento,
       rg: values.rg,
+      cpf: values.cpf,
       rua: values.rua,
       numero: values.numero,
       bairro: values.bairro,
@@ -199,6 +200,18 @@ const RegisterCaregiverForm = ({
                   control={form.control}
                   name="rg"
                   placeholder="123456789"
+                />
+              }
+            />
+            <GridCustomField
+              field={"CPF"}
+              description={"Insira seu CPF"}
+              children={
+                <CustomFormField
+                  fieldType={FormFieldType.INPUT}
+                  control={form.control}
+                  name="cpf"
+                  placeholder="123.456.789-10"
                 />
               }
             />
@@ -368,7 +381,7 @@ const RegisterCaregiverForm = ({
 
           <section className="space-y-6">
             <div className="mb-9 space-y-1">
-              <h2 className="sub-header">Local de Atendimento</h2>
+              <h2 className="sub-header">Endereço</h2>
             </div>
 
             <GridCustomField

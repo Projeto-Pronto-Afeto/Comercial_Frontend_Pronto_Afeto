@@ -4,6 +4,8 @@ import CommandRequest from "@/components/main/command/CommandRequest";
 import RequestCard from "@/components/RequestCard";
 import { PaginationComponent } from "@/components/main/pagination/PaginationComponent";
 import LoadingPage from "@/components/LoadingPage";
+import SearchFilter from "@/components/main/filters/searchFilter";
+import DateFilter from "@/components/main/filters/DateFilter";
 
 const SolicitacoesPage = async ({
   searchParams,
@@ -12,11 +14,14 @@ const SolicitacoesPage = async ({
 }) => {
   const page = searchParams.page ? parseInt(searchParams.page as string) : 0;
   const status =
-    typeof searchParams.status === "string" ? searchParams.status : undefined;
+  typeof searchParams.status === "string" ? searchParams.status : undefined;
+  const direction =
+  typeof searchParams.direction === "string" ? searchParams.direction : "asc";
   const data: ProposalDTOGet = await getAllPropostas({
     status: status,
+    direction,
     page: page,
-    limit: 4,
+    limit: 1,
   });
   if (!data) return <LoadingPage />;
 
@@ -24,7 +29,7 @@ const SolicitacoesPage = async ({
     <div className="admin-main">
       <section className="space-y-6 w-full ">
         <div>
-          <div className="flex justify-between">
+          <div className="flex flex-col justify-between pr-2 md:flex-row">
             <div className="">
               <h1 className="md:text-3xl sm:text-2xl font-bold">
                 Solicitações
@@ -33,15 +38,27 @@ const SolicitacoesPage = async ({
                 Gerencie as solicitações dos seus clientes com facilidade
               </p>
             </div>
-            <div className="my-auto">
-              <ButtonFilter
+            <div className="my-auto lg:flex gap-4 mt-4 sm:mt-0">
+              <SearchFilter
+                placeholder="Buscar Cliente..."
                 baseRoute="solicitacoes"
-                approvalValue="Aprovada"
-                pendingValue="Observacao"
-                rejectedValue="Negada"
+                queryParam="search"
               />
+              <div className="flex gap-4 mt-2 lg:mt-0">
+                <DateFilter
+                  baseRoute="solicitacoes"
+                  queryParam="direction"
+                />
+                <ButtonFilter
+                  baseRoute="solicitacoes"
+                  approvalValue="Aprovada"
+                  pendingValue="Observacao"
+                  rejectedValue="Negada"
+                />
+              </div>
+
             </div>
-          </div>
+          </div>          
 
           <div className="grid xl:grid-cols-2  grid-cols-1 gap-4 py-6">
             {" "}

@@ -186,6 +186,7 @@ declare type Status =
     status: ContractStatus;
     valor: number;
     cliente: Client;
+    propostaId: number;
     cuidadores: Caregiver[];
     cuidado: Cuidado;
   }

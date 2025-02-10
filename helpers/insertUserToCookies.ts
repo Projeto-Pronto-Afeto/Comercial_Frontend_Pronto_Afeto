@@ -1,15 +1,18 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
 
 // Função auxiliar para buscar o perfile
 
 export async function insertUserToCookies(
   session: Session,
   perfil: PerfilComercial | null
-): Promise<void> {
+): Promise<NextResponse> {
+  const response = new NextResponse();
   const cookieStore = cookies();
 
-  // Defina o accessToken e refreshToken nos cookies
+
+  // define o accessToken e refreshToken nos cookies
   cookieStore.set("accessToken", session.accessToken, {
     httpOnly: true,
     secure: true,
@@ -26,10 +29,8 @@ export async function insertUserToCookies(
     expires: new Date(session.expiresAt * 1000),
   });
 
-  // Decodifique o token e obtenha o userId
+  // decodifica o token e obtem o userId
   const decodedToken = jwt.decode(session.accessToken);
-
-  // Aguardamos a obtenção do perfile antes de configurar o cookie `userCredentials`
 
   const userCredentials = {
     userId: (decodedToken as jwt.JwtPayload)?.user_id,
@@ -52,4 +53,7 @@ export async function insertUserToCookies(
       expires: new Date(session.expiresAt * 1000),
     }
   );
+
+  console.log("Cookies setados na resposta:", response.headers.getSetCookie());
+  return response;
 }

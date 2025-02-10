@@ -67,6 +67,7 @@ export async function login(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
+      
     }
   );
 
@@ -106,64 +107,45 @@ export async function refreshToken() {
   const cookieStore = cookies();
   const refreshToken = cookieStore.get("refreshToken")?.value;
 
-  console.log("Tentando renovar o token com:", refreshToken);
+  //console.log("Tentando renovar o token com:", refreshToken);
 
-  if (!refreshToken) return false;
+  if (!refreshToken) return null; // retorna null para evitar erros
 
   try {
-    // Decodificar o token para obter o username
     const decodedToken = jwt.decode(refreshToken);
-    const username = (decodedToken as jwt.JwtPayload)?.sub; // Normalmente o username vem no 'sub'
+    const username = (decodedToken as jwt.JwtPayload)?.sub; 
 
     if (!username) {
-      console.error("Erro: Não foi possível extrair o username do token.");
-      return false;
+      return null;
     }
 
-    console.log("Username extraído do token:", username);
-
-    // Fazer a requisição para a API com a URL correta
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/refresh/${username}`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${refreshToken}`, // Adicionando o token no cabeçalho
-
-        }      
+          "Authorization": `Bearer ${refreshToken}`,
+        },
       }
     );
 
-    console.log("Resposta da API:", response.status);
+    //console.log("Resposta da API:", response.status);
+    const responseBody = await response.json();
 
-    const responseBody = await response.text();
-    console.log("Resposta completa da API:", responseBody);
+    if (!response.ok) return null;
 
-    if (!response.ok) return false;
-
-    const newTokenData = JSON.parse(responseBody);
-    console.log("Novo token recebido:", newTokenData);
-
-    const userId = (jwt.decode(newTokenData.accessToken) as jwt.JwtPayload)
-      ?.user_id;
-
-    const perfil = await fetchPerfilComercial(userId, newTokenData.accessToken);
-    if (!perfil) {
-      console.error("Erro: perfil comercial não encontrado após refresh.");
-      return false;
-    }
-
-    insertUserToCookies(newTokenData, perfil);
-
-    return true;
+    // retornar um objeto contendo os tokens
+    return {
+      accessToken: responseBody.accessToken,
+      refreshToken: responseBody.refreshToken,
+      expiresAt: responseBody.expiresAt,
+    };
   } catch (error) {
     console.error("Erro ao tentar renovar o token:", error);
-    return false;
+    return null;
   }
 }
-
-
 
 
 export async function logout() {

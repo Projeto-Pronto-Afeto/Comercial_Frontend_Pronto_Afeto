@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { getUserFromCookies } from "./helpers/getUserFromToken";
-import { insertUserToCookies } from "./helpers/insertUserToCookies";
+import { refreshToken } from "@/actions/auth/auth.actions";
 
 const PUBLIC_ROUTES = [
   "/auth/login",
@@ -10,44 +10,58 @@ const PUBLIC_ROUTES = [
   "/registro-cuidador",
 ];
 
-async function refreshToken(token: string | undefined) {
-  const user = await getUserFromCookies();
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}api/v1/auth/refresh${user?.userName}`,
-      {
-        headers: {
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-      }
-    );
-
-    const newToken = await response.json();
-    // insertUserToCookies(newToken);
-    return response.ok;
-  } catch (error) {
-    console.error("Erro na Validação do Token: ", error);
-    return false;
-  }
-}
-
 export async function middleware(request: NextRequest) {
   const { nextUrl } = request;
   const cookieStore = cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
-
   const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
   const isLoggedIn = Boolean(accessToken);
 
+  console.log("Acessando Middleware");
+
   // Caso 01 - O usuário está tentando acessar uma Rota Pública.
   if (isLoggedIn && isPublicRoute) {
+    console.log("Acessando 01");
+
     return Response.redirect(new URL("/", nextUrl));
+
   }
 
   // Caso 02 - Usuário não Logou e está tentando acessar uma rota pública!
   if (!isLoggedIn && !isPublicRoute) {
+    console.log("Acessando 02");
     console.log("Usuário não logado!");
+
     return NextResponse.redirect(new URL("/auth/login", nextUrl));
+
+  }
+
+  // Caso 03 - Usuário está logado, mas o token pode estar expirado → Tenta renovar o token
+  if (isLoggedIn && !isPublicRoute) {
+    console.log("Acessando 03");
+
+    const user = await getUserFromCookies();
+
+    if (!user) {
+      console.log("Acessando if(!user)");
+
+
+      return NextResponse.redirect(new URL("/auth/login", nextUrl));
+
+    }
+    console.log("é verdade");
+
+    const isTokenValid = await refreshToken();
+    console.log("isTokenValid", isTokenValid);
+
+    if (!isTokenValid) {
+      console.log("Acessando if(!isTokenValid)");
+
+      return NextResponse.redirect(new URL("/auth/login", nextUrl));
+    }
+
+    console.log("voce é maluco?");
+
   }
 
   //   Caso 03 - Usuário Logou e está tentando acessar uma rota pública, mas o token expirou!

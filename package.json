@@ -27,6 +27,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
+    "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "libphonenumber-js": "^1.11.11",
     "lucide-react": "^0.451.0",
@@ -45,6 +46,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
     "@types/react": "^18",

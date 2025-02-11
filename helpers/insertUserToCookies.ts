@@ -11,7 +11,6 @@ export async function insertUserToCookies(
   const response = new NextResponse();
   const cookieStore = cookies();
 
-
   // define o accessToken e refreshToken nos cookies
   cookieStore.set("accessToken", session.accessToken, {
     httpOnly: true,
@@ -54,6 +53,6 @@ export async function insertUserToCookies(
     }
   );
 
-  console.log("Cookies setados na resposta:", response.headers.getSetCookie());
+  //console.log("Cookies setados na resposta:", response.headers.getSetCookie());
   return response;
 }

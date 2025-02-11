@@ -28,8 +28,8 @@ export async function middleware(request: NextRequest) {
     let user = await getUserFromCookies();
     console.log("User", user);
 
-    // Caso não existir um usuário, ele tenta renovar o token.
-    // Se tiver um refresh token válido nos cookies, ele renova o token.
+    // caso não exista um usuário, ele tenta renovar o token.
+    // se tiver um refresh token válido, ele renova o token.
     if (!user) {
       //console.log("Token expirado. Tentando renovar...");
 

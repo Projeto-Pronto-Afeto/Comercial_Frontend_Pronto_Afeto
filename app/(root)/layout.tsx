@@ -27,9 +27,7 @@ export default async function RootLayout({
 }>) {
   const session = await getUserFromCookies();
 
-  if (!session) return <Loader />;
-
-  const user: UserSession = session;
+  const user: UserSession = session || ({} as UserSession);
   return (
     <html lang="en">
       <body className={cn("font-sans", fontSans.variable)}>

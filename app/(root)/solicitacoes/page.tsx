@@ -1,7 +1,7 @@
-import { getAllPropostas } from "@/actions/prposta/proposta.actions";
+import { getAllPropostas, getDeletedPropostas } from "@/actions/prposta/proposta.actions";
 import ButtonFilter from "@/components/main/filters/ButtonFilter";
-import CommandRequest from "@/components/main/command/CommandRequest";
 import RequestCard from "@/components/RequestCard";
+import RequestDeletedCard from "@/components/RequestDeletedCard";
 import { PaginationComponent } from "@/components/main/pagination/PaginationComponent";
 import LoadingPage from "@/components/LoadingPage";
 import SearchFilter from "@/components/main/filters/searchFilter";
@@ -21,8 +21,13 @@ const SolicitacoesPage = async ({
     status: status,
     direction,
     page: page,
-    limit: 1,
+    limit: 4,
   });
+  const dataDeleted: ProposalDTOGet = await getDeletedPropostas({
+    page: 0,
+    limit: 2,
+  });
+
   if (!data) return <LoadingPage />;
 
   return (
@@ -64,6 +69,12 @@ const SolicitacoesPage = async ({
             {" "}
             {data?.content.map((item: MinimalProposal) => (
               <RequestCard proposal={item} />
+            ))}
+          </div>
+          <div className="grid xl:grid-cols-2  grid-cols-1 gap-4 py-6">
+            {" "}
+            {dataDeleted?.content.map((item: MinimalProposal) => (
+              <RequestDeletedCard proposal={item} />
             ))}
           </div>
           {data.totalPages > 1 ? (

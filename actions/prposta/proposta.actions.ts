@@ -22,6 +22,7 @@ export async function getAllPropostas({
   const url = new URL(
     `${process.env.NEXT_PUBLIC_API_URL}/api/propostas/v1/orderByDateAndGroupByStatus`
   );
+  
 
   const params = new URLSearchParams();
 
@@ -30,7 +31,7 @@ export async function getAllPropostas({
   if (limit) params.append("limit", limit.toString());
   if (direction) params.append("direction", direction);
   url.search = params.toString();
-   console.log("🚀 ~ url.toString()", url.toString());
+  // console.log("🚀 ~ url.toString()", url.toString());
 
    try {
      const response = await fetch(url.toString(), {
@@ -41,12 +42,51 @@ export async function getAllPropostas({
      });
 
      const data = await response.json();
-     console.log("🚀 ~ data:", data);
+     //console.log("🚀 ~ data:", data);
 
      return data;
    } catch (error) {
      console.error("Failed to fetch propostas:", error);
      throw error; // Re-throw the error after logging it
+   }
+}
+
+export async function getDeletedPropostas({
+  page = 0,
+  limit = 12,
+}: {
+  page?: number;
+  limit?: number;
+}): Promise<ProposalDTOGet> {
+  const user = await getUserFromCookies();
+
+  if (!user) throw new Error("User not found");
+
+  const url = new URL(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/propostas/v1/deleted`
+  );
+  
+  const params = new URLSearchParams();
+
+  if (page) params.append("page", page.toString());
+  if (limit) params.append("limit", limit.toString());
+  url.search = params.toString();
+
+   try {
+     const response = await fetch(url.toString(), {
+       next: { tags: ["solicitacoes"], revalidate: 300 },
+       headers: {
+         Authorization: `Bearer ${user.accessToken}`,
+       },
+     });
+
+     const data = await response.json();
+     console.log("Propostas deletedas: ", data);
+
+     return data;
+   } catch (error) {
+     console.error("Failed to fetch propostas:", error);
+     throw error;
    }
 }
 

@@ -28,6 +28,7 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
   const proposalNumber = `#PR${proposal.nomeCliente.slice(0, 3)}-${
     proposal.id
   }`;
+
   return (
     <div className="shadow-sm bg-[#faf9f8e0]   w-full py-6 px-6 rounded-xl hover:bg-appointments   ">
       <div className="">
@@ -36,7 +37,7 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
           <div className="flex gap-5 text-xs text-black/60">
             <span className="capitalize">
               Solicitado{" "}
-              {format(formatDate(proposal.dataProposta), "MMM dd, yyyy", {
+              {format(formatDate(proposal.dataInicioPlantao), "MMM dd, yyyy", {
                 locale: ptBR,
               })}{" "}
             </span>

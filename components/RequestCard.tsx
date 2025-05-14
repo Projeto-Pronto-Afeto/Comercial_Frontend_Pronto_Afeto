@@ -36,7 +36,7 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
           <div className="flex gap-5 text-xs text-black/60">
             <span className="capitalize">
               Solicitado{" "}
-              {format(formatDate(proposal.dataProposta), "MMM dd, yyyy", {
+              {format(formatDate(proposal.dataInicioPlantao), "MMM dd, yyyy", {
                 locale: ptBR,
               })}{" "}
             </span>
@@ -56,11 +56,8 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
             </div>
             <div className="flex flex-col gap-4">
               {proposal && <ProposalDetailsSheet proposalId={proposal.id} />}
-
-              {proposal.statusProposta != "Aprovada" ? (
+              {!["Aprovada", "Assinada"].includes(proposal.statusProposta) && (
                 <AcceptDialog proposalId={proposal.id} />
-              ) : (
-                <></>
               )}
             </div>
           </div>

@@ -24,6 +24,7 @@ declare type Gender = "Feminino" | "Masculino";
 declare type Status =
   | "Pendente"
   | "Negada"
+  | "Assinada"
   | "Aprovada"
   | "Observacao"
   | "Em_Observacao";

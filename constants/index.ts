@@ -39,6 +39,7 @@ export const Habilidades = [
 ];
 
 export const StatusIcon = {
+  Assinada: "/assets/icons/check.svg",
   Aprovada: "/assets/icons/check.svg",
   Pendente: "/assets/icons/pending.svg",
   Observacao: "/assets/icons/pending.svg",

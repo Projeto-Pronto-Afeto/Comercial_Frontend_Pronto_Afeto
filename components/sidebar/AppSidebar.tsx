@@ -31,11 +31,7 @@ import { TbAnalyze, TbBrandSuperhuman, TbClipboardText } from "react-icons/tb";
 
 // This is sample data.
 const data = {
-  user: {
-    name: "rebeca",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
+  
   teams: [
     {
       name: "Pronto Afeto",
@@ -73,10 +69,7 @@ const data = {
       url: "#",
       icon: TbClipboardText as LucideIcon,
       items: [
-        {
-          title: "Cadastros",
-          url: "/registro-cuidador",
-        },
+        
         {
           title: "Buscar Cuidadores",
           url: "/cuidadores",
@@ -95,11 +88,7 @@ const data = {
       url: "/usuarios",
       icon: User2,
     },
-    {
-      name: "Configurações",
-      url: "#",
-      icon: Settings2,
-    },
+    
   ],
 };
 

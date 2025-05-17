@@ -9,14 +9,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Image from "next/image";
-import { TbPencil, TbTrash } from "react-icons/tb";
+import { TbTrash } from "react-icons/tb";
 import { removeUser, StateRemove } from "@/actions/comercial/comercial.actions";
 import { useFormState } from "react-dom";
+import ProfileImage from "@/components/ProfileImage"; // Import do novo componente
 
 // Definindo as colunas para PerfilComercial
 export const columns: ColumnDef<PerfilComercial>[] = [
@@ -46,13 +44,11 @@ export const columns: ColumnDef<PerfilComercial>[] = [
     accessorKey: "perfil",
     header: "Perfil",
     cell: ({ row }) => (
-      <div className="flex items-center space-x-3">
-        <Image
-          src={row.original.fotoUrl}
-          alt={row.original.nome}
-          width={50}
-          height={50}
-          className="rounded-full mr-2  "
+      <div className="flex items-center gap-4">
+        <ProfileImage
+          nome={row.original.nome}
+          fotoUrl={row.original.fotoUrl}
+          size={40}
         />
         <div>
           <p className="font-medium">{row.original.nome}</p>
@@ -84,12 +80,6 @@ export const columns: ColumnDef<PerfilComercial>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="bg-white">
-            {/* <DropdownMenuLabel>Atividade</DropdownMenuLabel> */}
-            {/* <DropdownMenuItem>
-              {" "}
-              <TbPencil />
-              Editar
-            </DropdownMenuItem> */}
             <DropdownMenuItem className="hover:bg-red-100">
               <form action={formAction} className="">
                 <input type="hidden" name="id" value={row.original.id} />

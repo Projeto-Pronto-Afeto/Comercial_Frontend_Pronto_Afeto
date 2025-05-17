@@ -141,7 +141,7 @@ const ServerCustomField = (props: CustomProps) => {
   const { name, label, errors } = props;
 
   return (
-    <div className="col-span-2">
+    <div className="text-start col-span-2">
       {label && <p className="text-sm font-medium mb-1">{label} *</p>}
       <RenderInput props={props} />
       {errors && (

@@ -27,9 +27,22 @@ interface RequestCardProps {
 }
 
 const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
+  console.log("🚀 ~ proposal:", proposal)
   const proposalNumber = `#PR${proposal.nomeCliente.slice(0, 3)}-${
     proposal.id
   }`;
+
+  // Create a date using each index of the updatedAt array
+  const dataEdicao = proposal.updatedAt
+    ? format(new Date(
+        proposal.updatedAt[0], // Year
+        proposal.updatedAt[1] - 1, // Month (0-based index)
+        proposal.updatedAt[2], // Day
+        proposal.updatedAt[3], // Hours
+        proposal.updatedAt[4], // Minutes
+        proposal.updatedAt[5] // Seconds
+      ), "dd/MM/yyyy HH:mm:ss", { locale: ptBR })
+    : null;
 
     return (
     <div className="shadow-sm bg-[#faf9f8e0]   w-full py-6 px-6 rounded-xl hover:bg-appointments   ">
@@ -43,7 +56,7 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
                 locale: ptBR,
               })}{" "}
             </span>
-            {proposal?.dataEdicao && <Badge  className="flex items-center gap-2 bg-yellow-100"><TbAlertHexagon/>Proposta editada</Badge>}
+            {dataEdicao && <Badge  className="flex items-center gap-2 bg-yellow-100"><TbAlertHexagon/>Proposta editada</Badge>}
           </div>
           <div className="flex justify-between border-b-[0.1rem] border-slate-100 pb-3">
             <div className="flex gap-2">

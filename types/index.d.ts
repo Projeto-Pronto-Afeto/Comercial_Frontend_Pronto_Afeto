@@ -91,6 +91,8 @@ declare type Status =
   }
 
   declare interface MinimalProposal {
+    updatedAt: any;
+    dataEdicao: React.JSX.Element;
     id: number;
     telefone: string;
     nomeCliente: string;

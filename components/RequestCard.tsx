@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 
 import {
+  TbAlertHexagon,
   TbBrandSuperhuman,
   TbCalendarSmile,
   TbCarambola,
@@ -19,6 +20,7 @@ import { StatusBadge } from "./BadgesStatus";
 import { arrayToDate, formatDate } from "@/lib/utils";
 import { acceptProposal } from "@/actions/prposta/proposta.actions";
 import AcceptDialog from "./main/dialog/AcceptDialog";
+import { Badge } from "./ui/badge";
 
 interface RequestCardProps {
   proposal: MinimalProposal;
@@ -28,18 +30,20 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
   const proposalNumber = `#PR${proposal.nomeCliente.slice(0, 3)}-${
     proposal.id
   }`;
-  return (
+
+    return (
     <div className="shadow-sm bg-[#faf9f8e0]   w-full py-6 px-6 rounded-xl hover:bg-appointments   ">
       <div className="">
         {/* Top */}
         <div className="flex flex-col gap-2">
-          <div className="flex gap-5 text-xs text-black/60">
+          <div className="flex gap-5 text-xs w-full justify-between text-black/60">
             <span className="capitalize">
               Solicitado{" "}
               {format(formatDate(proposal.dataInicioPlantao), "MMM dd, yyyy", {
                 locale: ptBR,
               })}{" "}
             </span>
+            {proposal?.dataEdicao && <Badge  className="flex items-center gap-2 bg-yellow-100"><TbAlertHexagon/>Proposta editada</Badge>}
           </div>
           <div className="flex justify-between border-b-[0.1rem] border-slate-100 pb-3">
             <div className="flex gap-2">
@@ -66,7 +70,7 @@ const RequestCard: React.FC<RequestCardProps> = ({ proposal }) => {
               <div className="grid grid-rows-4 gap-4">
                 <p className="flex text-sm text-black/50 font-semibold my-auto">
                   <TbCalendarSmile className=" text-black/60 my-auto mr-1 text-[18px]" />
-                  Data
+                  Início
                 </p>
                 <p className="flex text-sm text-black/50 font-semibold my-auto">
                   <TbPhoneCall className=" text-black/60 my-auto mr-1 text-[18px]" />

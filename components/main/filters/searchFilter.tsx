@@ -28,7 +28,7 @@ const SearchFilter = ({
   };
 
   return (
-    <div className="flex items-center gap-2 border rounded-lg p-2 max-h-14 max-w-lg bg-white">
+    <div className="flex items-center gap-2 border rounded-2xl text-sm  px-4 p-2 max-h-12 max-w-xl bg-white">
       <Search className="text-gray-500" onClick={handleSearch}/>
       <input
         type="text"

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { use, useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -12,13 +12,14 @@ import { login, State } from "@/actions/auth/auth.actions";
 import ServerCustomField, { FormFieldType } from "../inputs/ServerCustomField";
 import { TbBrandBackbone, TbCarambola } from "react-icons/tb";
 
+
 const LoginForm = () => {
   const initialState: State = { errors: {}, message: "", error: false };
 
   const [formState, formAction] = useFormState(login, initialState);
-
+  
   useEffect(() => {
-    console.log("🚀 ~ formState.error", formState.error);
+
     if (formState) {
       if (
         !formState.error &&

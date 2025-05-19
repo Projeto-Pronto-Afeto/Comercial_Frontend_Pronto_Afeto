@@ -1,4 +1,5 @@
-import React from "react";
+'use client'
+import React, { useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -33,13 +34,24 @@ import { getProposalById } from "@/actions/prposta/proposta.actions";
 import CuidadorCard from "./CuidadorCard";
 import { Textarea } from "./ui/textarea";
 import { diasDaSemanaMap } from "@/constants";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
-const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
-  const proposal: Proposal = await getProposalById(proposalId);
+
+const ProposalDetailsSheet = ({ proposalId }: { proposalId: number }) => {
+  const [open, setOpen] = useState(false);
+  const [proposal, setProposal] = useState<Proposal | null >(null);
+
+  const handleOpenChange = async (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (isOpen && !proposal) {
+      const data = await getProposalById(proposalId); // precisa funcionar no client
+      setProposal(data);
+    }
+  };
+  console.log("ProposalDetailsSheet", proposal);
 
   return (
-    proposal && (
-      <Sheet>
+    <Sheet open={open} onOpenChange={handleOpenChange}>
         <SheetTrigger>
           <TbDots className="text-black/60 text-lg" />
         </SheetTrigger>
@@ -47,17 +59,23 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
           side={"right"}
           className=" bg-[#faf9f8]  border-none rounded-xl overflow-y-auto simple-scrollbar"
         >
-          <SheetHeader>
+          {proposal && (  
+            <div>
+  <SheetHeader>
             <div className="flex gap-4">
               <div className="my-auto">
-                <p className="text-black/60 text-sm">Solicitado por</p>
+               
+                <SheetDescription className="text-sm text-black/60">
+                  Solicitada por
+                </SheetDescription>
                 <SheetTitle className="text-3xl">
                   {proposal.cliente.nome}
                 </SheetTitle>
+                
               </div>
             </div>
           </SheetHeader>
-          {/* Proposal Information */}
+         
           <div className=" py-6">
             <div className="flex gap-6">
               <div className="grid grid-rows-5 gap-6">
@@ -67,7 +85,7 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
                 </p>
                 <p className=" flex text-sm text-black/50 font-semibold my-auto">
                   <TbCalendarSmile className=" text-black/60 my-auto mr-1 text-[18px]" />
-                  Data
+                  Início
                 </p>
                 <p className="flex text-sm text-black/50 font-semibold my-auto">
                   <TbBrandDaysCounter className=" text-black/60 my-auto mr-1 text-[18px]" />
@@ -106,7 +124,7 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
                     }
                   )}
                 </p>
-                <p className="flex gap-2 my-auto overflow-hidden remove-scrollbar px-4">
+                <div className="flex gap-2 my-auto overflow-hidden remove-scrollbar px-4">
                   {proposal.plantao.diasDaSemana.map((dia, index) => (
                     <p key={dia} className="text-sm font-medium">
                       {diasDaSemanaMap[dia as keyof typeof diasDaSemanaMap] ||
@@ -114,8 +132,8 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
                       {index < proposal.plantao.diasDaSemana.length - 1 && ", "}
                     </p>
                   ))}
-                </p>
-                <p className="flex gap-2 my-auto overflow-hidden remove-scrollbar px-3">
+                </div>
+                <div className="flex gap-2 my-auto overflow-hidden remove-scrollbar px-3">
                   {proposal.plantao.turno.map((turn: any) => (
                     <Badge
                       key={turn}
@@ -130,7 +148,7 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
                       {turn}
                     </Badge>
                   ))}
-                </p>
+                </div>
 
                 <p className="text-xs my-auto font-medium px-4">
                   {proposal.localAtendimento.rua},{" "}
@@ -181,10 +199,15 @@ const ProposalDetailsSheet = async ({ proposalId }: { proposalId: number }) => {
               </div>
             </TabsContent>
           </Tabs>
+            </div>
+            
+          )
+}
+        
         </SheetContent>
       </Sheet>
     )
-  );
+  
 };
 
 export default ProposalDetailsSheet;

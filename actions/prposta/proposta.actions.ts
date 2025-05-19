@@ -9,11 +9,13 @@ export async function getAllPropostas({
   page = 0,
   limit = 12,
   direction = "asc",
+  search,
 }: {
   status?: string;
   page?: number;
   limit?: number;
   direction?: string;
+  search?: string;
 }): Promise<ProposalDTOGet> {
   const user = await getUserFromCookies();
 
@@ -29,8 +31,9 @@ export async function getAllPropostas({
   if (page) params.append("page", page.toString());
   if (limit) params.append("limit", limit.toString());
   if (direction) params.append("direction", direction);
+  if(search) params.append("nomeCliente", search);
   url.search = params.toString();
-   console.log("🚀 ~ url.toString()", url.toString());
+
 
    try {
      const response = await fetch(url.toString(), {
@@ -130,10 +133,12 @@ export async function acceptProposal(
         body: JSON.stringify(data),
       }
     );
-    console.log("🚀 ~ response", response);
+   
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (!response.ok) { 
+      const errorData = await response.json();
+      
+      return { errors: {}, message: errorData.message, error: true }; 
     }
     revalidateTag("solicitacoes");
     return {
@@ -145,7 +150,7 @@ export async function acceptProposal(
     console.error("Failed to accept proposta:", error);
     return {
       errors: {},
-      message: "Ocorreu um erro ao aceitar a proposta",
+      message: "Erro interno ao aceitar proposta",
       error: true,
     }; // Re-throw the error after logging it
   }

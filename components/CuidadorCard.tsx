@@ -1,3 +1,4 @@
+'use client'
 import {
   classificarTempoExperiencia,
   formatDate,
@@ -36,11 +37,12 @@ const CuidadorCard: React.FC<CuidadorCardProps> = ({ caregiver }) => {
       <div className="absolute flex flex-col gap-5 top-6 right-6 text-2xl z-50"></div>
       <div className="flex gap-4">
         <Image
-          src={caregiver.fotoUrl}
+          src={caregiver.fotoUrl || "/assets/images/profile.png"}
           alt=""
           height={1000}
           width={1000}
           className="rounded-3xl h-20 w-20"
+          
         />
 
         <div className=" p-1 pr-8">

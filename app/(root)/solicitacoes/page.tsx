@@ -13,6 +13,9 @@ const SolicitacoesPage = async ({
   searchParams: { [key: string]: string | undefined | string[] };
 }) => {
   const page = searchParams.page ? parseInt(searchParams.page as string) : 0;
+  const search = 
+    typeof searchParams.search === "string" ? searchParams.search : undefined;
+
   const status =
   typeof searchParams.status === "string" ? searchParams.status : undefined;
   const direction =
@@ -20,30 +23,31 @@ const SolicitacoesPage = async ({
   const data: ProposalDTOGet = await getAllPropostas({
     status: status,
     direction,
+    search,
     page: page,
-    limit: 1,
+    limit: 10,
   });
-  if (!data) return <LoadingPage />;
+  
 
   return (
     <div className="admin-main">
       <section className="space-y-6 w-full ">
         <div>
-          <div className="flex flex-col justify-between pr-2 md:flex-row">
+          
             <div className="">
               <h1 className="md:text-3xl sm:text-2xl font-bold">
                 Solicitações
               </h1>
-              <p className="text-dark-600 text-sm">
+              <p className="text-dark-600 text-sm mb-5">
                 Gerencie as solicitações dos seus clientes com facilidade
               </p>
-            </div>
-            <div className="my-auto lg:flex gap-4 mt-4 sm:mt-0">
-              <SearchFilter
+            <div className="flex justify-between w-full">
+               <SearchFilter
                 placeholder="Buscar Cliente..."
                 baseRoute="solicitacoes"
                 queryParam="search"
               />
+              <div className="flex-1"></div>
               <div className="flex gap-4 mt-2 lg:mt-0">
                 <DateFilter
                   baseRoute="solicitacoes"
@@ -55,10 +59,15 @@ const SolicitacoesPage = async ({
                   pendingValue="Observacao"
                   rejectedValue="Negada"
                 />
-              </div>
+            
 
             </div>
-          </div>          
+            </div>
+            </div>
+         
+             
+              
+         
 
           <div className="grid xl:grid-cols-2  grid-cols-1 gap-4 py-6">
             {" "}

@@ -45,8 +45,8 @@ const ButtonFilter: React.FC<ButtonFilterProps> = ({
 
   return (
   <DropdownMenu>
-      <DropdownMenuTrigger asChild className="bg-violet-500 text-white font-semibold text-lg border border-gray-600 ">
-        <Button size={"lg"} variant="outline">
+      <DropdownMenuTrigger asChild >
+        <Button  className="bg-purple text-white text-sm">
           <TbFilter />
           Filtrar
         </Button>

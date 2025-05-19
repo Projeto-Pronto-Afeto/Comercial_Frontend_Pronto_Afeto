@@ -1,8 +1,10 @@
 import LoginForm from "@/components/main/form/LoginForm";
+import { cookies } from "next/headers";
 import Image from "next/image";
 import React from "react";
 
 const Login = () => {
+ 
   return (
     <div className="relative max-h-screen flex h-screen justify-end items-center  w-full p-4 ">
       <Image

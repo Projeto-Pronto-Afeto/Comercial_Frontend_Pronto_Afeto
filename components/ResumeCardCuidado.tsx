@@ -30,9 +30,7 @@ const ResumeCardCuidado = ({
       {/* Cuidado Nome, idade, foto, resumo, pdf */}
       <div className="flex md:flex-row flex-col  gap-6 border-b-[0.125rem] border-slate-50 pb-6 mr-8">
         <div className="flex gap-6 text-start my-auto">
-          <div className="bg-purple rounded-full p-2 h-fit">
-            <TbUserSquareRounded className="text-4xl text-white" />
-          </div>
+         
           <div>
             <h2 className="font-semibold ">{cuidado.nome}</h2>
 

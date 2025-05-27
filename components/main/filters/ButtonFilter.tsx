@@ -72,26 +72,26 @@ const ButtonFilter: React.FC<ButtonFilterProps> = ({
 
             <button
               onClick={() => handleFilter("")}
-              className="px-4 py-2 rounded-xl border text-black hover:bg-gray-200"
+              className="px-4 py-1 rounded-xl border text-black hover:bg-gray-200"
             >
               Todos
             </button>
             <button
               onClick={() => handleFilter(pendingValue)}
-              className="px-4 py-2 rounded-xl border text-violet-900 hover:bg-gray-200"
+              className="px-4 py-1 rounded-xl border text-violet-900 hover:bg-gray-200"
             >
               Em Observação
             </button>
             <button
               onClick={() => handleFilter(approvalValue)}
-              className="px-4 py-2 rounded-xl border text-green-900 hover:bg-gray-200"
+              className="px-4 py-1 rounded-xl border text-green-900 hover:bg-gray-200"
             >
               Aprovada
             </button>
             {rejectedValue && (
               <button
                 onClick={() => handleFilter(rejectedValue)}
-                className="px-4 py-2 rounded-xl border text-red-900 hover:bg-gray-200"
+                className="px-4 py-1 rounded-xl border text-red-900 hover:bg-gray-200"
               >
                 Negada
               </button>

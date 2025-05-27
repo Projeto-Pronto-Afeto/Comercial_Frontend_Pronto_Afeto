@@ -94,18 +94,6 @@ export function NavUser({ user }: { user: UserSession }) {
               </div>
             </DropdownMenuLabel>
 
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Minha conta
-              </DropdownMenuItem>
-
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Sair

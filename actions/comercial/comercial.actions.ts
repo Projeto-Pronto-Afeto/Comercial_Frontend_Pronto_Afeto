@@ -47,6 +47,7 @@ export type State = {
     password?: string[] | undefined;
     telefone?: string[] | undefined;
     image?: string[] | undefined;
+    nomeApresentacao?: string[] | undefined;
   };
   message?: string | null;
   error?: boolean;
@@ -62,6 +63,7 @@ export const createComercialUser = async (
 
   const nome = formData.get("nome") as string;
   const email = formData.get("email") as string;
+  const nomeApresentacao = formData.get("nomeApresentacao") as string;
   const password = formData.get("password") as string;
   const telefone = formData.get("telefone") as string;
   const image = formData.get("image"); // Verificar se está vindo como File ou Blob
@@ -69,6 +71,7 @@ export const createComercialUser = async (
   const comercial = {
     nome: nome,
     telefone: telefone,
+    nomeApresentacao: nomeApresentacao,
     userDto: {
       email: email,
       password: password,

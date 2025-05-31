@@ -23,21 +23,21 @@ const FormCreateUser = () => {
     initialState
   );
   useEffect(() => {
-    console.log("🚀 ~ formState.error", formState.error);
     if (formState) {
       if (
         !formState.error &&
         formState.message === "Usuário criado com sucesso"
       ) {
-        console.log("🚀 ~ formState.error logando");
         toast.success(formState.message);
       } else if (formState.message) {
         toast.error(formState.message);
       }
     }
   }, [formState.error, formState.message, formState]);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState(""); // Estado para o campo nomeApresentacao
 
   return (
     <form className="pb-8" action={formAction}>
@@ -71,7 +71,22 @@ const FormCreateUser = () => {
           />
         </div>
         <div className="grid md:grid-cols-3 grid-cols-1 gap-2 ">
-          <Label className="col-span-1" htmlFor="name">
+          <Label className="col-span-1" htmlFor="nickname">
+            Apelido
+          </Label>
+          <ServerCustomField
+            fieldType={FormFieldType.INPUT}
+            errors={formState?.errors?.nomeApresentacao}
+            name="nomeApresentacao"
+            placeholder="Apelido"
+            iconSrc="/assets/icons/user.svg"
+            iconAlt="user"
+            value={nickname} // Conecta o estado ao campo
+            onChange={(e) => setNickname(e)} // Atualiza o estado
+          />
+        </div>
+        <div className="grid md:grid-cols-3 grid-cols-1 gap-2 ">
+          <Label className="col-span-1" htmlFor="email">
             Email
           </Label>
           <ServerCustomField
@@ -97,7 +112,7 @@ const FormCreateUser = () => {
           />
         </div>
         <div className="grid md:grid-cols-3 grid-cols-1 gap-2 ">
-          <Label className="col-span-1" htmlFor="tel">
+          <Label className="col-span-1" htmlFor="password">
             Senha
           </Label>
           <ServerCustomField
